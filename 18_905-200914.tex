@@ -1,0 +1,237 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{September 14, 2020}
+
+We can extend the definition of nonnegative chain complexes to
+all of the integer.
+\begin{definition}
+  A (not necessarily nonnegative) \vocab{chain complex} is a sequence of
+  abelian groups and maps:
+  \[
+    \begin{tikzcd}
+      \cdots \ar[r, "\partial_2"   , swap] &
+      A_1    \ar[r, "\partial_1"   , swap] &
+      A_0    \ar[r, "\partial_0"   , swap] &
+      A_{-1} \ar[r, "\partial_{-1}", swap] &
+      \cdots
+    \end{tikzcd}
+  \]
+\end{definition}
+
+There are functors \(\cat{chAb}_{\geq 0} \to \cat{chAb}\) that just sends
+\[
+  \begin{tikzcd}
+    \cdots \ar[r, "\partial_2", swap] &
+    A_2    \ar[r, "\partial_1", swap] &
+    A_1    \ar[r, "\partial_0", swap] &
+    A_0
+  \end{tikzcd}
+\]
+to
+\[
+  \begin{tikzcd}
+    \cdots \ar[r, "\partial_2", swap] &
+    A_2    \ar[r, "\partial_1", swap] &
+    A_1    \ar[r, "\partial_0", swap] &
+    A_0    \ar[r, "\partial_{-1}", swap] &
+    0 \ar[r, "0", swap] &
+    \cdots
+  \end{tikzcd}
+\]
+Therefore, we can similarly define functors
+\(Z_n, B_n, H_n \colon \cchAb \to \cAb\)
+analogously to how we did before.
+
+
+\section{Homology}
+\subsection{Of a point}
+Let \(X = *\) be the one point topological space.
+Then
+\[
+  \Sing_n(X) = \set{\text{continuous functions \(\Delta^n \to *\)}}
+    = \set{a_n},
+\]
+where \(a_n\) is the unique continuous map \(\Delta^n \to *\).
+Then, the map \(S_*\) gives
+\[
+  S_*(X) = \parens*{
+    \begin{tikzcd}[ampersand replacement=\&]
+      \ZZ\braces{a_0} \&
+      \ZZ\braces{a_1} \arrow[l, "\partial_1"] \&
+      \ZZ\braces{a_2} \arrow[l, "\partial_2"] \&
+      \cdots          \arrow[l, "\partial_3"]
+    \end{tikzcd}
+  }
+\]
+where
+\[
+  \partial_n(a_n) = \sum_{k = 0}^n (-1)^k (d_k a_n)
+    = \sum_{k = 0}^n (-1)^k a_{n-1}
+    = a_{n - 1} \sum_{k = 0}^n (-1)^k
+    = \begin{cases*}
+      a_{n-1} & \(k\) is even \\[-1ex]
+      0       & \(k\) is odd.
+    \end{cases*}
+\]
+In summary, \(S_*(*)\) is isomorphic, in \(\cat{chAb}_{\geq 0}\), to
+\[
+  \begin{tikzcd}
+    \ZZ &
+    \ZZ \arrow[l, "\partial_1 = 0"] &
+    \ZZ \arrow[l, "\partial_2 = \id"] &
+    \ZZ \arrow[l, "\partial_3 = 0"] &
+    \ZZ \arrow[l, "\partial_4 = \id"] &
+    \cdots \arrow[l]
+  \end{tikzcd}
+\]
+We can then compute
+\begin{align*}
+  H_0(*) &\iso \ker(\partial_0)/\img(\partial_1) \iso \ZZ/0 \iso \ZZ \\
+  H_1(*) &\iso \ker(\partial_1)/\img(\partial_2) \iso \ZZ/\ZZ \iso 0 \\
+  H_2(*) &\iso \ker(\partial_2)/\img(\partial_3) \iso 0/0 \iso 0 \\
+  \MTFlushSpaceAbove
+  &\vdotswithin{\iso}
+\end{align*}
+In particular,
+\[
+  H_n(*) = \begin{cases}
+    \ZZ & n = 0 \\[-1ex]
+    0 & \text{otherwise}.
+  \end{cases}
+\]
+
+
+\subsection{Of stars}
+\begin{definition}
+  A subset \(X \subseteq \RR^n\) is \vocab{star-shaped}
+  with respect to \(b \in X\) if for every \(x \in X\),
+  \[
+    \set{tb + (1-t)x \mid t \in [0, 1]} \subseteq X.
+  \]
+\end{definition}
+Intuitively, this means that the segment from \(x\) to any other point is
+contained within \(X\).
+
+\begin{theorem}<star-same-Hn-as-point>
+  Suppose \(X\) is star-shaped with respect to \(b \in X\).
+  Then for all \(n \in \ZZ\), we have \(H_n(X) \iso H_n(*)\).
+\end{theorem}
+
+To approach this, we will hop over to some algebra with \(\cchAb\).
+
+\subsubsection{Digression to \(\cat{chAb}\)}
+Let \(C_*, D_*\) be chain complexes and \(f_0, f_1 \colon C_* \to D_*\) be
+two chain maps. A \vocab{chain homotopy} \(h \colon f_0 \simeq f_1\) is
+a collection of homomorphisms \(h \colon C_n \to D_{n + 1}\) such that
+\(\partial h + h \partial = f_1 - f_0\).
+
+To visualize this, consider the (not commutative) diagram
+\[
+  \begin{tikzcd}
+    \cdots  \ar[r] &
+      C_{n+1} \ar[r] &
+      C_{n  } \ar[r] \ar[ld, "h"'] &
+      C_{n-1} \ar[r] \ar[ld, "h"'] &
+      \cdots \\
+    \cdots  \ar[r] &
+      D_{n+1} \ar[r] &
+      D_{n  } \ar[r] &
+      D_{n-1} \ar[r] &
+      \cdots \\
+  \end{tikzcd}
+\]
+There are two ways to get from \(C_n \to D_n\) using \(h\),
+namely \(\partial h\) and \(h \partial\). The sum of these is \(f_1 - f_0\).
+We say that \(f_0\) and \(f_1\) are \vocab{chain homotopic} if there exists
+some chain homotopy \(h \colon f_0 \simeq f_1\).
+
+\begin{lemma}[Homotopy invariance on homology]<homotopy-invariance-homology>
+  Suppose \(f, g \colon C_* \to D_*\) are chain homotopic.
+  Then \(H_n(f), H_n(g) \colon H_n(C_*) \to H_n(D_*)\) are equal.
+\end{lemma}
+\begin{proof}
+  If \(f, g\) are chain homotopic, then we know
+  \[
+    f = \partial h + h \partial + g
+  \]
+  for some \(h\colon C_n \to D_{n+1}\).
+  Let \(c \in Z_n(C_*) = \ker \partial_n\).
+  Then,
+  \[
+    H_n(f)([c]) = H_n(\partial h + h \partial + g)([c])
+      = H_n(\partial h c + h \underbracket{\partial c}_{=0} + g c)
+      = H_n(\underbracket{\partial h c}_{\mathclap{\in \img \partial_{n+1}}})
+        + H_n(g c)
+      = H_n(g)([c])
+  \]
+  where the brackets indicate the class of the element of the homology group.
+  Therefore, \(H_n(f) = H_n(g)\).
+\end{proof}
+
+Here, we're omitting the indices on the \(\partial\)s, where some of them
+should be \(\partial_n\) and others should be \(\partial_{n+1}\).
+This makes it faster to write equations, since there is a unique choice
+that makes sense.
+
+\begin{proof}[\cref{thm:star-same-Hn-as-point}]
+  Suppose \(X\) is star shaped with respect to \(b \in X\). Then the map
+  \(X \to *\) induces a chain map \(\eps \colon S_*(X) \to S_*(*)\)
+  and the map \(b \colon * \to X\) induces a chain map
+  \(\eta \colon S_*(*) \to S_*(X)\).
+
+  We will show that for all \(n\), \(H_n(\eps)\) and \(H_n(\eta)\) are
+  inverse isomorphisms of abelian groups. Then, that means that \(H_n(S_*(X))\)
+  and \(H_n(S_*(*))\) are isomorphic. First note that
+  \[
+    H_n(\eps) \circ H_n(\eta) = H_n(\eps \circ \eta)
+      = H_n(1_{S_*(X)})
+      = 1_{H_n(S_*(*))}.
+  \]
+  It remains to analyze \(H_n(\eta) \circ H_n(\eps) = H_n(\eta \circ \eps)\).
+  We will prove that \(\eta \circ \eps \colon S_*(X) \to S_*(X)\)
+  is chain homotopic to the identity, from which the result will follow by
+  \cref{lem:homotopy-invariance-homology}.
+  The chain homotopy \(h \colon S_{q}(X) \to S_{q+1}(X)\) will send
+  simplices to simplices.
+
+  In particular, for \(\sigma \in \Sing_q(X)\),
+  define \(h(\sigma) \colon \Delta^{q+1} \to X\) by
+  \[
+    h(\sigma)(t_0, t_1, \dots, t_{q + 1}) = \begin{cases}
+      b & t_0 = 1 \\[-1ex]
+      t_0 b + (1-t_0) \sigma\parens*{
+        \frac{t_1}{1-t_0},
+        \frac{t_2}{1-t_0},
+        \dots,
+        \frac{t_{q+1}}{1-t_0}
+      } & \text{otherwise}.
+    \end{cases}
+  \]
+  If \(\sigma\) embeds \(\Delta^q\) into \(X\), then \(h\sigma\) embeds
+  \(\Delta^{q+1}\) into \(X\), where indices are shifted up by \(1\)
+  and the extra coordinate \(t_0\) gets mapped linearly to \(b\).
+  Since \(X\) is star shaped, the entire simplex \(\Delta^{q+1}\) embedding
+  is contained within \(X\).
+
+  Note that we have \(d_0(h(\sigma)) = \sigma\), and for \(i > 0\),
+  \[
+    d_i(h(\sigma)) = h(d_{i-1}(\sigma)).
+  \]
+  Therefore,
+  \begin{align*}
+    \partial(h(\sigma))
+      &= d_0 h \sigma - d_1 h \sigma + d_2 h \sigma - \cdots \\
+      &= \sigma - h d_0 \sigma + h d_1 \sigma - \cdots \\
+      &= \sigma - h (d_0 \sigma - d_1 \sigma + \cdots) \\
+      &= \sigma - h \partial \sigma.
+  \end{align*}
+  We conclude that \(\partial h + h \partial = 1 - \eta \eps\) because \TODO{}.
+  Therefore, \(H_n(\eta \circ \eps) = 1_{H_n(S_*(*))}\), and
+  \(H_n(X) \iso H_n(*)\), as desired.
+\end{proof}
+
+
+
+\end{document}

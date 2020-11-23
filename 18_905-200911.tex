@@ -1,0 +1,225 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{September 11, 2020}
+Today we will finish putting semisimplicial sets into
+a category theory viewpoint.
+
+Suppose \(\mathcal C\) is a category. Then a new category we can consider is
+the \vocab{opposite category} \(\mathcal C^{\mathrm{op}}\) with
+\begin{itemize}[nosep]
+  \item \(\Obj(\mathcal C^\op) = \Obj(\mathcal C)\)
+  \item For \(X, Y \in \Obj(\mathcal C^\op)\),
+  \(\Hom_{\mathcal C^\op}(X, Y) = \Hom_{\mathcal C}(Y, X)\).
+\end{itemize}
+In particular, if \(f \in \Hom_{\mathcal C}(Y, X)\), we use \(f^\op\)
+to represent the corresponding object of \(\Hom_{\mathcal C^\op}(X, Y)\).
+The composition law is
+\[
+  (f \circ g)^\op = g^\op \circ f^\op.
+\]
+
+A good way to think about the opposite category is through functors.
+As a category itself, \(\mathcal C^\op\) is essentially the same as
+\(\mathcal C\), but a functor \(F \colon \mathcal C^\op \to \mathcal D\)
+can be thought of as a function that still takes objects in \(\mathcal C\)
+to objects in \(\mathcal D\), but takes maps \(c \to c'\) in \(\mathcal C\)
+to maps \(F(c') \to F(c)\) in \(\mathcal D\).
+
+
+\begin{example}
+  Recall the category \(\cat{Vect}_\RR\) of real vector spaces.
+  Every vector space \(V\) has a dual
+  \(V^* = \underline{\Hom}_{\cat{Vect}_\RR}(V, \RR)\),
+  where the underline indicates that the \(\Hom\) is a vector space itself.
+
+  Note that if \(f \colon W \to V\) is a linear map, then the corresponding
+  map \(f^* \colon V^* \to W^*\) in the opposite category maps
+  \[
+    f^* \colon
+    \underset{\mathclap{\in V^*}}{(g \colon V \to \RR)}
+    \mapsto
+    \underset{\mathclap{\in W^*}}{(g \circ f \colon W \to V \to \RR)}.
+  \]
+  
+  In particular, we have the functor
+  \((\,)^* \colon \cat{Vect}_\RR \to \cat{Vect}_\RR^\op\).
+\end{example}
+
+From last time, recall that for categories \(\mathcal C, \mathcal D\)
+where \(\mathcal C\) has a set of objects, \(\Fun(\mathcal C, \mathcal D)\)
+is a category where the objects are the set of functors
+\(\mathcal C \to \mathcal D\), and morphisms are
+natural transformations of functors. In particular, we can
+compose natural transformations.
+
+\section{Semisimplicial sets}
+\begin{definition}
+  Let \(\Deltainj\) be the category with objects
+  \[
+    \Obj \Deltainj = \set{[0], [1], [2], \dots},
+  \]
+  and morphisms
+  \[
+    \Hom_{\Deltainj}([a], [b]) = \set*{
+      \parbox{7.8cm}{
+        injective functions
+        \(f \colon \set{0, 1, \dots, a} \to \set{0, 1, \dots, b}\)
+        that preserve order, i.e. \(f(x) < f(y)\) whenever \(x < y\)
+      }
+    }.
+  \]
+\end{definition}
+
+For instance, there are three maps in \(\Hom_{\Delta}([1], [2])\), which are
+injective order preserving functions
+\[
+  \set{0, 1} \to \set{0, 1, 2}.
+\]
+They are determined by their image \((f(0), f(1))\),
+which could be \((0, 1)\), \((0, 2)\), or \((1, 2)\).
+
+\begin{claim}
+  A semisimplicial set is a functor \(\Deltainj^\op \to \cat{Set}\),
+  i.e.\ an element of \(\Fun(\Deltainj^\op, \cat{Set})\).
+\end{claim}
+
+Let's unpack this. A semisimplicial is a sequence of sets
+\[
+  X_0, X_1, X_2, \dots
+\]
+with maps:
+\begin{align*}
+  d_0, d_1 &\colon X_1 \to X_0 \\
+  d_0, d_1, d_2 &\colon X_2 \to X_1 \\
+  \MTFlushSpaceAbove
+  &\vdotswithin{\colon}
+\end{align*}
+such that \(d_i d_j = d_{j-1}d_i\) when \(i < j\).
+
+We are looking for a functor \(F \colon \Deltainj^\op \to \cat{Set}\).
+We have
+\[
+  \Obj \Deltainj^\op = \Obj \Deltainj = \set{[0], [1], \dots}.
+\]
+The most natural way to do this is to map \(F([n])\) to \(X_n\) in the
+semisimplicial set. To get the \(d_i\) maps, consider that
+\[
+  \Hom_{\Deltainj^\op}([2], [1]) = \Hom_{\Deltainj}([1], [2])
+     = \set*{\parbox{4.5cm}{
+      injective order preserving maps \(\set{0, 1} \to \set{0, 1, 2}\)
+     }}.
+\]
+Recall that there are three of these.
+Let \(f_0 \colon \set{0, 1} \to \set{0, 1, 2}\) be the map with image
+\(\set{1, 2}\), i.e.\ the one that does not contain \(0\).
+In general, let \(f_k \colon \set{0, 1} \to \set{0, 1, 2}\) be the map with
+image \(\set{0, 1, 2} \setminus \set{k}\).
+Then, we can map \(F(f_k^\op)\) to \(d_k\) in the semisimplicial set.
+
+It turns out that the combinatorics of these injective morphisms translates
+directly into the simplicial identity \(d_i d_j = d_{j-1} d_i\).
+
+\begin{remark}
+  \(\Fun(\Deltainj^\op, \cat{Set})\) forms a category of semisimplicial sets
+  where the morphisms are natural transformations.
+\end{remark}
+
+\begin{theorem}
+  There are functors
+  \begin{align*}
+    \Sing &\colon \cat{Top} \to \Fun(\Deltainj^\op, \cat{Set}) \\
+    S_n, Z_n, B_n, H_n &\colon \Fun(\Deltainj^\op, \cat{Set}) \to \cat{Ab}.
+  \end{align*}
+\end{theorem}
+
+\begin{corollary}
+  There are functors
+  \[
+    S_n, Z_n, B_n, H_n \colon \cat{Top} \to \cat{Ab}.
+  \]
+\end{corollary}
+Note that this corollary was deduced from the fact that \(\cat{Cat}\)
+is a category.
+
+\begin{definition}
+  Let \(\cat{Fil}\) (standing for filtered) denote the category with one object
+  for each nonnegative integer, and where \(\Hom(a, b)\) is empty if \(a < b\),
+  and \(\Hom(a, b)\) has a unique element if \(a \geq b\).
+\end{definition}
+Note that the data of a functor \(\cat{Fil} \to \cat{Ab}\) is a sequence of
+abelian groups with maps between them
+\[
+  \begin{tikzcd}
+    A_0 &
+    A_1 \ar[l, "\partial_1", swap] &
+    A_2 \ar[l, "\partial_2", swap] &
+    A_3 \ar[l, "\partial_3", swap] &
+    \cdots \ar[l, "\partial_4", swap]
+  \end{tikzcd}
+\]
+
+\begin{definition}
+  A \vocab{nonnegative chain complex} of abelian groups is
+  a functor \(\cat{Fil} \to \cat{Ab}\) with the property that
+  \(\partial_{i - 1} \circ \partial_i = 0\) for all \(i \geq 2\).
+\end{definition}
+
+Note that there is a category \(\cat{chAb}_{\geq 0}\) of
+nonnegative chain complexes where the morphisms are
+natural transformations of functors \(\cat{Fil} \to \cat{Ab}\).
+More explicitly, a map of nonnegative chain complexes is a diagram
+\[
+  \begin{tikzcd}
+    A_0 \ar[d] &
+      A_1 \ar[l, "\partial_1", swap] \ar[d] &
+      A_2 \ar[l, "\partial_2", swap] \ar[d] &
+      A_3 \ar[l, "\partial_3", swap] \ar[d] &
+      \cdots \ar[l, "\partial_4", swap] \\
+    B_0 &
+      B_1 \ar[l, "\partial_1"] &
+      B_2 \ar[l, "\partial_2"] &
+      B_3 \ar[l, "\partial_3"] &
+      \cdots \ar[l, "\partial_4"]
+  \end{tikzcd}
+\]
+where all the squares commute.
+
+\begin{claim}
+  There is a functor
+  \begin{align*}
+    S_* \colon& \Fun(\Deltainj^\op, \cat{Set}) \to \cat{chAb}_{\geq 0} \\
+      & X \mapsto \parens*{
+        \begin{tikzcd}[ampersand replacement=\&]
+          S_0(X) \&
+          S_1(X) \ar[l, "\partial_1", swap] \&
+          S_2(X) \ar[l, "\partial_2", swap] \&
+          S_3(X) \ar[l, "\partial_3", swap] \&
+          \cdots \ar[l, "\partial_4", swap]
+        \end{tikzcd}
+      }
+  \end{align*}
+  mapping a semisimplicial set to the chain complex of singular \(n\)-chains,
+  which are the free abelian groups generated by the \(n\)-simplices \(X_n\).
+\end{claim}
+
+\begin{theorem}
+  There are functors \(Z_n, B_n, H_n \colon \cat{chAb}_{\geq 0} \to \cat{Ab}\).
+\end{theorem}
+
+In summary, the \(H_n \colon \cat{Top} \to \cat{Ab}\) is a composite of
+\[
+  \begin{tikzcd}
+    \cat{Top} \ar[r, "\Sing"] &
+    \Fun(\Deltainj^\op, \cat{Set}) \ar[r, "S_*"] &
+    \cat{chAb}_{\geq 0}
+    \ar[rr, "H_n = \ker(\partial_n)/\img(\partial_{n+1}) = Z_n/B_n"] &
+    {\hspace{1.8cm}} &
+    \cat{Ab}
+  \end{tikzcd}
+\]
+
+
+
+\end{document}

@@ -1,0 +1,375 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{September 18, 2020}
+
+\begin{definition}
+  If \(A \subseteq X\) is a subspace, let \(H_n(X, A)\) be
+  the \(n\)th homology of the quotient chain complex \(S_*(X)/S_*(A)\).
+\end{definition}
+
+The general strategy for computing \(H_m(X)\) is roughly the following:
+\begin{enumerate}[nosep]
+  \item Find a slightly simpler space \(A \subseteq X\).
+  \item Relate \(H_m(A)\), \(H_m(X)\), and \(H_m(X, A)\).
+  \item Relate \(H_m(X, A)\) to \(X_m(X/A)\).
+\end{enumerate}
+
+Before we make steps 2 and 3 precise, it is useful to introduce a new category.
+\begin{definition}
+  There is a category \(\cTop_2\) with
+  \begin{gather*}
+    \Obj \cTop_2 = \set*{\parbox{6cm}{%
+      pairs \((X, A)\) where \(X\) is a topological space
+      and \(A \subseteq X\) is a subspace
+    }} \\
+    \Hom_{\cTop_2}((X, A), (Y, B)) = \set*{\text{%
+        continuous maps \(f \colon X \to Y\) where \(f(A) \subseteq B\)%
+    }}
+  \end{gather*}
+\end{definition}
+
+There is, for each \(m \geq 0\) a functor
+\[
+  H_m \colon \cTop_2 \to \cAb.
+\]
+There is also a functor
+\[
+  \cTop \to \cTop_2
+\]
+sending \(X\) to the pair \((X, \nullset)\). This lets us view \(\cTop\) as a
+subcategory of \(\cTop_2\).
+
+\section{Some algebra}
+\begin{definition}
+  Suppose
+  \(
+    \begin{tikzcd}[cramped, sep=small]
+    	A \ar[r, "f"] &
+    	B \ar[r, "g"] &
+    	C
+    \end{tikzcd}
+  \)
+  is a sequence of abelian groups with maps between them. We say this sequence
+  is \vocab{exact} at \(B\) if \(\ker g = \img f\).
+\end{definition}
+
+\begin{example}
+  \begin{itemize}[nosep]
+    \item The sequence
+      \(
+        \begin{tikzcd}[cramped, sep=small]
+          0 \ar[r] &
+          A \ar[r, "f"] &
+          B
+        \end{tikzcd}
+      \)
+      is exact if and only if \(f\) is injective.
+    \item The sequence
+      \(
+        \begin{tikzcd}[cramped, sep=small]
+          A \ar[r, "f"] &
+          B \ar[r] &
+          0
+        \end{tikzcd}
+      \)
+      is exact if and only if \(f\) is surjective.
+  \end{itemize}
+\end{example}
+
+\begin{definition}
+  A longer sequence is said to be \vocab{exact} if it is exact at every
+  three-term subsequence.
+\end{definition}
+
+\begin{example}
+  The sequence
+  \[
+    \begin{tikzcd}
+    	0 \ar[r] &
+    	\ZZ \ar[r, "2"] &
+    	\ZZ \ar[r, "1"] &
+    	\ZZ/2\ZZ \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+  is exact. Indeed, at the first \(\ZZ\), multiplication by \(2\) is injective;
+  at the second \(\ZZ\), the kernel of the projection \(\ZZ \to \ZZ/2\ZZ\) is
+  the same as the image of the multiplication by \(2\) map; and at
+  the \(\ZZ/2\ZZ\), the projection \(\ZZ \to \ZZ/2\ZZ\) is surjective.
+
+  In general, an exact sequence of the form
+  \[
+    \begin{tikzcd}
+    	0 \ar[r] &
+    	A \ar[r] &
+    	B \ar[r] &
+    	C \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+  is called a \vocab{short exact sequence}.
+\end{example}
+
+\begin{example}
+  \[
+    S_*(\nullset) = \parens*{
+      \begin{tikzcd}[ampersand replacement=\&]
+        \cdots \ar[r] \&
+        0 \ar[r] \&
+        0 \ar[r] \&
+        0 \ar[r] \&
+        0 \ar[r] \&
+        \cdots
+      \end{tikzcd}
+    }
+  \]
+  is exact.
+
+  \(S_*(*)\) is not exact. However, it is away from \(S_0(*)\).
+\end{example}
+
+\begin{theorem}[Five lemma]
+  Suppose
+  \[
+    \begin{tikzcd}
+    	A_4 \ar[r, "d"] \ar[d, "f_4"] &
+        A_3 \ar[r, "d"] \ar[d, "f_3"] &
+        A_2 \ar[r, "d"] \ar[d, "f_2"] &
+        A_1 \ar[r, "d"] \ar[d, "f_1"] &
+        A_0             \ar[d, "f_0"] \\
+    	B_4   \ar[r, "d", swap] &
+        B_3 \ar[r, "d", swap] &
+        B_2 \ar[r, "d", swap] &
+        B_1 \ar[r, "d", swap] &
+        B_0
+    \end{tikzcd}
+  \]
+  is a commutative diagram in \(\cAb\). Suppose that both rows are exact
+  and that \(f_0, f_1, f_3, f_4\) are isomorphisms.
+  Then \(f_2\) is also an isomorphism.
+\end{theorem}
+\begin{proof}
+  We will show that \(f_2\) is surjective. The proof method we will use
+  is called \vocab{diagram chasing}, which typically involves pointing at
+  a diagram. To simulate the experience in text, we will use bullet points,
+  as we often make seemingly unrelated claims that follow one after another.
+
+  We will show surjectivity of \(f_2\) first.
+  \begin{itemize}[nosep]
+    \item Let \(b_2 \in B_2\).
+    \item Since \(f_1\) is surjective, there exists \(a_1 \in A_1\) such that
+    \(f_1 a_1 = d b_2\).
+    \item By commutativity of the diagram, we have \(f_0 d a_1 = d f_1 a_2\).
+    \item By exactness, \(d^2 = 0\), so \(f_0 d a_1 = d f_1 a_1 = ddb_2 = 0\).
+    \item Since \(f_0\) is an isomorphism, \(d a_1 = 0\).
+    \item By exactness, \(a_1 \in \ker d = \img d\)
+    (where the \(d\)s have different indices),
+    so there exists \(a_2 \in A_2\) such that \(d a_2 = a_1\).
+    \item By commutativity, \(d f_2 a_2 = f_1 d a_2 = f_1 a_1 = d b_2\).
+    \item Since \(d\) is a homomorphism, \(d(b_2 - f_2 a_2) = 0\).
+    \item By exactness, there exists some \(b_3 \in B_3\) such that
+    \(d b_3 = b_2 - f_2 a_2\).
+    \item By commutativity, \(d f_3 = f_2 d\), so
+    \(f_2 d a_3 = b_2 - f_2 a_2\).
+    \item Rearranging, \(b_2 = f_2(a_2 + da_3)\), so \(f_2\) is surjective.
+  \end{itemize}
+
+  Now we will show that \(f_2\) is injective, i.e.\ \(\ker f_2 = 0\).
+  \begin{itemize}[nosep]
+    \item Let \(a_2 \in A_2\) such that \(f_2 a_2 = 0\), and therefore
+    \(d f_2 a_2 = 0\). We want to show \(a_2 = 0\).
+    \item By commutativity, we have \(f_1 d a_2 = 0\).
+    \item Since \(f_1\) is injective, \(d a_2 = 0\).
+    \item By exactness, there exists \(a_3 \in A_3\) such that \(d a_3 = a_2\).
+    \item By commutativity, \(d f_3 a_3 = f_2 d a_3 = f_2 a_2 = 0\).
+    \item By exactness, \(f_3 a_3 \in \ker d\), so there exists \(b_4 \in B_3\)
+    such that \(d b_4 = f_3 a_3\).
+    \item Since \(f_4\) is surjective, there exists \(a_4 \in A_4\) such that
+    \(f_4 a_4 = b_4\), and furthermore \(d f_4 a_4 = d b_4 = f_3 a_3\).
+    \item By commutativity, \(f_3 d a_4 = d f_4 a_4 = f_3 a_3\).
+    \item Rearranging, \(f_3(a_3 - d a_4) = 0\).
+    \item Since \(f_3\) is injective, \(a_3 = d a_4\).
+    \item Applying \(d\) to both sides and using injectivity,
+    \(d a_3 = d^2 a_4 = 0\), as desired. \pog
+  \end{itemize}
+\iffalse
+  Let's show \(f_2\) is surjective. Pick \(b_2 \in B_2\). Note that
+  \[
+    d b_2 = f_1 a_1
+  \]
+  for some \(a_1\). Also note \(d a_1 = 0\) because
+  \[
+    f_0 d a_1 = d f_1 a_1 = d d b_2 = 0.
+  \]
+  By exactness, \(a_1 = d a_2\) for some \(a_2 \in A_2\).
+  %We might like that f_2 a_2 = b_2, but we don't know it
+  Note that \(d f_2 a_2 = f_1 d a_2 = f_1 a_1 = d b_2\).
+  Consider \(b_2 - f_2 a\). This goes to \(0\) under \(d\).
+  So we can find \(b_3 \in B_3\) such that \(d b_3 = b_2 - f_2 a_2\).
+  Since \(f_3\) is an isomorphism, we can lift this to an \(a_3\) such that
+  \(f_3 a_3 = b_3\) and now
+  \[
+    f_2 d a_3 = d f_3 a_3 = b_2 - f_2 a_2.
+  \]
+  Thus,
+  \(b_2 = f_2(a_2 + d a_3)\).
+\fi
+\end{proof}
+
+\begin{definition}
+  A \vocab{short exact sequence of chain complexes} is a diagram
+  \[
+    \begin{tikzcd}
+    	0 \ar[r] &
+    	A_* \ar[r] &
+    	B_* \ar[r] &
+    	C_* \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+  or equivalently
+  \[
+    \begin{tikzcd}
+    	 &
+    	0 \ar[d] &
+    	0 \ar[d] &
+    	0 \ar[d] &
+    	\\
+    	\cdots \ar[r] &
+    	A_{n+1} \ar[r] \ar[d] &
+    	A_n     \ar[r] \ar[d] &
+    	A_{n-1} \ar[r] \ar[d] &
+    	\cdots \\
+    	\cdots \ar[r] &
+    	B_{n+1} \ar[r] \ar[d] &
+    	B_n     \ar[r] \ar[d] &
+    	B_{n-1} \ar[r] \ar[d] &
+    	\cdots \\
+    	\cdots  \ar[r] &
+    	C_{n+1} \ar[r] \ar[d] &
+    	C_n     \ar[r] \ar[d] &
+    	C_{n-1} \ar[r] \ar[d] &
+    	\cdots \\
+    	&
+    	0 &
+    	0 &
+    	0 &
+    \end{tikzcd}
+  \]
+  where the rows are chain complexes and the vertical maps are
+  short exact sequences of abelian groups.
+\end{definition}
+
+\begin{example}
+  Suppose \(A \subseteq X\) is an inclusion of topological spaces. Then
+  \[
+    \begin{tikzcd}
+    	0 \ar[r] &
+    	S_*(A) \ar[r] &
+    	S_*(X) \ar[r] &
+    	S_*(X)/S_*(A) \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+  is a short exact sequence of chain complexes.
+  This is easy to check because there is a natural injection
+  \(S_*(A) \to S_*(X)\) and a natural surjection \(S_*(X) \to S_*(X)/S_*(A)\).
+\end{example}
+
+\begin{theorem}
+  If
+  \[
+    \begin{tikzcd}
+    	0 \ar[r] &
+    	A_* \ar[r, "f"] &
+    	B_* \ar[r, "g"] &
+    	C_* \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+  is a short exact sequence of chain complexes, then there is
+  a ``long'' exact sequence of homology groups
+  \[
+    \begin{tikzcd}
+      \cdots \ar[r] &
+    	H_{n+1}(B) \ar[r, "H_{n+1}(g)"] &
+    	H_{n+1}(C) \ar[r] &
+    	H_n(A)     \ar[r, "H_{n}(f)"] &
+    	H_n(B)     \ar[r, "H_{n}(g)"] &
+    	H_n(C)     \ar[r] &
+    	H_{n-1}(A) \ar[r, "H_{n-1}(f)"] &
+    	H_{n-1}(B) \ar[r] &
+    	\cdots
+    \end{tikzcd}
+  \]
+  where the interesting maps are the ones \(H_{n+1}(C) \to H_n(A)\).
+\end{theorem}
+In particular, there is a relationship between the homology of \(C\) and \(A\),
+with the degree lowered by \(1\).
+This is a version of what is called the ``snake lemma''.
+
+The proof is again by diagram chasing, so we will defer it to the homework.
+It is also proved in
+\href{https://www.youtube.com/watch?v=etbcKWEKnvg}{this clip} from a movie.
+
+\begin{corollary}
+  Suppose \(A \subseteq X\) is an inclusion of spaces.
+  Then there is a long exact sequence
+  \[
+    \begin{tikzcd}[column sep=small]
+    	\cdots \ar[r] &
+    	H_{n+1}(X) \ar[r] &
+    	H_{n+1}(X, A) \ar[r] &
+    	H_n(A) \ar[r] &
+    	H_n(X) \ar[r] &
+    	H_n(X, A) \ar[r] &
+    	H_{n-1}(A) \ar[r] &
+    	H_{n-1}(X) \ar[r] &
+    	\cdots
+    \end{tikzcd}
+  \]
+\end{corollary}
+The point of this is that there exists a long exact sequence, even though
+the degree lowering maps are mysterious and unknown. In particular,
+to express this relationship, we have to use all of the homologies at once, as opposed to a
+homology in a fixed degree.
+
+\begin{question}
+   How do we compute \(H_n(X, A)\)?
+\end{question}
+
+Simple case: If \(b \in X\), i.e.\ a pair \((X, \set{b})\),
+what is \(H_m(X, \set{b})\)?
+
+Consider
+\[
+  \begin{tikzcd}
+  	S_*(\set{b}) \ar[r] &
+  	S_*(X) \ar[r] &
+  	S_*(X)/S_*(\set{b})
+  \end{tikzcd}
+\]
+Note for all \(m \geq 0\), the quotient \(S_m(X) / S_m(\set{b})\) is
+the quotient of the free abelian group generated by the \(m\)-simplices
+of \(X\) by the group generated by the single \(m\)-simplex
+\[
+  \begin{tikzcd}
+  	\Delta^m \ar[r] &
+  	* \ar[r, "b"] &
+  	X
+  \end{tikzcd}
+\]
+This \(m\)-simplex is easy to calculate the boundary of.
+For \(m > 0\), the homology \(H_m(X) \iso H_m(X, \set{b})\).
+When \(m = 0\), we know from the problem set that \(H_0(X) \iso \ZZ \pi_0 X\).
+Indeed, there is a direct sum decomposition
+\[
+  H_0(X) \iso \ZZ \oplus H_0(X, \set{b})
+\]
+where the summand \(\ZZ\) corresponds to the path component of \(b\).
+
+
+
+\end{document}

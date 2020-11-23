@@ -1,0 +1,276 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{September 21, 2020}
+
+The final piece that we need before we do calculations is
+the following theorem.
+\begin{theorem}[Excision]
+  Let \((X, A)\) be a pair of spaces, and assume there is a subspace
+  \(B \subseteq X\) such that
+  \begin{enumerate}[nosep]
+    \item \(\ol A \subseteq \operatorname{int} B\) and
+    \item \(A \to B\) is a deformation retract.
+  \end{enumerate}
+  Then for all \(m\) there is an isomorphism
+  \[
+    H_m(X, A) \iso H_m(X/A, *)
+      \iso \begin{cases}
+        H_m(X/A) & m > 0 \\[-1ex]
+        \ker(\ZZ \pi_0 X \to \ZZ) & m = 0.
+      \end{cases}
+  \]
+\end{theorem}
+The condition that there is a subspace \(B\) is not particularly restrictive,
+as it almost always exists. Once this condition is satisfied, this theorem says
+that relative homology is the same thing as the absolute homology of
+a quotient, as seen from the snake lemma.
+
+\begin{definition}
+  Suppose \(U \subseteq A \subseteq X\). Such a triple is said to be
+  \vocab{excisive} if \(\ol{U} \subseteq \Int A\).
+  The inclusion \((X - U, A - U) \subseteq X, A\)
+  is called an \vocab{excision}.
+\end{definition}
+\begin{theorem}<excision>
+  An excision induces an isomorphism
+  \[
+    H_m(X - U, A - U) \iso H_m(X, A).
+  \]
+\end{theorem}
+
+Before we prove this result, we will first make a definition and summarize
+what we will have afterwards.
+
+\begin{definition}
+  Two maps of pairs \(f, g \colon (X, A) \to (Y, B)\) are \vocab{homotopic}
+  if there exists a \(h \colon X \times [0, 1] \to Y\) such that
+  \begin{enumerate}[nosep]
+    \item \(h(x, 0) = f\),
+    \item \(h(x, 1) = g\),
+    \item \(h(a, t) \in B\) for all \(a \in A\) and \(t \in [0, 1]\).
+  \end{enumerate}
+\end{definition}
+This allows us to define \(\cat{Ho}(\cTop_2)\) analogous to how we defined
+\(\cHoTop\).
+
+\subsection{Summary}
+We have:
+\begin{itemize}[nosep]
+  \item A sequence of functors \(H_n \colon \cTop_2 \to \cAb\)
+  for all \(n \in \ZZ\).
+  \item A sequence of natural transformations
+  \(\partial \colon H_n(X, A) \to H_{n-1}(A) \coloneqq H_{n-1}(A, \nullset)\)
+  from the snake lemma.
+\end{itemize}
+such that:
+\begin{enumerate}[nosep]
+  \item For any pair \((X, A)\), the sequence
+  \[
+    \begin{tikzcd}
+    	\cdots \ar[r] &
+    	H_{q+1}(X, A) \ar[r, "\partial"] &
+    	H_q(A) \ar[r] &
+    	H_q(X) \ar[r] &
+    	H_q(X, A) \ar[r, "\partial"] &
+    	\cdots
+    \end{tikzcd}
+  \]
+  is exact.
+
+  \item If \(f_0, f_1 \colon (X, A) \to (Y, B)\) are homotopic,
+  then \(H_n(f_0) = H_n(f_1)\).
+
+  \item Excisions induce homology isomorphisms.
+
+  \item\label{axiom-4} (Dimension axiom) The groups
+  \[
+    H_n(*) \iso \begin{cases*}
+      \ZZ & if \(n = 0\) \\[-1ex]
+      0   & otherwise.
+    \end{cases*}
+  \]
+
+  \item Let \(X_i\) be a collection of spaces
+  indexed by \(I\). Then
+  \[
+    H_m\parens*{\coprod_{i \in I} X_i} \iso \bigoplus_{i \in I} H_m(X_i).
+  \]
+\end{enumerate}
+
+\begin{theorem}[Eilenberg-Steenrod]<eilenberg-steenrod>
+  These facts characterize the \(H_m\) functors.
+  In other words, any other functor \(\cTop \to \cAb\)
+  satisfying these properties would be isomorphic to \(H_m\).
+\end{theorem}
+
+\begin{remark}
+   A set of functors \(E_n \colon \cTop_2 \to \cAb\) satisfying all the axioms
+   except for~\ref{axiom-4} is called an \vocab{extraordinary homology theory}.
+\end{remark}
+
+If we modify the dimension axiom so that the homology of a point some data
+that is not the integers, we can still compute things.
+\begin{question}
+  Can one define such things that are computable but contain more refined than that seen by \(H_m\)?
+\end{question}
+This is an active area of research, namely asking which data are useful.
+Examples include
+  K-theory,
+  bordism theory,
+  topological modular fans,
+  topological automorphic forms, and
+  Morava E-theories.
+
+\section{Calculations}
+Rather than proving excision right now, we can start to do some calculations.
+
+Let's calculate \(H_m(S^1)\) for various \(m \in \ZZ\).
+Consider \(S^1 \iso [0, 1]/\set{0, 1}\). The long exact sequence associated to
+the pair \(([0, 1], \set{0, 1})\) is
+\[
+  \begin{tikzcd}
+    \cdots \ar[r] &
+    H_2(\set{0, 1}) \ar[r] &
+    H_2([0, 1]) \ar[r] &
+    H_2([0, 1], \set{0, 1})
+      \ar[dll, "\delta"' pos=0.9, out=-30, in=160, looseness=0.7] & \\
+  & H_1(\set{0, 1}) \ar[r] &
+    H_1([0, 1]) \ar[r] &
+    H_1([0, 1], \set{0, 1})
+      \ar[dll, "\delta"' pos=0.9, out=-30, in=160, looseness=0.7] & \\
+  & H_0(\set{0, 1}) \ar[r] &
+    H_0([0, 1]) \ar[r] &
+    H_0([0, 1], \set{0, 1}) \ar[r] & \cdots
+  \end{tikzcd}
+\]
+
+We can start computing some of the elements in this chain.
+\begin{itemize}[nosep]
+  \item \(H_2(\set{0, 1}) \iso H_2(\set{0}) \sqcup H_2(\set{1}) \iso 0\)
+  \item \(H_2([0, 1]) \iso 0\) because the interval is contractable.
+  \item This means that the map \(H_2(\set{0, 1}) \to H_2([0, 1])\) is \(0\).
+  \item Similarly, we have \(H_1(\set{0, 1}) \iso H_2([0, 1]) \iso 0\).
+  \item By exactness, we have that the maps in the chain
+    \(H_2([0, 1]) \to H_2([0, 1], \set{0, 1}) \to H_1(\set{0, 1})\)
+    are the zero maps.
+  \item From the dimension axiom and additivity,
+    \(H_0(\set{0, 1}) \iso \ZZ \oplus \ZZ\).
+  \item \(H_0([0, 1]) \iso \ZZ\) because \([0, 1]\) is contractable.
+\end{itemize}
+This gives us the updated diagram
+\[
+  \begin{tikzcd}
+    \cdots \ar[r] &
+    0 \ar[r, "0"] &
+    0 \ar[r, "0"] &
+    0 \ar[dll, "\delta = 0"' pos=0.9, out=-30, in=160, looseness=0.7] \\
+  & 0 \ar[r, "0"] &
+    0 \ar[r] &
+    H_1([0, 1], \set{0, 1})
+      \ar[dll, "\delta"' pos=0.9, out=-30, in=160, looseness=0.7] \\
+  & \ZZ \oplus \ZZ \ar[r, "f"] &
+    \ZZ \ar[r, "g"] &
+    H_0([0, 1], \set{0, 1}) \ar[r] & 0 \ar[r] &\cdots
+  \end{tikzcd}
+\]
+Since \(H_0\) measures path components, the map
+\(f \colon \ZZ \oplus \ZZ \to \ZZ\) maps
+\((1, 0) \mapsto 1\) and \((0, 1) \mapsto 1\). In particular, it maps the two
+elements representing the path components of \(\set{0, 1}\) to the single
+path component of \([0, 1]\). By exactness and the first isomorphism theorem,
+\(H_1([0, 1], \set{0, 1})\) is isomorphic to \(\ker f = \ZZ\).
+Similarly, we know that \(\img f = \ZZ = \ker g\) by exactness, so \(g\) is
+the zero map. This means that \(H_0([0, 1], \set{0, 1}) \iso 0\).
+
+Overall, we have deduced from this calculation that
+\[
+  H_0([0, 1], \set{0, 1}) \iso 0 \qquad\qquad
+  H_1([0, 1], \set{0, 1}) \iso \ZZ \qquad\qquad
+  H_2([0, 1], \set{0, 1}) \iso 0.
+\]
+By excision, we have for \(m > 0\)
+\[
+  H_m([0, 1], \set{0, 1}) = H_m(S^1, *).
+\]
+This gives
+\[
+  H_0(S^1) = \ZZ \oplus \tilde H_0(S^1) \iso \ZZ \qquad\qquad
+  H_1(S^1) = \ZZ \qquad\qquad
+  H_2(S^1) = 0.
+\]
+What this means geometrically is that \(S^1\) has no \(2\)-dimensional holes,
+one \(1\)-dimensional hole, and one path component.
+
+If we extend the exact sequence to the left, we can continue to calculate
+\[
+  H_m(S^1) \iso \begin{cases*}
+    \ZZ & if \(m = 0, 1\) \\[-1ex]
+    0   & otherwise.
+  \end{cases*}
+\]
+As a more general fact, we have
+\[
+  H_m(S^q) \iso \begin{cases*}
+    \ZZ & if \(m = 0, q\) \\[-1ex]
+    0   & otherwise.
+  \end{cases*}
+\]
+
+
+\begin{corollary}
+  If \(q \neq r\), \(S^q\) and \(S^r\) are not homotopy equivalent.
+\end{corollary}
+\begin{proof*}{Sketch}
+  They would have the same homology groups otherwise
+\end{proof*}
+\begin{corollary}
+  If \(q \neq r\), \(\RR^q\) and \(\RR^r\) are not homeomorphic.
+\end{corollary}
+\begin{proof}
+  Suppose they were. Then \(\RR^q - \set{0}\) would be homeomorphic to
+  \(\RR^r - \set{0}\). However, there are deformation retracts
+  \begin{gather*}
+    S^{q-1} \hookrightarrow \RR^q - \set{0} \\[-1ex]
+    S^{r-1} \hookrightarrow \RR^r - \set{0},
+  \end{gather*}
+  meaning that \(S^{q-1}\) and \(S^{r-1}\) are homotopy equivalent,
+  which is a contradiction.
+\end{proof}
+
+
+\begin{theorem}[Brouwer fixed point theorem]
+  Let \(n \geq 2\).
+  If \(f \colon D^n \to D^n\) is continuous, then there is a point
+  \(x \in D^n\) such that \(f(x) = x\).
+\end{theorem}
+\begin{proof}
+  Suppose there were no fixed point. Then one can define the continuous map
+  \(g \colon D^n \to S^{n-1}\) that maps \(x\) to the point where the ray
+  connecting \(f(x)\) to \(x\) hits the boundary.
+  
+  If \(x \in S^{n-1} \subseteq D(n)\) is on the boundary, \(g(x) = x\).
+  Then, we have the maps
+  \[
+    \begin{tikzcd}
+    	S^{n-1} \ar[r, hook] \ar[rr, bend right, "\id"'] &
+    	D^n \ar[r, "g"] &
+    	S^{n-1}
+    \end{tikzcd}
+  \]
+  Applying the functor \(H_{n-1}\), we have
+  \[
+    \begin{tikzcd}
+    	\ZZ \ar[r] \ar[rr, bend right, "\id"'] &
+    	0 \ar[r] &
+    	\ZZ
+    \end{tikzcd}
+  \]
+  which is a contradiction.
+\end{proof}
+
+
+
+
+\end{document}

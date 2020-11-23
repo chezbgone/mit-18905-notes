@@ -1,0 +1,293 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{October 23, 2020}
+
+If two chain complexes are isomorphic in \(\der(R)\),
+then they have isomorphic homology \(R\)-modules.
+
+\begin{fact}
+  If at least one of \(C_*\) and \(D_*\) are
+  chain complexes of free \(R\)-modules,
+  then \(C_* \otimes_R^{\mathbb L} D_* \iso C_* \otimes_R D_*\).
+\end{fact}
+Since we haven't described the derived category rigorously,
+we can't prove this. However, we will show some consequences of this fact.
+
+\begin{definition}
+  If \(M\) and \(N\) are two \(R\)-modules, then \(\Tor_i(M, N)\)
+  is defined to be \(H_i(M \otimes^{\mathbb L}_R N)\),
+  where \(M\) and \(N\) are viewed as
+  chain complexes concentrated in degree \(0\).
+\end{definition}
+Soon we will prove that \(\Tor_i(M, N)\) are well defined.
+For now, let's do some calculations of them.
+
+\begin{example}
+  Suppose \(R = \ZZ\). Then we can compute
+  \(\ZZ/2\ZZ \otimes^{\mathbb L}_\ZZ \ZZ/4\ZZ\)
+  by replacing either \(\ZZ/2\ZZ\) or \(\ZZ/4\ZZ\) with their free resolution,
+  and then take the tensor product normally.
+
+  We can compute this by resolving \(\ZZ/2\ZZ\), i.e.\ replacing it with
+  its free resolution.
+  \begin{align*}
+    \ZZ/2\ZZ \otimes^{\mathbb L} \ZZ/4\ZZ
+      &\iso \Big(
+        \begin{tikzcd}[ampersand replacement=\&,
+                       cramped, column sep=scriptsize]
+          \ZZ \ar[r, "2"] \& \ZZ
+        \end{tikzcd}
+      \Big) \otimes \ZZ/4\ZZ \\
+      &\iso \Bigg(\;
+        \begin{tikzcd}[ampersand replacement=\&,
+                       cramped, column sep=scriptsize, row sep=0ex]
+          \cdots \ar[r] \&
+          0 \ar[r] \&
+          \ZZ/4\ZZ \ar[r, "2"] \&
+          \ZZ/4\ZZ \ar[r] \&
+          0 \ar[r] \&
+          \cdots \\
+          \& \& \deg 1 \& \deg 0
+        \end{tikzcd}
+      \;\Bigg)
+  \end{align*}
+  Then we have
+  \begin{align*}
+    \Tor_0(\ZZ/2\ZZ, \ZZ/4\ZZ) &= \frac{\ZZ/4\ZZ}{\ZZ/2\ZZ} \iso \ZZ/2\ZZ \\
+    \Tor_1(\ZZ/2\ZZ, \ZZ/4\ZZ) &= \frac{\ZZ/2\ZZ}{0} \iso \ZZ/2\ZZ,
+  \end{align*}
+  and \(\Tor_i = 0\) for all other \(i\).
+
+  We can also compute it by resolving \(\ZZ/4\ZZ\):
+  \begin{align*}
+    \ZZ/2\ZZ \otimes^{\mathbb L} \ZZ/4\ZZ
+      &\iso \ZZ/2\ZZ \otimes \Big(
+        \begin{tikzcd}[ampersand replacement=\&,
+                       cramped, column sep=scriptsize]
+          \ZZ \ar[r, "4"] \& \ZZ
+        \end{tikzcd}
+      \Big) \\
+      &\iso \Big(
+        \begin{tikzcd}[ampersand replacement=\&,
+                       cramped, column sep=scriptsize]
+          \ZZ/4\ZZ \ar[r, "4"] \& \ZZ/4\ZZ
+        \end{tikzcd}
+      \Big)
+  \end{align*}
+  Then we have
+  \begin{align*}
+    \Tor_0(\ZZ/2\ZZ, \ZZ/4\ZZ) &= \frac{\ZZ/2\ZZ}{0} \iso \ZZ/2\ZZ \\
+    \Tor_1(\ZZ/2\ZZ, \ZZ/4\ZZ) &= \frac{\ZZ/2\ZZ}{0} \iso \ZZ/2\ZZ,
+  \end{align*}
+  and \(\Tor_i = 0\) for all other \(i\).
+
+  We can also compute this in some more inefficient ways.
+  We can resolve both sides:
+  \begin{align*}
+    \ZZ/2\ZZ \otimes^{\mathbb L} \ZZ/4\ZZ
+      &\iso \Big(
+        \begin{tikzcd}[ampersand replacement=\&,
+                       cramped, column sep=scriptsize]
+          \ZZ\fgen{a} \ar[r, "2"] \& \ZZ\fgen{b}
+        \end{tikzcd}
+      \Big) \otimes \Big(
+        \begin{tikzcd}[ampersand replacement=\&,
+                       cramped, column sep=scriptsize]
+          \ZZ\fgen{c} \ar[r, "4"] \& \ZZ\fgen{d}
+        \end{tikzcd}
+      \Big),
+  \intertext{where we add generators to make it more clear. Multiplying,}
+    &\iso \begin{tikzcd}[ampersand replacement=\&,
+                         cramped, column sep=scriptsize]
+    	\ZZ\fgen{a \otimes c} \ar[r, "\partial_2"] \&
+    		\ZZ\fgen{b \otimes c, a \otimes d} \ar[r, "\partial_1"] \&
+    		\ZZ\fgen{b \otimes d}
+    \end{tikzcd}
+  \end{align*}
+  where
+  \begin{align*}
+    \partial(a \otimes c) &=        (\partial a \otimes c)
+                             + (-1) (a \otimes \partial c)
+                           = (2b \otimes c) - (a \otimes 4d) \\
+    \partial(b \otimes c) &=   (\partial b \otimes c)
+                             + (b \otimes \partial c)
+                           = 4 (b \otimes d) \\
+    \partial(a \otimes d) &=        (\partial a \otimes d)
+                             + (-1) (a \otimes \partial d)
+                           = 2 (b \otimes d).
+  \end{align*}
+  We can also confirm
+  \[
+    \partial \partial (a \otimes c)
+      = \partial (2(b \otimes c) - 4(a \otimes d))
+      = 2 \cdot 4(b \otimes d) - 4 \cdot 2(b \otimes d)
+      = 0.
+  \]
+  We can then compute \(H_0\) of this complex to be
+  \(\frac{\ZZ\fgen{b \otimes d}}{\img \partial_1} = \ZZ/2\ZZ\),
+  and \(H_1\) to be
+  \(
+    \ker \partial_1 / \img \partial_2
+      = \frac{\ZZ\fgen{ b \otimes c - 2(a \otimes d)}}
+             {\ZZ\fgen{2b \otimes c - 4(a \otimes d)}}
+      \iso \ZZ/2\ZZ
+  \).
+  Moreover, we can notice \(\partial_2\) is injective,
+  so all higher order homology groups are zero, as expected.
+\end{example}
+
+\begin{example}
+  To compute \(\Tor_i(\ZZ/2\ZZ, \ZZ/3\ZZ)\), we have
+  \begin{align*}
+    \ZZ/2\ZZ \otimes^{\mathbb L} \ZZ/3\ZZ
+      &\iso \Big(
+        \begin{tikzcd}[ampersand replacement=\&,
+                       cramped, column sep=scriptsize]
+        	\ZZ \ar[r, "2"] \& \ZZ
+        \end{tikzcd}
+      \Big) \otimes \ZZ/3\ZZ \\
+      &\iso \begin{tikzcd}[ampersand replacement=\&,
+                           cramped, column sep=scriptsize]
+        	\ZZ/3\ZZ \ar[r, "2"] \& \ZZ/3\ZZ
+        \end{tikzcd}
+  \end{align*}
+  which means
+  \begin{align*}
+    \Tor_0(\ZZ/2\ZZ, \ZZ/3\ZZ) &\iso 0 \\
+    \Tor_1(\ZZ/2\ZZ, \ZZ/3\ZZ) &\iso 0.
+  \end{align*}
+\end{example}
+
+\begin{example}
+  For \(\Tor_i(\ZZ/3\ZZ, \ZZ)\), note that
+  \[
+    \ZZ/3\ZZ \otimes^{\mathbb L} \ZZ \iso \ZZ/3\ZZ,
+  \]
+  where we interpret \(\ZZ/3\ZZ\) as
+  \[
+    \begin{tikzcd}
+    	\cdots \ar[r] &
+    		0 \ar[r] &
+    		\ZZ/3\ZZ \ar[r] &
+    		0 \ar[r] &
+    		\cdots
+    \end{tikzcd}
+  \]
+  so
+  \[
+    \Tor_0(\ZZ/3\ZZ, \ZZ) \iso \ZZ/3\ZZ
+  \]
+  and \(\Tor_i = 0\) for all other \(i\).
+\end{example}
+
+\begin{example}
+  If \(R\) is a field, and \(V\) and \(W\) are vector spaces over \(R\),
+  then \(\Tor_0(V, W) \iso V \otimes_R W\) and \(\Tor_i(V, W) \iso 0\)
+  for all other \(i\).
+\end{example}
+
+We will now prove that the \(\Tor\) groups are well defined
+without reference to the derived categories.
+\begin{proof}[\(\Tor\) groups are well defined]
+  Suppose \(M\) and \(N\) are two \(R\)-modules, and suppose
+  \(F_*\) and \(F_*'\) are two free resolutions of \(M\).
+  We will prove that \(F_* \otimes_R N\) and \(F_*' \otimes_R N\)
+  have the same homology groups.
+  In fact, we will show that they are chain homotopy equivalent.
+
+  By the fundamental theorem of homological algebra,
+  there exists a unique (up to chain homotopy) map
+  \(f \colon F_* \to F_*'\) lifting \(1_M\) and
+  \(g \colon F_*' \to F_*\) lifting \(1_M\).
+
+  Note that \(f \circ g\) is a map from \(F_*' \to F_*'\) lifting \(1_M\),
+  so by the fundamental theorem,
+  \(f \circ g\) must be chain homotopic to \(1_{F_*'}\).
+  It follows that
+  \((f \circ g) \otimes_R N = (f \otimes N) \circ (g \otimes N)\),
+  which is chain homotopic to \(1_{F_*' \otimes N}\).
+
+  Similarly, \((g \circ f) \otimes_R N\) is chain homotopic to
+  \(1_{F_* \otimes N}\).
+  Therefore, \(g \otimes_R N\) and \(f \otimes_R N\) are inverses
+  up to chain homotopy.
+  This proves that \(F_* \otimes_R N\) and \(F_*' \otimes_R N\)
+  are chain homotopy equivalent.
+\end{proof}
+
+\subsection{On internal \texorpdfstring{\(\Hom\)}{Hom}s}
+\begin{definition}
+  If \(F_*\) is a chain complex of free \(R\)-modules and
+  \(N\) is an \(R\)-module, considered as a chain concentrated in degree \(0\).
+  Then we may form a new chain complex \(\ul\Hom_{\der(R)}(F_*, N)\)
+  with
+  \[
+    \ul\Hom(F_*, N)_n = \ul\Hom_{\cRmod}(F_{-n}, N).
+  \]
+\end{definition}
+
+\begin{example}
+  If \(R = \ZZ\),
+  \[
+    F_* = \bigg(\begin{tikzcd}[row sep=-1ex]
+    	\cdots \ar[r] &
+    		0 \ar[r] &
+    		\ZZ \ar[r, "4"] &
+    		\ZZ \ar[r] &
+    		0 \ar[r] &
+    		\cdots \\
+      & & \deg 1 & \deg 0
+    \end{tikzcd}
+    \bigg)
+  \]
+  and \(N = \ZZ/2\ZZ\).
+  Then
+  \[
+    \ul\Hom_{\der(\ZZ)}(F_*, N) \iso
+    \bigg(
+      \begin{tikzcd}[row sep=-1ex]
+      	\cdots \ar[r] &
+      		0 \ar[r] &
+      		\ZZ/2\ZZ \ar[r, "\partial"] &
+      		\ZZ/2\ZZ \ar[r] &
+      		0 \ar[r] &
+      		\cdots \\
+        & & \deg 0 & \deg {-1}
+      \end{tikzcd}
+    \bigg)
+  \]
+  The degree \(0\) \(R\)-module is
+  \(\ul\Hom(F_0, N) \iso \ul\Hom(\ZZ, \ZZ/2\ZZ) \iso \ZZ/2\ZZ\),
+  and the degree \(1\) \(R\)-module is \(\ul\Hom(F_1, N) \iso \ZZ/2\ZZ\).
+
+  We can see that the differential \(\partial\) exists because
+  given a map in \(\ul\Hom(F_0, N)\),
+  we can compose it with the \(4\) map to get a map in \(\ul\Hom(F_1, N)\).
+\end{example}
+
+\begin{definition}
+  If \(M\) and \(N\) are \(R\)-modules, then \(\ul\Hom_{\der(R)}(M, N)\)
+  can be computed by replacing \(M\) with a free resolution and
+  then applying the above construction.
+\end{definition}
+
+\begin{definition}
+  If \(M\) and \(N\) are \(R\)-modules, then
+  \begin{align*}
+    \Ext_R^i(M, N) &= H_{-i}(\ul\Hom_{\der(R)}(M, N)) \\
+      &= H_{-i}(\ul\Hom_{\der(R)}(F_*, N)),
+  \end{align*}
+  where \(F_*\) is any free resolution of \(M\).
+\end{definition}
+
+We will use \(\Tor\) and \(\Ext\) to compute homology with coefficients from
+homology with \(\ZZ\) coefficients.
+
+
+
+
+
+
+\end{document}

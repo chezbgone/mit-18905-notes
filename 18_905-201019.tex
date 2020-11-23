@@ -1,0 +1,281 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{October 19, 2020}
+
+If \(C_*\) and \(D_*\) are chain complexes, then \(\Hom(C_*, D_*)\)
+is not obviously a chain complex.
+
+
+\section{Some algebra}
+Suppose
+\[
+  \begin{tikzcd}
+  	0 \ar[r] &
+  	A \ar[r] &
+  	B \ar[r] &
+  	C \ar[r] &
+  	0
+  \end{tikzcd}
+\]
+is a short exact sequence of \(R\)-modules and \(M\) is another \(R\)-module.
+Then, note that the sequence
+\[
+  \begin{tikzcd}
+  	0 \ar[r] &
+  	A \otimes_R M \ar[r] &
+  	B \otimes_R M \ar[r] &
+  	C \otimes_R M \ar[r] &
+  	0
+  \end{tikzcd}
+\]
+is in general not exact.
+\begin{example}
+  Let \(R = \ZZ\) and consider the short exact sequence
+  \[
+    \begin{tikzcd}
+    	0 \ar[r] &
+    	\ZZ \ar[r, "2"] &
+    	\ZZ \ar[r] &
+    	\ZZ/2\ZZ \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+  Tensoring with \(\ZZ/2\ZZ\) yields
+  \[
+    \begin{tikzcd}[row sep=0.1ex]
+    	0 \ar[r] &
+        \ZZ/2\ZZ \otimes_\ZZ \ZZ \ar[r] &
+        \ZZ/2\ZZ \otimes_\ZZ \ZZ \ar[r] &
+        \ZZ/2\ZZ \otimes_\ZZ \ZZ/2\ZZ \ar[r] &
+        0 \\
+    	0 \ar[r] &
+        \ZZ/2\ZZ \ar[r] &
+        \ZZ/2\ZZ \ar[r] &
+        \ZZ/2\ZZ \ar[r] &
+        0
+    \end{tikzcd}
+  \]
+  However, the multiplication by \(2\) map becomes
+  the zero map when we tensor by \(\ZZ/2\ZZ\),
+  so the first \(\ZZ/2\ZZ \to \ZZ/2\ZZ\) map becomes \(0\).
+  However, the zero map is not injective,
+  so the sequence we get is not exact.
+\end{example}
+
+\begin{proposition}<module-exactness-tensor>
+  If \(M\) is an \(R\)-module, then the functor
+  \[
+    {-} \otimes_R M \colon \cRmod \to \cRmod
+  \]
+  is \vocab{right exact}.
+  In other words, if
+  \[
+    \begin{tikzcd}
+    	A \ar[r] &
+    	B \ar[r] &
+    	C \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+  is an exact sequence of \(R\)-modules, then so is
+  \[
+    \begin{tikzcd}
+    	A \otimes_R M \ar[r] &
+    	B \otimes_R M \ar[r] &
+    	C \otimes_R M \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+\end{proposition}
+\begin{corollary}
+  In fact,
+  \[
+    \begin{tikzcd}
+    	A \ar[r] &
+    	B \ar[r] &
+    	C \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+  is exact if and only if
+  \[
+    \begin{tikzcd}
+    	A \otimes_R M \ar[r] &
+    	B \otimes_R M \ar[r] &
+    	C \otimes_R M \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+  is exact for every \(R\)-module \(M\).
+\end{corollary}
+\begin{proof*}{Sketch}
+  Take \(M = R\).
+\end{proof*}
+
+To prove something about tensor products,
+it is often helpful to think about
+the tensor products as internal \(\Hom\)s.
+In particular, we have the related theorem
+\begin{proposition}<module-exactness-hom>
+  A sequence of \(R\)-modules
+  \[
+    \begin{tikzcd}
+    	A \ar[r] &
+    	B \ar[r] &
+    	C \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+  is exact if and only if for all \(R\)-modules \(N\),
+  \[
+    \begin{tikzcd}
+    	0 \ar[r] &
+    	\ul\Hom_{\cRmod}(C, N) \ar[r] &
+    	\ul\Hom_{\cRmod}(B, N) \ar[r] &
+    	\ul\Hom_{\cRmod}(A, N)
+    \end{tikzcd}
+  \]
+  is exact.
+\end{proposition}
+
+\begin{proof}[\cref{prop:module-exactness-hom} \(\implies\)
+  \cref{prop:module-exactness-tensor}]
+  Suppose \(A \to B \to C \to 0\) is exact.
+  To prove
+  \[
+    \begin{tikzcd}
+    	A \otimes_R M \ar[r] &
+    	B \otimes_R M \ar[r] &
+    	C \otimes_R M \ar[r] &
+    	0
+    \end{tikzcd}
+  \]
+  is exact, by \cref{prop:module-exactness-hom} it suffices to check that
+  \[
+    \begin{tikzcd}
+    	0 \ar[r] &
+    	\ul\Hom(C \otimes_R M, N) \ar[r] &
+    	\ul\Hom(B \otimes_R M, N) \ar[r] &
+    	\ul\Hom(A \otimes_R M, N)
+    \end{tikzcd}
+  \]
+  is exact for every \(N\).
+  This is equivalent to checking that
+  \[
+    \begin{tikzcd}
+    	0 \ar[r] &
+    	\ul\Hom(C, \ul\Hom(M, N)) \ar[r] &
+    	\ul\Hom(B, \ul\Hom(M, N)) \ar[r] &
+    	\ul\Hom(A, \ul\Hom(M, N))
+    \end{tikzcd}
+  \]
+  is exact for every \(N\).
+  By \cref{prop:module-exactness-hom} again, this is true.
+\end{proof}
+
+\begin{proof}[\cref{prop:module-exactness-hom}]
+  Suppose
+  \(
+    \begin{tikzcd}[cramped, column sep=small]
+      A \ar[r, "\varphi"] & B \ar[r, "\psi"] & C \ar[r] & 0
+    \end{tikzcd}
+  \)
+  is exact. We want to show
+  \[
+    \begin{tikzcd}
+    	0 \ar[r] &
+    	\ul\Hom(C, N) \ar[r] &
+    	\ul\Hom(B, N) \ar[r] &
+    	\ul\Hom(A, N)
+    \end{tikzcd}
+  \]
+  is exact.
+
+  Exactness at \(\ul\Hom(C, N)\) is equivalent to the map
+  \(\ul\Hom(C, N) \to \ul\Hom(B, N)\) being injective.
+  This is indeed true, because \(\psi\) is surjective,
+  so the composite \(B \to C \to N\) determines a map \(C \to N\).
+
+  Consider the diagram
+  \[
+    \begin{tikzcd}
+    	A \ar[r, "\varphi"] \ar[rd, "0"'] &
+        B \ar[r, "\psi"] \ar[d, "f" pos=0.3] &
+        C \ar[r] \ar[ld, "g"]&
+        0 \\
+    	& N & &
+    \end{tikzcd}
+  \]
+  Exactness at \(\ul\Hom(B, N)\) is equivalent to saying that a
+  map \(f \colon B \to N\) is restricted to the zero map \(A \to B \to N\)
+  if and only if \(f\) can be written as a composite \(B \to C \to N\).
+  The backward direction is clear because any composite \(A \to B \to C \to N\)
+  is zero because \(A \to B \to C\) is exact.
+  We want to find a function \(g \colon C \to N\)
+  such that \(f = g \circ \psi\).
+  If \(f \circ \varphi = 0\), then note that \(C \iso B / \img \varphi\).
+  We can then assign \(g [b] = f b\),
+  where \([b]\) denotes the equivalent class representing \(b\).
+  This gives \(f = g \circ \psi\), as desired.
+\end{proof}
+
+We have now proved that if
+\[
+  \begin{tikzcd}
+  	0 \ar[r] &
+  	A \ar[r] &
+  	B \ar[r] &
+  	C \ar[r] &
+  	0
+  \end{tikzcd}
+\]
+is exact and \(M\) is an \(R\)-module, then
+\[
+  \begin{tikzcd}
+  	A \otimes_R M \ar[r] &
+  	B \otimes_R M \ar[r] &
+  	C \otimes_R M \ar[r] &
+  	0
+  \end{tikzcd}
+\]
+is exact, but
+\[
+  \begin{tikzcd}
+  	0 \ar[r] &
+  	A \otimes_R M \ar[r] &
+  	B \otimes_R M \ar[r] &
+  	C \otimes_R M \ar[r] &
+  	0
+  \end{tikzcd}
+\]
+is not necessarily exact.
+
+However, if we let \(M = R\), then it is exact.
+Furthermore, if we take \(M = R \oplus R\), the sequence will stay exact.
+In particular, it will become
+\[
+  \begin{tikzcd}
+    0 \arrow[r] &
+    A \oplus A \arrow[r] &
+    B \oplus B \arrow[r] &
+    C \oplus C \arrow[r] &
+    0
+  \end{tikzcd}
+\]
+In general, if \(M\) is a free \(R\)-module, then tensoring with \(M\)
+gives an exact sequence and not just a right exact sequence.
+
+\begin{note}
+  If \(X\) is a topological space, then \(\Ccell_*(X; R)\) is
+  a chain complex of free \(R\)-modules.
+\end{note}
+
+
+
+
+
+
+
+\end{document}

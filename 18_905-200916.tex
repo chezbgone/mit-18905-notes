@@ -1,0 +1,195 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{September 16, 2020}
+
+\begin{question}
+  Given two maps \(f, g \colon X \to Y\) in \(\cTop\), when are
+  \(S_*(f)\) and \(S_*(f)\) chain homotopic?
+  When they are, we learn that \(H_n(f) = H_n(g)\).
+\end{question}
+
+\begin{definition}
+  A \vocab{homotopy} \(h\) between \(f, g \colon X \to Y\) is a continuous map
+  \(h \colon X \times [0, 1] \to Y\) such that \(h(x, 0) = f(x)\) and
+  \(h(x, 1) = g(x)\).
+
+  We say that \(f\) and \(g\) are \vocab{homotopic} if there exists a homotopy
+  from \(f\) to \(g\).
+\end{definition}
+
+Often we think of the second variable as time, and we can think of \(h\) as
+a family of maps that interpolates from \(f\) to \(g\), such that at \(t = 0\),
+we have the map \(f\) and at \(t = 1\), we have \(g\).
+
+\begin{theorem}
+  If \(f\) and \(g\) are homotopic, then \(S_*(f)\) and \(S_*(g)\) are
+  chain homotopic. Hence, \(H_n(f) = H_n(g)\) as maps in \(\cAb\).
+\end{theorem}
+The proof of this is on PSet 2.
+
+Suppose \(h_{12} \colon X \times [0, 1] \to Y\) is a homotopy
+from \(f_1\) to \(f_2\), and \(h_{12} \colon X \times [0, 1] \to Y\)
+is a homotopy from \(f_2\) to \(f_3\).
+Then we can define \(h_{13} \colon X \times [0, 1] \to Y\) where
+\[
+  h_{13}(x, t) = \begin{cases}
+    h_{12}(x, 2t) & 0 \leq t \leq 1/2 \\[-1ex]
+    h_{23}(x, 2t-1) & 1/2 \leq t \leq 1.
+  \end{cases}
+\]
+This \(h_{13}\) is a homotopy from \(f_1\) to \(f_3\), implying that homotopy
+equivalence is transitive. Indeed, if we define \(f \simeq g\)
+if \(f\) and \(g\) are homotopic, then \(\simeq\) is an equivalence relation
+on the set \(\Hom_{\cTop}(X, Y)\).
+
+Furthermore, there is a category \(\cHoTop\) called
+the homotopy category where
+\begin{gather*}
+  \Obj \cHoTop = \Obj \cTop \\
+  \Hom_{\cHoTop}(X, Y) = \Hom_{\cTop}(X, Y) / {\simeq}.
+\end{gather*}
+In particular, the maps in the homotopy category \(\cHoTop\) are
+homotopy classes of maps in \(\cTop\).
+
+Note that there is a canonical functor \(\cTop \to \cHoTop\), namely
+sending a topological space to itself, and
+sending a continuous map to the equivalence class containing that continuous
+map under the homotopy relation.
+
+A consequence of the theorem is that there is a diagram of functors
+\[
+  \begin{tikzcd}[column sep=tiny]
+    \cTop \ar[rr, "H_n"]\ar[rd] && \cAb \\
+    & \cHoTop \ar[ru] &
+  \end{tikzcd}
+\]
+that commutes. In particular, we claim that there exists a unique functor
+\(\cHoTop \to \cAb\).
+
+\begin{adhoctheorem*}{Aside on fundamental groups}
+  The fundamental group is similar in that we can form the diagram
+  \[
+    \begin{tikzcd}[column sep=tiny]
+      \cTop_* \ar[rr, "\pi_1"] \ar[rd] && \cGrp \\
+      & \cHoTop \ar[ru] &
+    \end{tikzcd}
+  \]
+  where \(\cTop_*\) is the category of topological spaces with a base point.
+\end{adhoctheorem*}
+
+\begin{definition}
+  A continuous map \(f \colon X \to Y\) of topological spaces is called a
+  \vocab{homotopy equivalence} if it maps to an isomorphism under the functor
+  \(\cTop \to \cHoTop\), i.e. there exists a map \(g \colon Y \to X\) such that
+  \(f \circ g \simeq 1_Y\) and \(g \circ f \simeq 1_X\).
+
+  Two spaces \(X, Y\) are \vocab{homotopy equivalent} if there exists
+  a homotopy equivalence \(f \colon X \to Y\).
+\end{definition}
+
+More explicitly, \(f\) is a homotopy equivalence if and only if there exists
+an inverse \(g \colon Y \to X\) such that \(f \circ g \simeq 1_Y\) and
+\(g \circ f \simeq 1_X\). Note that we only require these compositions to
+be homotopic to the identity, as opposed to equal to the identity, which
+describes homeomorphism. An important distinction to make is that maps
+can be homotopic, but spaces are homotopy equivalent.
+
+\begin{example}
+  The maps \(f \colon \RR \to *\) and \(g \colon * \to \RR\) where
+  \(f \colon x \mapsto *\) and \(g \colon * \mapsto 0\) compose to
+  \(f \circ g \colon * \mapsto *\) and \(g \circ f \colon x \mapsto 0\),
+  which are homotopic to their respective identities.
+
+  Therefore, \(\RR\) and \(*\) are homotopy equivalent, but not homeomorphic.
+\end{example}
+
+\begin{fact}
+  The thing to remember here is that homology cannot tell the difference
+  between homotopy equivalent spaces or homotopic maps. In particular,
+  homology is an invariant on a weaker notion of equivalence, namely
+  homotopy equivalence.
+\end{fact}
+
+It's useful to get a geometric feeling for when two non-homeomorphic spaces
+are homotopy equivalent. The following way is a simple way to check for
+homotopy equivalence a lot of the time.
+
+\begin{definition}
+  An inclusion \(A \hookrightarrow X\) is a \vocab{deformation retraction}
+  provided that there is a map \(h \colon X \times [0, 1] \to X\) such that
+  \begin{enumerate}[nosep]
+    \item \(h(x, 0) = x\) for all \(x \in X\),
+    \item \(h(x, 1) \in A\) for all \(x \in X\),
+    \item \(h(a, t) = a\) for all \(a \in A\) and \(t \in [0, 1]\).
+  \end{enumerate}
+\end{definition}
+Intuitively, we can again think of the second coordinate \(t\) as time,
+where at \(t = 0\), we have the space \(X\), and as time goes on, we retract
+everything into \(A\), while not moving anything in \(A\) throughout
+the process.
+
+\begin{example}
+  \(S^{n-1} \subset \RR^n - \set{0}\) is a deformation retraction.
+  In particular, we can take each point \(x\) in \(\RR^n - \set{0}\)
+  and move it to the point on \(S^{n - 1}\) that intersects the ray from the
+  origin passing through \(x\).
+\end{example}
+
+One way to prove that two spaces \(X\) and \(Y\) are homotopy equivalent is
+to exhibit a common deformation retraction:
+\[
+  \begin{tikzcd}
+    X & A \ar[l, hook'] \ar[r, hook] & Y
+  \end{tikzcd}
+\]
+
+We know that if \(A \simeq B\) are homotopy equivalent spaces, then they
+have the same homology.
+Last class, we proved that star-shaped regions are homotopy equivalent to
+a point. Our next goal is to answer the following question:
+\begin{question}
+  If \(A \subseteq X\) is the inclusion of a subspace, how does \(H_n(A)\)
+  compare to \(H_n(X)\)?
+\end{question}
+
+\begin{claim}
+  If \(A \subseteq X\) is the inclusion of a subspace, \(S_*(A) \to S_*(X)\)
+  is a subcomplex.
+\end{claim}
+\begin{definition}
+  A \vocab{subcomplex} \(C_* \subseteq D_*\) is a diagram
+  \[
+    \begin{tikzcd}
+      \cdots \arrow[r] &
+        C_2 \arrow[r] \arrow[d, symbol=\subseteq] &
+        C_1 \arrow[r] \arrow[d, symbol=\subseteq] &
+        C_0 \arrow[r] \arrow[d, symbol=\subseteq] &
+        C_{-1} \arrow[r] \arrow[d, symbol=\subseteq] &
+        C_{-2} \arrow[r] \arrow[d, symbol=\subseteq] &
+        \cdots \\
+      \cdots \arrow[r] &
+        D_2 \arrow[r] &
+        D_1 \arrow[r] &
+        D_0 \arrow[r] &
+        D_{-1} \arrow[r] &
+        D_{-2} \arrow[r] &
+        \cdots
+    \end{tikzcd}
+  \]
+  where the \(\subseteq\)s are inclusion maps and all squares commute.
+\end{definition}
+
+When we have an inclusion, then we can take the quotient.
+
+\begin{adhoctheorem}{Construction}
+  Suppose \(C_* \subseteq D_*\) is a subcomplex. The quotient complex
+  \(D_*/C_*\) has groups \((D_*/C_*)_n = D_n/C_n\), where the differential
+  \(\partial_n \colon D_n/C_n \to D_{n-1}/C_{n-1}\) is well defined because
+  if two classes in \(D_n\) differ by a class in \(C_n\), then their boundaries
+  differ by a class in \(C_{n-1}\). This is the same as the condition that all
+  the squares commute.
+\end{adhoctheorem}
+
+\end{document}

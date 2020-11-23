@@ -1,0 +1,303 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{October 21, 2020}
+
+\begin{definition}
+  Suppose \(C_*\) and \(D_*\) are chain complexes of \(R\)-modules.
+  A chain map \(f \colon C_* \to D_*\) is a \vocab{quasi-isomorphism}
+  if \(H_q(f)\) is an isomorphism for all \(q\).
+  Then, one says that \(C_*\) and \(D_*\) are \vocab{quasi-isomorphic}.
+\end{definition}
+
+\begin{definition}
+  Suppose \(M\) is an \(R\)-module.
+  Then a \vocab{free resolution} of \(M\) is
+    a chain complex \(C_*\) of free \(R\)-modules and
+    a quasi-isomorphism \(C_* \to M\) where
+      we think of \(M\) as a chain complex concentrated in degree \(0\).
+\end{definition}
+
+\begin{example}
+  Suppose
+  \begin{align*}
+    C_* &= \Big(
+    \begin{tikzcd}[ampersand replacement=\&]
+    	\cdots \ar[r] \&
+    	0 \ar[r] \&
+    	0 \ar[r] \&
+    	\ZZ \ar[r, "5"] \&
+    	\ZZ \ar[r] \&
+    	0 \ar[r] \&
+    	\cdots
+    \end{tikzcd}
+    \Big) \\
+    D_* &= \Big(
+    \begin{tikzcd}[ampersand replacement=\&]
+    	\cdots \ar[r] \&
+    	0 \ar[r] \&
+    	0 \ar[r] \&
+    	0 \ar[r] \&
+    	\ZZ/5\ZZ \ar[r] \&
+    	0 \ar[r] \&
+    	\cdots
+    \end{tikzcd}
+    \Big)
+  \end{align*}
+  Then the following chain map is a quasi-isomorphism:
+  \[
+    \begin{tikzcd}
+      \cdots \ar[r] &
+        0 \ar[r] \ar[d] &
+        \ZZ \ar[r, "5"] \ar[d] &
+        \ZZ \ar[r] \ar[d] &
+        0 \ar[r] \ar[d] &
+        \cdots \\
+      \cdots \ar[r] &
+        0 \ar[r] &
+        0 \ar[r] &
+        \ZZ/5\ZZ \ar[r] &
+        0 \ar[r] &
+        \cdots
+    \end{tikzcd}
+  \]
+  where the map \(\ZZ \to \ZZ/5\ZZ\) is the natural quotient map.
+  Moreover, \(C_*\) is a free resolution of \(\ZZ/5\ZZ\).
+\end{example}
+
+\begin{example}
+  If \(R\) is a field, then every module is its own free resolution.
+\end{example}
+
+\begin{example}
+  Suppose \(\RR = \ZZ\) and \(M = \ZZ/3\ZZ \oplus \ZZ \oplus \ZZ/2\ZZ\).
+  Then we have the free resolution
+  \[
+    \begin{tikzcd}
+    	\cdots \ar[r] &
+    		0 \ar[r] \ar[d] &
+    		\ZZ \oplus \ZZ \ar[r] \ar[d] &
+    		\ZZ \oplus \ZZ \oplus \ZZ \ar[r] \ar[d] &
+    		0 \ar[r] \ar[d] &
+    		0 \ar[r] \ar[d] &
+    		\cdots \\
+    	\cdots \ar[r] &
+    		0 \ar[r] &
+    		0 \ar[r] &
+    		\ZZ/3\ZZ \oplus \ZZ \oplus \ZZ/2\ZZ \ar[r] &
+    		0 \ar[r] &
+    		0 \ar[r] &
+    		\cdots
+    \end{tikzcd}
+  \]
+  where the \(\ZZ \oplus \ZZ \to \ZZ \oplus \ZZ \oplus \ZZ\) map
+  maps \((1, 0) \mapsto (3, 0, 0)\) and \((0, 1) \mapsto (0, 0, 2)\).
+\end{example}
+
+It turns out that we can always find a two term free resolution by
+taking a surjection with the degree \(0\) group,
+e.g.\ \(\ZZ \oplus \ZZ \oplus \ZZ \to \ZZ/3\ZZ \oplus \ZZ \oplus \ZZ/2\ZZ\)
+in the previous example,
+and then use the degree \(1\) group to describe the relations.
+
+Note that free resolutions are not unique! In particular,
+\[
+  \begin{tikzcd}[row sep=0.05ex]
+  	\ZZ \ar[r] &
+  		\ZZ \oplus \ZZ \oplus \ZZ \ar[r] &
+  		\ZZ \oplus \ZZ \oplus \ZZ \\
+    1 \ar[r, mapsto] & (0, 0, 1) \\
+    & (1, 0, 0) \ar[r, mapsto] & (3, 0, 1) \\
+    & (0, 1, 0) \ar[r, mapsto] & (0, 0, 2) \\
+    & (0, 0, 1) \ar[r, mapsto] & (0, 0, 0)
+  \end{tikzcd}
+\]
+is also a free resolution of \(\ZZ/3\ZZ \oplus \ZZ \oplus \ZZ/2\ZZ\).
+However, it is not ``minimal''.
+
+\begin{example}
+  If \(R = \QQ[t]/t^2\) and
+    \(M\) is the module \(\QQ\) where \(t\) acts by \(0\),
+    then this has a free resolution, but the smallest possible one is infinite.
+\end{example}
+
+\begin{theorem}[Fundamental theorem of homological algebra]
+  Suppose \(N\) and \(M\) are \(R\)-modules.
+  Let
+  \[
+    \begin{tikzcd}
+    	\cdots \ar[r] &
+    		F_2 \ar[r] \ar[d] &
+    		F_1 \ar[r] \ar[d] &
+    		F_0 \ar[d, "\eps_N"] \\
+    	\cdots \ar[r] &
+    		0 \ar[r] &
+    		0 \ar[r] &
+    		N
+    \end{tikzcd}
+    \qquad \text{and} \qquad
+    \begin{tikzcd}
+    	\cdots \ar[r] &
+    		E_2 \ar[r] \ar[d] &
+    		E_1 \ar[r] \ar[d] &
+    		E_0 \ar[d, "\eps_M"] \\
+    	\cdots \ar[r] &
+    		0 \ar[r] &
+    		0 \ar[r] &
+    		M
+    \end{tikzcd}
+  \]
+  be two free resolutions of \(N\) and \(M\) respectively.
+  Then any \(R\)-module map \(f \colon N \to M\) lifts to
+  a chain map \(f_* \colon F_* \to E_*\).
+  Furthermore, \(f_*\) is unique up to chain homotopy.
+\end{theorem}
+
+\begin{example}
+  Let \(R = \ZZ\), \(N = \ZZ/2\ZZ\), and \(M = \ZZ/6\ZZ\).
+  Consider \(f \colon \ZZ/2\ZZ \to \ZZ/6\ZZ\) mapping \(1 \mapsto 3\).
+  We have the free resolutions with the maps
+  \[
+    \begin{tikzcd}[row sep=small,
+                   column sep=small,
+                   background color=green!6]
+    	F_* = \Big( \cdots \ar[rr] &&
+    		0 \ar[rr] \ar[ld] &&
+    		\ZZ \ar[rr, "2"] \ar[ld, "1"'] &&
+    		\ZZ \ar[rr] \ar[ld, "3"'] \ar[dd] &&
+    		0 \ar[rr] \ar[ld] &&
+    		\cdots \Big) \\
+    	E_* = \Big( \cdots \ar[r] &
+    		0 \ar[rr] &&
+    		\ZZ \ar[rr, "6"'] &&
+    		\ZZ \ar[rr, crossing over] \ar[d] &&
+    		0 \ar[rr] &&
+    		\cdots \Big) \\
+    	&& && & \ZZ/6\ZZ & \ZZ/2\ZZ \ar[l, "f"']
+    \end{tikzcd}
+  \]
+  This is a chain map \(f_*\), where
+  \[
+    \begin{tikzcd}[row sep=tiny]
+      \mathllap{H_0(f_*) \colon} H_0(F_*) \ar[r] \ar[d, symbol=\iso] &
+        H_0(E_*) \ar[d, symbol=\iso] \\
+        \ZZ/2\ZZ \ar[r, "f"] & \ZZ/6\ZZ
+    \end{tikzcd}
+  \]
+\end{example}
+
+This theorem says that if we want to understand maps between modules,
+it suffices to understand the maps between their free resolutions
+up to chain homotopy.
+In particular, they contain the same data,
+and the map between the modules can be recovered by taking \(H_0\).
+
+\begin{proof*}{Sketch}
+  We can build up a map between the free resolutions inductively,
+  checking at every stage that there is only one choice up to chain homotopy.
+  To start producing a chain map, if we have
+  \[
+    \begin{tikzcd}
+      F_0 \arrow[d, dashed, "f_0"] \arrow[r, "\eps_N"] &
+        N \arrow[d, "f"] \\
+      E_0 \arrow[r, "\eps_M"] &
+        M
+    \end{tikzcd}
+  \]
+  we want to produce the dashed \(f_0\) map.
+  Since \(F_0\) is free, say on \(S_0\), for each \(s_0 \in S_0\),
+  we can define \(f_0(s_0)\) to be any element in \(E_0\) such that
+  \[
+    \eps_M(f_0 s_0) = f (\eps_N s_0).
+  \]
+  This is possible because \(\eps_M\) is surjective,
+  because \(M\) is the homology of \(E_*\),
+  which means \(M\) is the quotient of
+  \(E_0\) mod the image of the \(E_1 \to E_0\) map.
+  
+  This gives the diagram
+  \[
+    \begin{tikzcd}
+      \ker \eps_M \arrow[d, "g_0"] \arrow[r] &
+      F_0 \arrow[d, "f_0"] \arrow[r, "\eps_N"] &
+        N \arrow[d, "f"] \\
+      \ker \eps_N \arrow[r] &
+      E_0 \arrow[r, "\eps_M"'] &
+        M
+    \end{tikzcd}
+  \]
+  where the map \(g_0\) is unique because \(\ker \eps_M \to F_0\)
+  and \(\ker \eps_N \to E_0\) are just projections,
+  so \(f_0\) determines \(g_0\).
+
+  Now we wish to produce the dashed map in the diagram
+  \[
+    \begin{tikzcd}
+      F_1 \ar[r] \ar[d, dashed, "f_1"] &
+      \ker \eps_M \arrow[d, "g_0"] \arrow[r] &
+      F_0 \arrow[d, "f_0"] \arrow[r, "\eps_N"] &
+        N \arrow[d, "f"] \\
+      E_1 \ar[r] &
+      \ker \eps_N \arrow[r] &
+      E_0 \arrow[r, "\eps_M"'] &
+        M
+    \end{tikzcd}
+  \]
+  However, by exactness of the free resolutions,
+  we know that the \(F_1 \to \ker \eps_N\) and \(E_1 \to \ker \eps_M\) maps
+  are surjective, so we can apply the same argument as before.
+\end{proof*}
+
+\begin{adhoctheorem}{Definition Sketch}
+  Let \(R\) be a commutative ring, and \(\cchRmod\) be the category
+  of chain complexes of \(R\)-modules.
+  The \vocab{derived category} of \(R\), denoted \(\der(R)\),
+  is the category obtained from \(\cchRmod\) by formally inverting
+  all quasi-isomorphisms.
+
+  In other words, the objects of \(\der(R)\) are the objects of \(\cchRmod\),
+  but there are many more morphisms than just chain maps.
+  In particular, if \(f_* \colon C_* \to D_*\) is a chain map,
+  then there is a formal inverse \(g \colon D_* \to C_*\) in \(\der(R)\).
+\end{adhoctheorem}
+The formal construction of \(\der(R)\) is beyond the scope of the class
+because there are set-theoretic technicalities.
+
+In algebraic topology, we don't actually care about \(\cchRmod\).
+We only care about \(\der(R)\).
+
+\begin{example}
+  In \(\der(R)\), every object is isomorphic to
+  a chain complex of free modules.
+  Free resolutions are an example of this.
+\end{example}
+
+We will state facts about \(\der(R)\) and then
+prove consequences of these facts that can be stated
+without reference to \(\der(R)\).
+The reason we do so is because it gives motivation for the statements
+and their proofs.
+
+\begin{example}[Tensor products in \(\der(R)\)]
+  If \(C_*\) and \(D_*\) are two chain complexes,
+  we define the \vocab{derived tensor product}
+  \(C_* \otimes^{\mathbb L} D_*\) as follows:
+  \begin{enumerate}[nosep]
+    \item We replace \(C_*\) and \(D_*\) by quasi-isomorphic chain complexes
+          of free modules \(C_*'\) and \(D_*'\).
+    \item Take \(C_*' \otimes_R D_*'\).
+    \item The result is well defined up to quasi-isomorphism
+  \end{enumerate}
+\end{example}
+
+
+
+
+
+
+
+
+
+
+\end{document}

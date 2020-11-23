@@ -1,0 +1,196 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{September 09, 2020}
+Note that if \(X \to Y\) is a continuous map of topological spaces,
+and \(\sigma \colon \Delta^n \to X\) is a continuous function,
+then the composition of them \(\Delta^n \to X \to Y\) is also continuous.
+Therefore, a map \(X \to Y\) induces a map \(\Sing_n(X) \to \Sing_n(Y)\).
+
+\section{Category theory}
+\begin{definition}
+  A \vocab{category} \(\mathcal C\) consists of:
+  \begin{itemize}[nosep]
+    \item A class \(\Obj C\) of \vocab{objects} in \(\mathcal C\).
+    \item For every pair of objects \(X, Y \in \Obj \mathcal C\),
+      a set of \vocab{morphisms} \(\Hom_{\mathcal C}(X, Y)\).
+    \item For every object \(X \in \Obj \mathcal C\),
+      an identity morphism \(1_X \in \Hom_{\mathcal C}(X, X)\).
+    \item For every triple of objects \(X, Y, Z \in \Obj \mathcal C\),
+      a composition operation
+      \[
+        \Hom_{\mathcal C}(X, Y) \times \Hom_{\mathcal C}(Y, Z)
+        \to
+        \Hom_{\mathcal C}(X, Z)
+      \]
+      written \((f, g) \mapsto g \circ f\).
+  \end{itemize}
+  These data are required to satisfy two properties:
+  \begin{itemize}[nosep]
+    \item \(1_Y \circ f = f\) for all \(f \in \Hom_{\mathcal C}(X, Y)\) and
+      \(f \circ 1_Y = f\) for all \(f \in \Hom_{\mathcal C}(Y, X)\).
+    \item Composition is associative, i.e.
+      \[
+        (h \circ g) \circ f = h \circ (g \circ f)
+      \]
+      whenever these operations are defined.
+  \end{itemize}
+\end{definition}
+
+Note that we say that \(\Obj C\) is a class instead of a set to prevent
+logical paradoxes, such as talking about the set of all sets.
+We can just think about these as sets, and our intuition would
+work perfectly well.
+
+\begin{example}
+  \begin{itemize}[nosep]
+    \item \(\cSet\) is the category of sets.
+    \(\Obj(\cSet)\) is the class of all sets and morphisms are functions:
+    if \(X, Y\) are two sets, then \(\Hom_{\cSet}(X, Y)\) is
+    the set of all functions \(X \to Y\).
+
+    \item \(\cAb\) is the category of abelian groups.
+    \(\Hom_{\cAb}(A, B)\) refers to the set of all group homomorphisms
+    \(A \to B\).
+
+    \item \(\cat{Vect_\RR}\) is the category of real vector spaces.
+    Morphisms are linear transformations.
+
+    \item \(\cTop\) is the category of topological spaces.
+    \(\Hom_{\cTop}(X, Y)\) is the set of continuous maps \(X \to Y\).
+  \end{itemize}
+\end{example}
+
+A note on notation: If \(\mathcal C\) is a category, sometimes we say
+\(X \in \mathcal C\) to mean \(X \in \Obj C\) and
+\(f \colon X \to Y\) to mean \(f \in \Hom_{\mathcal C}(X, Y)\).
+We also may sometimes say map instead of morphism.
+
+\begin{definition}
+  A morphism \(f \colon X \to Y\) in a category \(\mathcal C\) is called an
+  \vocab{isomorphism} if there exists a map \(g \colon Y \to X\) such that
+  \[
+    g \circ f = 1_X, \qquad \text{and} \qquad f \circ g = 1_Y.
+  \]
+\end{definition}
+
+\begin{example}
+  A morphism in \(\cSet\) is an isomorphism if and only if
+  it is a bijection.
+
+  A morphism in \(\cAb\) is an isomorphism if and only if
+  it is a group isomorphism.
+
+  A morphism in \(\cTop\) is the same thing as a homeomorphism.
+\end{example}
+
+\begin{proposition}
+  If \(f \colon X \to Y\) is an isomorphism in a category \(\mathcal C\),
+  then the inverse \(g \colon Y \to X\) is unique.
+\end{proposition}
+\begin{proof}
+  Suppose \(g, g' \colon Y \to X\) are two inverses of \(f \colon X \to Y\).
+  Then
+  \[
+    g = g \circ 1_Y = g \circ (f \circ g') =
+    (g \circ f) \circ g' = 1_X \circ g' = g'. \qedhere
+  \]
+\end{proof}
+
+\begin{definition}
+  Given categories \(\mathcal C, \mathcal D\), a \vocab{functor}
+  \(F \colon \mathcal C \to \mathcal D\) consists of:
+  \begin{itemize}[nosep]
+    \item An assignment \(F \colon \Obj \mathcal C \to \Obj \mathcal D\), and
+    \item for all \(X, Y \in \Obj \mathcal C\), a function
+      \[
+        F \colon \Hom_{\mathcal C}(X, Y) \to \Hom_{\mathcal D}(F(X), F(Y)).
+      \]
+  \end{itemize}
+  These are required to satisfy the following two properties:
+  \begin{itemize}[nosep]
+    \item For all \(X \in \Obj \mathcal C\), \(F(1_X) = 1_{F(X)}\).
+    \item For all composable pairs of morphisms \(f, g\) in \(\mathcal C\),
+    \[
+      F(g \circ f) = F(g) \circ F(f).
+    \]
+  \end{itemize}
+\end{definition}
+
+\begin{example}
+  For each \(n \geq 0\), there are the functors
+  \begin{align*}
+    \Sing_n \colon& \cTop \to \cSet \\
+      & X \to \set{\sigma \colon \Delta^n \to X} \\
+    S_n \colon& \cTop \to \cat{Ab}.
+  \end{align*}
+\end{example}
+
+There is a huge category \(\cCat\) of categories. In particular,
+the objects of \(\cCat\) are categories, and the morphisms are functors.
+Warning: If \(\mathcal C, \mathcal D\) are two categories, then
+\(\Hom_{\cCat}(\mathcal C, \mathcal D)\) might be a class and not a set.
+In particular, we can compose functors.
+
+\begin{example}
+  There is a functor
+  \[
+    \operatorname{Free} \colon \cSet \to \cat{Ab}
+  \]
+  that maps a set to the free abelian group generated by the set.
+  In particular,
+  \(S_n = \operatorname{Free} \circ \Sing_n \colon \cTop \to \cat{Ab}\).
+\end{example}
+
+If \(f \colon X \to Y\) is a map in \(\cTop\), then there is a diagram
+for each \(0 \leq i \leq n\)
+\[
+  \begin{tikzcd}
+    \Sing_n(X)\arrow[r, "d_i"]\arrow[d, "\Sing_n(f)", swap] &
+      \Sing_{n-1}(X)\arrow[d, "\Sing_{n-1}(f)"] \\
+    \Sing_n(Y)\arrow[r, "d_i"] & \Sing_{n-1}(Y)
+  \end{tikzcd}
+\]
+that commutes. In category theory, one can generalize this kind of diagram.
+
+\begin{definition}
+  Let \(F, G \colon \mathcal C \to \mathcal D\) be two functors.
+  A \vocab{natural transformation} \(\Theta \colon F \to G\) consists of
+  maps \(\Theta_X \colon F(X) \to G(X)\) for each \(X \in \mathcal C\)
+  such that for all \(f \colon X \to Y\), the following diagram commutes:
+  \[
+    \begin{tikzcd}
+      F(X)\arrow[r, "\Theta_X"]\arrow[d, "F(f)", swap] &
+        G(X)\arrow[d, "G(f)"] \\
+      F(Y)\arrow[r, "\Theta_Y"] &
+        G(Y)
+    \end{tikzcd}
+  \]
+\end{definition}
+
+\begin{example}
+  Our previous example becomes the following:
+  Suppose \(n \geq 1\) and \(0 \leq i \leq n\). Then there is
+  a natural transformation
+  \[
+    d_i \colon \Sing_n \to \Sing_{n - 1},
+  \]
+  where \(\Sing_n, \Sing_{n-1}\) are functors \(\cTop \to \cSet\).
+\end{example}
+
+\begin{definition}
+  A natural transformation \(\Theta \colon F \to G\) is called a
+  \vocab{natural isomorphism} if each map \(\Theta_X\) is an isomorphism
+  for all \(X \in \Obj \mathcal C\).
+\end{definition}
+
+Suppose \(\mathcal C, \mathcal D\) are categories and
+\(\Obj \mathcal C\) is a set (as opposed to a class).
+Then there is another category \(\cat{Fun}(\mathcal C, \mathcal D)\)
+of functors where the morphisms are natural transformations of functors.
+Note that if \(\Obj \mathcal C\) is not a set, then some sets of morphisms
+would be a class instead of a set, while the definition requires a set.
+
+
+\end{document}

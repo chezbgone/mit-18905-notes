@@ -1,0 +1,227 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{September 25, 2020}
+
+Let's give some more intuition about the dimension-lowering connecting map
+in the long exact sequence.
+
+Let \(A \subseteq X\) be a pair of spaces such that
+\[
+  H_m(A, X) \iso H_m(X/A, *) \iso H_m(X/A)
+\]
+for \(m > 0\). We have the long exact sequence
+\[
+  \begin{tikzcd}
+  	\cdots \ar[r] &
+  	H_m(A) \ar[r] &
+  	H_m(X) \ar[r] &
+  	H_m(X, A) \iso H_m(X/A) \ar[r, "\partial"] &
+  	H_{m-1}(A) \ar[r] &
+  	H_{m-1}(X) \ar[r] &
+  	\cdots
+  \end{tikzcd}
+\]
+\begin{question}
+  What is the geometric intuition of \(\partial\)?
+\end{question}
+Consider some class \(c \in S_m(X)\) not in \(Z_m(X)\),
+i.e.\ \(\partial c \neq 0\).
+Suppose that the image of \(c\) under the quotient map
+\(S_m(X) \to S_m(X/A)\) is a cycle. Then \(\partial c \in S_{m-1}(X)\)
+is actually in the image of \(S_{m-1}(A) \hookrightarrow S_{m-1}(X)\),
+and \(\partial c \in Z_{m-1}(A)\).
+Therefore, \(\partial c\) represents and element of \(H_{m-1}(A)\).
+
+\begin{example}
+  Suppose \(X = [0, 1]\) and \(A = \set{0, 1}\). Then \(X/A \iso S^1\).
+  Consider \(\sigma \colon \Delta^1 \to X \in S_1(X)\) where
+  \(\sigma \colon e_0 \mapsto 0, e_1 \mapsto 1\).
+
+  In \(S_*(X)\), \(\partial \sigma = \set{1} - \set{0} \neq 0 \in S_0(X)\).
+  However, under the quotient \(X \to X/A\), \(\sigma\) is sent to an element
+  in \(Z_1(X/A)\). Therefore, \(\sigma\) represents a class in
+  \(H_1(X, A) \iso H_1(S^1)\), but its boundary
+  \(\partial \sigma = \set{1} - \set{0}\) is a class in \(H_0(A)\).
+  Symbolically,
+  \begin{align*}
+    \cdots \to H_1(S^1) &\to H_0(\set{0, 1}) \to \cdots \\[-1ex]
+    \ZZ &\to \ZZ \oplus \ZZ \\[-1ex]
+    \sigma &\to (-1, 1).
+  \end{align*}
+\end{example}
+
+\section{Excision}
+Recall that there is a chain homotopy \(T\) from \(\$\) to \(1_{S_*(X)}\).
+\begin{corollary}
+  There is a natural chain homotopy \(T_k\) from \(\$^k\) to \(1_{S_*(X)}\).
+\end{corollary}
+\begin{corollary}
+  If \(\sigma \in Z_n(X)\), then \(\$^k \sigma\) is equivalent to \(\sigma\)
+  modulo boundaries.
+\end{corollary}
+
+We will now prove the locality principle.
+\begin{theorem*}[\hyperref[thm:locality]{Locality principle}]
+  Let \(\mathcal A\) be a cover of \(X\).
+  Then \(S_*^{\mathcal A}(X) \subseteq S_*(X)\)
+  induces an isomorphism \(H_n^{\mathcal A}(X) \leftrightarrow H_n(X)\).
+\end{theorem*}
+\begin{proof}
+  First we will show surjectivity. Suppose we have some \(c \in Z_n(X)\).
+  We want to find an \(\mathcal A\)-small element of \(Z_n(X)\) equivalent
+  to \(c\) modulo boundaries. We just use \(\$^k c\) for a sufficiently large
+  \(k\), and the Lebesgue covering lemma tells us this works.
+
+  To show injectivity, we can show that the kernel is \(0\).
+  In particular, suppose \(c \in Z_n^{\mathcal A}(X)\) is
+  an \(\mathcal A\)-small cycle, and \(c = \partial b\) for some
+  \(b \in S_{n+1}(X)\). We wish to find some \(b' \in S_{n+1}^{\mathcal A}(X)\)
+  such that \(\partial b' = c\). We can select \(k\) such that \(\$^k b\) is
+  \(\mathcal A\)-small. Note that
+  \begin{align*}
+    \partial(\$^k b) - c &= \partial ((\$^k - 1_{S_{n+1}(X)})(b)) \\
+      &= \partial((\partial T_k + T_k \partial) b) \\
+      &= \partial \partial T_k b + \partial (T_k \partial b) \\
+      &= 0 + \partial (T_k c).
+  \end{align*}
+  Rearranging,
+  \[
+    c = \partial(\$^k b - T_k c).
+  \]
+  We finish by the following:
+  \begin{lemma*}
+    If \(c \in S_n(X)\) is \(\mathcal A\)-small, then
+    \(T_k c \in S_{n+1}(X)\) is also \(\mathcal A\)-small.
+  \end{lemma*}
+  \begin{proof*}{Lemma proof}
+    Without loss of generality assume that
+    \(c = \sigma\) is an \(\mathcal A\)-small \(n\)-simplex.
+    We can represent it as a composite
+    \(\Delta^n \overset{\sigma'}\to A \overset{i}\to X\)
+    where \(A \in \mathcal A\), where
+      \(\sigma'\) denotes the map \(\Delta^n \to A\) and
+      \(i\) is the inclusion of \(A\) into \(X\).
+    Note that \(\sigma = S_n(i)(\sigma')\), so
+    \(T_k \sigma = (S_{n+1}(i))(T_k \sigma')\)
+    by the naturailty of \(T_k\).
+    We know that \(T_k \sigma\) is the image of
+    some \(T_k \sigma' \in S_{n+1}(A)\), so
+    \(T_k \sigma\) is \(\mathcal A\)-small.
+  \end{proof*}
+  This concludes the proof of the locality principle.
+\end{proof}
+
+Now we can prove excision.
+\begin{theorem*}[Excision]
+  Suppose \(U \subseteq A \subseteq X\) is excisive, i.e.\
+  \(\ol U \subseteq \Int A\). Then the map \((X - U, A - U) \to (X, A)\)
+  induces homology isomorphisms.
+\end{theorem*}
+\begin{proof}
+  Note that the condition \(\ol U \subseteq \Int A\) is equivalent to
+  \[
+    \Int A \union \Int (X - U) = X.
+  \]
+  Let \(B \coloneqq X - U\). Then \(\set{A, B}\) is a cover of \(X\).
+  We can rewrite \((X - U, A - U) = (B, A \intersect B)\), so we want to show
+  that the inclusion
+  \[
+    S_*(B, A \intersect B) \hookrightarrow S_*(X, A)
+  \]
+  induces homology isomorphisms.
+  Note the diagram of a map of short exact sequences of chain complexes
+  \[
+    \begin{tikzcd}
+    	0 \ar[r]                                                      &
+        S_*(A) \ar[r] \ar[d, equal]                                 &
+        S_*^{\mathcal A}(X) \ar[r], \ar[d, hook]                    &
+        S_*^{\mathcal A}(X)/S_*^{\mathcal A}(A) \ar[r] \ar[d, hook] &
+        0                                                           \\
+    	0 \ar[r]                                                      &
+        S_*(A) \ar[r]                                               &
+        S_*(X) \ar[r]                                               &
+        \underset{\mathclap{= S_*(X)/S_*(A)}}{S_*(X, A)} \ar[r]     &
+        0
+    \end{tikzcd}
+  \]
+  We can obtain a map of long exact sequences of homology groups
+  \[
+    \begin{tikzcd}
+    	\cdots \ar[r]                                               &
+    	H_m(A) \ar[r] \ar[d]                                        &
+    	H_m^{\mathcal A}(X) \ar[r] \ar[d]                           &
+    	H_m(S_*^{\mathcal A}(X) / S_*(X)) \ar[r, "\partial"] \ar[d] &
+    	H_{m-1}(A) \ar[r] \ar[d]                                    &
+    	H_{m-1}^{\mathcal A}(X) \ar[r] \ar[d]                       &
+    	\cdots                                                      \\
+    	\cdots \ar[r]                                               &
+    	H_m(A) \ar[r]                                               &
+    	H_m(X) \ar[r]                                               &
+    	H_m(S_*(X) / S_*(X)) \ar[r, "\partial"]                     &
+    	H_{m-1}(A) \ar[r]                                           &
+    	H_{m-1}^{\mathcal A}(X) \ar[r]                              &
+    	\cdots
+    \end{tikzcd}
+  \]
+  By locality, the \(H_m^{\mathcal A}(X) \to H_m(X)\) and
+  \(H_{m-1}^{\mathcal A}(X) \to H_{m-1}(X)\) maps are isomorphisms.
+  By the five-lemma,
+  \[
+    H_m(S_*^{\mathcal A}(X) / S_*(X)) \to H_m(X, A)
+  \]
+  is also an isomorphism. Therefore,
+  \(S_*^{\mathcal A}(X) / S_*(A) \to S_*(X) / S_*(A)\)
+  induces homology isomorphisms \(H_m(S_*(X)/S_*(A)) \iso H_m(X, A)\).
+  Then observe
+  \begin{align*}
+    S_n^{\mathcal A}(X) / S_n(A) &= \frac{S_n(A) + S_n(B)}{S_n(A)} \\
+      &= \frac{S_n(B)}{S_n(A) \intersect S_n(B)} \\
+      &= \frac{S_n(B)}{S_n(A \intersect B)} \\
+      &= \frac{S_n(X - U)}{S_n(A - U)}. \pog
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  Let \((X, A)\) be a pair of spaces and let \(B \subseteq X\) be a subspace
+  such that
+  \begin{enumerate}[nosep]
+    \item \(\overline A \subseteq \Int B\) and
+    \item \(A \to B\) is a deformation retract.\label{item-def-retract}
+  \end{enumerate}
+  Then for all \(m\), \(H_m(X, A) \to H_m(X/A, *)\) is an isomorphism.
+\end{corollary}
+\begin{proof}
+  Consider the commutative diagram in \(\cTop_2\)
+  \[
+    \begin{tikzcd}
+      (X, A) \arrow[r, "i"] \arrow[d] &
+        (X, B) \arrow[r, leftarrow, "j"] \arrow[d] &
+        (X - A, B - A) \arrow[d, "k"] \\
+      (X/A, *) \arrow[r, "\ol i"] &
+        (X/A, B/A) \arrow[r, leftarrow, "\ol j"] &
+        (X/A - *, B/A - *)
+    \end{tikzcd}
+  \]
+  We can check that each labeled arrow induces a homology isomorphism:
+  \begin{itemize}
+    \item \(k\) is a homeomorphism in \(\cTop_2\).
+    \item \(j\) is an excision
+    \item \(i\) is a homology isomorphism by \cref{item-def-retract} and
+      the homotopy invariance of homology.
+    \item \(\ol j\) is an excision.
+    \item \(\ol i\) is also a deformation detract, obtained from
+    the given retract \(B \times I \to B\) by quotienting out by \(A\).
+  \end{itemize}
+  Since all of the maps along the edge induce an homology isomorphism,
+  the map on the left also induces a homology isomorphism.
+\end{proof}
+
+This concludes the proof of all of the Eilenberg-Steenrod axioms.
+
+
+
+
+
+\end{document}
