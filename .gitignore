@@ -1,0 +1,8 @@
+.notes_config
+*.log
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.toc
+*.pdf

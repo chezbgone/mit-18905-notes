@@ -1,0 +1,240 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{October 28, 2020}
+
+\begin{question}
+  What is the homology of a tensor product of chain complexes?
+\end{question}
+
+\begin{theorem}
+  Suppose that \(C_*\) and \(D_*\) are chain complexes of \(\ZZ\)-modules
+  and suppose \(C_*\) is a complex of free \(\ZZ\)-modules. Then
+  \[
+    H_n(C_* \otimes_\ZZ D_*)
+      = \parens*{\bigoplus_{p + q = n} H_p(C_*) \otimes_\ZZ H_q(D_*)} \oplus
+        \parens*{\bigoplus_{p + q = n-1} \Tor_1^{\ZZ}(H_p(C_*), H_q(D_*))}.
+  \]
+\end{theorem}
+
+Note the similarity between this theorem and the universal coefficient theorem.
+We have a guess for the tensor product in the first term,
+and then correction terms described by the \(\Tor\) functor.
+In fact, the universal coefficient theorem is a special case of this theorem,
+where \(D_*\) is concentrated in degree \(0\).
+
+\begin{proof*}{Proof idea 1}
+  Note that \(C_* \otimes D_*\) calculates
+  \(C_* \otimes^{\mathbb L} D_*\) in \(\der(\ZZ)\).
+  Its homology will not change if we replace \(D_*\) with
+  any chain complex isomorphic to \(D_*\) in \(\der(\ZZ)\).
+  In particular, replace \(D_*\) with the chain complex \(D_*'\)
+  such that \((D_*')_q = H_q(D_*)\) and all of the maps are \(0\) maps.
+  Note that \(D_*'\) is a direct sum of
+  chain complexes concentrated in single degrees,
+  so we can reduce the theorem to the universal coefficient theorem.
+\end{proof*}
+
+However, we may want to give a proof that does not use
+the derived category, since we have not talked about those rigorously.
+This proof will still however, have the same spirit, since we will
+reduce the proof to the universal coefficient theorem.
+\begin{proof*}{Proof idea 2}
+  Consider the new chain complex \(Z(D_*)\) where
+  \[
+    Z(D_*)_n = Z_n(D_*) = \ker(\partial \colon D_n \to D_{n-1})
+  \]
+  and all \(\partial\) maps in \(Z(D_*)\) are \(0\).
+  Note that the is an inclusion of chain complexes \(Z(D_*) \to D_*\).
+  \(Z(D_*)\) is a direct sum of chain complexes concentrated in single degrees.
+  
+  Note that the quotient chain complex \(D_*/Z(D_*)\) also has boundary maps
+  that are the zero maps.
+  Therefore, \(D_* / Z(D_*)\) is also a direct sum of chain complexes
+  concentrated in single degrees.
+
+  Consider the short exact sequence of chain complexes
+  \[
+    \begin{tikzcd}
+      0 \arrow[r] &
+      C_* \otimes_\ZZ Z(D_*) \arrow[r] &
+      C_* \otimes_\ZZ D_* \arrow[r] &
+      C_* \otimes_\ZZ D_*/Z(D_*) \arrow[r] &
+      0
+    \end{tikzcd}
+  \]
+  This gives the long exact sequence in homology from the snake lemma
+  to write \(H_n(C_* \otimes_\ZZ D_*)\) in terms of
+  \(H_n(C_* \otimes_\ZZ Z(D_*))\) and \(H_{n-1}(C_* \otimes_\ZZ D_*/Z(D_*))\).
+  This reduces to the universal coefficient theorem.
+\end{proof*}
+
+\begin{remark}
+  This extends to all PIDs, not just \(\ZZ\).
+  Suppose that \(R\) is a PID and
+  \(C_*\) and \(D_*\) are chain complexes of \(R\)-modules
+  such that \(C_*\) is a chain complex of free \(R\)-modules.
+  Then
+  \[
+    H_n(C_* \otimes_R D_*) \iso
+      \parens*{\bigoplus_{p + q = n} H_p(C_*) \otimes_R H_q(D_*)} \oplus
+      \parens*{\bigoplus_{p + q = n-1} \Tor_1^R(H_p(C_*), H_q(D_*))}.
+  \]
+\end{remark}
+The hypothesis that \(R\) has to be a PID comes from how we needed a
+\(2\)-term free resolution of \(M\) in the proof of
+the universal coefficient theorem.
+
+In particular, if \(R\) is a field, then
+\[
+  H_n(C_* \otimes_R D_*) \iso \bigoplus_{p+q = n} H_p(C_*) \otimes_R H_q(D_*).
+\]
+This is because all free resolutions over a field are not interesting,
+so all of the \(\Tor\) functors vanish.
+
+\begin{theorem}[Eilenberg-Zilber]<eilenberg-zilber>
+  Suppose \(X\) and \(Y\) are topological spaces
+  and \(R\) is a commutative ring.
+  Then \(S_*(X \times Y; R)\) is quasi-isomorphic to
+  \(S_*(X; R) \otimes_R S_*(Y; R)\).
+\end{theorem}
+\begin{proof*}{Proof idea 1}
+  If \(X\) and \(Y\) are CW complexes,
+  then we can examine the CW structure on \(X \times Y\).
+  Rather than developing the theory of product CW structures,
+  we will directly prove the theorem instead,
+  since not all topological spaces have a natural CW structure.
+\end{proof*}
+
+Before we prove the theorem, let's do some examples.
+\begin{example}
+  Let's compute the groups \(H_q(\RP^2 \times \RP^2; \FF_2)\).
+  Recall that we have
+  \[
+    H_q(\RP^2; \FF_2) = \begin{cases*}
+      \FF_2 & \(q = 0, 1, 2\) \\[-1ex]
+      0 & otherwise.
+    \end{cases*}
+  \]
+  Since \(\FF_2\) is a field, this means
+  \begin{align*}
+    H_0(\RP^2 \times \RP^2; \FF_2)
+      &\iso \bigoplus_{p + q = 0} H_p(\RP^2; \FF_2) \otimes_{\FF_2}
+                                  H_q(\RP^2; \FF_2) \\
+      &\iso H_0(\RP^2; \FF_2) \otimes_{\FF_2} H_0(\RP^2; \FF_2) \\
+      &\iso \FF_2 \otimes_{\FF_2} \FF_2 \\
+      &\iso \FF_2 \\
+    %
+    H_1(\RP^2 \times \RP^2; \FF_2)
+      &\iso \bigoplus_{p + q = 1} H_p(\RP^2; \FF_2) \otimes_{\FF_2}
+                                  H_q(\RP^2; \FF_2) \\
+      &\iso H_0(\RP^2; \FF_2) \otimes_{\FF_2} H_1(\RP^2; \FF_2) \oplus
+            H_1(\RP^2; \FF_2) \otimes_{\FF_2} H_0(\RP^2; \FF_2) \\
+      &\iso \FF_2 \otimes_{\FF_2} \FF_2 \oplus \FF_2 \otimes_{\FF_2} \FF_2 \\
+    %
+    H_2(\RP^2 \times \RP^2; \FF_2)
+      &\iso (H_0 \otimes H_2) \oplus
+            (H_1 \otimes H_1) \oplus
+            (H_2 \otimes H_0) \\
+      &\iso \FF_2 \oplus \FF_2 \oplus \FF_2 \\
+    %
+    H_3(\RP^2 \times \RP^2; \FF_2)
+      &\iso (H_0 \otimes H_3) \oplus
+            (H_1 \otimes H_2) \oplus
+            (H_2 \otimes H_1) \oplus
+            (H_3 \otimes H_0) \\
+      &\iso (\FF_2 \otimes 0    ) \oplus
+            (\FF_2 \otimes \FF_2) \oplus
+            (\FF_2 \otimes \FF_2) \oplus
+            (0     \otimes \FF_2) \\
+      &\iso \FF_2 \oplus \FF_2 \\
+    %
+    H_4(\RP^2 \times \RP^2; \FF_4)
+      &\iso (H_0 \otimes H_4) \oplus
+            (H_1 \otimes H_3) \oplus
+            (H_2 \otimes H_2) \oplus
+            (H_3 \otimes H_1) \oplus
+            (H_4 \otimes H_0) \\
+      &\iso (\FF_2 \otimes 0    ) \oplus
+            (\FF_2 \otimes 0    ) \oplus
+            (\FF_2 \otimes \FF_2) \oplus
+            (0     \otimes \FF_2) \oplus
+            (0     \otimes \FF_2) \\
+      &\iso \FF_2.
+  \end{align*}
+  This gives
+  \[
+    H_q(\RP^2 \times \RP^2; \FF_2) \iso \begin{cases}
+      \FF_2                           & q = 0            \\[-1ex]
+      \FF_2 \oplus \FF_2              & q = 1            \\[-1ex]
+      \FF_2 \oplus \FF_2 \oplus \FF_2 & q = 2            \\[-1ex]
+      \FF_2 \oplus \FF_2              & q = 3            \\[-1ex]
+      \FF_2                           & q = 4            \\[-1ex]
+      0                               & \text{otherwise.}
+    \end{cases}
+  \]
+  One thing to note is that these groups are symmetric around \(q = 2\).
+  This is called Poincar\'e duality, and we will prove it later.
+\end{example}
+
+\begin{remark}
+  There is a diagonal map
+  \begin{align*}
+    \Delta \colon \RP^2 &\to \RP^2 \times \RP^2 \\[-1ex]
+      x &\mapsto (x, x)
+  \end{align*}
+  where
+  \begin{align*}
+    H_2(\Delta) \colon H_2(\RP^2; \FF_2) &\to
+                        H_2(\RP^2 \times \RP^2; \FF_2) \\[-1ex]
+      \FF_2 &\to \FF_2 \oplus \FF_2 \oplus \FF_2.
+  \end{align*}
+  We would like the figure out how to describe this map.
+  We will do this later in the course.
+\end{remark}
+
+To prove Eilenberg-Zilber (\cref{thm:eilenberg-zilber}),
+we want to show \(S_*(X \times Y; R)\) is quasi-isomorphic to
+\(S_*(X; R) \times_R S_*(Y, R)\).
+We will show that the following map is the quasi-isomorphism.
+
+\begin{definition}
+  The \vocab{Alexander-Whitney map}
+  \[
+    A \colon S_*(X \times Y; R) \to S_*(X; R) \times S_*(Y; R)
+  \]
+  is a chain map defined as follows:
+  For each integer \(n\) and \(p + q = n\), let
+  \[
+    A \colon S_n(X \times Y; R) \to S_p(X; R) \otimes S_q(Y; R).
+  \]
+  It suffices to define \(A(\sigma)\) for \(\sigma \in \Sing_n(X \times Y)\).
+  Note that \(\sigma \colon \Delta^n \to X \times Y\) is determined
+  by two maps \(\alpha \colon \Delta^n \to X\)
+  and \(\beta \colon \Delta^n \to Y\).
+  Let
+  \[
+    A(\sigma) = (\alpha {\restriction}_{\Delta^p}) \otimes
+                (\beta {\restriction}_{\Delta^q})
+  \]
+  where the restriction to \(\Delta^p\) is given by the map
+  \begin{align*}
+    \Delta^p &\to \Delta^n \\[-1ex]
+       [e_0: e_1: \dots: e_p] &\mapsto [e_0: e_1: \dots: e_p: 0: \dots: 0]
+  \end{align*}
+  and the restriction to \(\Delta^q\) is given by the map
+  \begin{align*}
+    \Delta^q &\to \Delta^n \\[-1ex]
+       [e_0: e_1: \dots: e_q] &\mapsto [0: \dots: 0: e_0: e_1: \dots: e_q].
+  \end{align*}
+\end{definition}
+
+
+
+
+
+
+
+
+\end{document}
