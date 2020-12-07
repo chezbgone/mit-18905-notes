@@ -1,0 +1,201 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{November 18, 2020}
+
+\begin{proposition}[Problem 1 of PSET]<homology-cohomology-pairing>
+  If \(X\) is a finite type CW complex, then the map,
+  adjoint to the Kronecker pairing
+  \[
+    H^q(X; \FF_2)
+      \to \ul\Hom_{\FF_2\text{-}\cat{mod}}(H_q(X; \FF_2), \FF_2) % chktex 35
+  \]
+  is an isomorphism.
+\end{proposition}
+This is an example of a perfect pairing.
+
+\begin{definition}
+  A \vocab{perfect pairing} of two finitely generated free \(R\)-modules
+  \(V\) and \(W\) is an \(R\)-linear map
+  \[
+    V \otimes_R W \to R
+  \]
+  such that the adjoint map
+  \[
+    V \to \ul\Hom_R(W, R)
+  \]
+  is an isomorphism of \(R\) modules.
+\end{definition}
+
+\begin{definition}
+  An \(n\)-dimensional \vocab{manifold} \(M\) is a Hausdorff topological space
+  such that every point has an open neighborhood homeomorphic to \(\RR^n\).
+\end{definition}
+
+\begin{example}
+  A \(2\)-dimensional manifold is called a \vocab{surface}.
+  Examples include \(S^2\),
+                   \(T^2\),
+                   the Klein bottle \(K\),
+                   \(\RP^2\), and
+                   \(\RR^2\).
+  
+  Non-examples include \(S^2 \vee S^2\), because at the wedge point,
+  there is no open neighborhood homeomorphic to \(\RR^2\).
+
+  Examples of 3D manifolds include \(\RR^3\),
+                                   \(S^3\),
+                                   \(S^1 \times S^1 \times S^1\),
+                                   \(\RP^3\), etc.
+
+  Other manifolds include
+  \begin{itemize}[nosep]
+    \item smooth algebraic varieties over \(\RR\) or \(\CC\),
+    \item configuration spaces in physics.
+  \end{itemize}
+\end{example}
+
+\begin{fact}
+  Any compact manifold is homotopy equivalent to a finite type CW complex.
+\end{fact}
+
+
+\begin{theorem}[Poincar\'e duality]
+  Let \(M\) be a compact \(n\)-dimensional manifold.
+  Then there exists a unique class \([M] \in H_n(M; \FF_2)\)
+  called the \vocab{fundamental class} of the manifold, such that
+  for all \(p, q \in \ZZ\) such that \(p + q = n\), the map
+  \[
+    H^p(M; \FF_2) \otimes_{\FF_2} H^q(M; \FF_2) \xrightarrow{\cup}
+      H^n(M; \FF_2) \xrightarrow{\angles{{-}, [M]}} \FF_2
+  \]
+  is a perfect pairing.
+\end{theorem}
+In other words, \(H^p(M; \FF_2)\) is canonically isomorphic to
+the \(F_2\)-linear dual of \(H^q(M; \FF_2)\).
+
+\begin{example}
+  Suppose \(M\) is a compact 3D manifold with
+  \(H^0(M; \FF_2) = \FF_2 \oplus \FF_2\) and
+  \(H^1(M; \FF_2) = \FF_2 \oplus \FF_2 \oplus \FF_2\).
+  Then we can determine \emph{all} of
+  the homology and cohomology groups of \(M\) with \(\FF_2\) coefficients.
+  In particular,
+  \begin{align*}
+    H^2(M; \FF_2) &\iso \ul\Hom(H^1(M; \FF_2), \FF_2)
+                   \iso \FF_2 \oplus \FF_2 \oplus \FF_2 \\
+    H^3(M; \FF_2) &\iso \ul\Hom(H^0(M; \FF_2), \FF_2)
+                   \iso \FF_2 \oplus \FF_2,
+  \end{align*}
+  and all other cohomology groups vanish.
+  All other cohomology groups vanish, because e.g.\
+  \[
+    H^4(M; \FF_2) \iso H^{-1}(M; \FF_2)^\vee \iso 0^\vee \iso 0.
+  \]
+
+  From \cref{prop:homology-cohomology-pairing}, we have
+  \begin{align*}
+    H_0(M; \FF_2) &\iso \FF_2 \oplus \FF_2 \\
+    H_1(M; \FF_2) &\iso \FF_2 \oplus \FF_2 \oplus \FF_2 \\
+    H_2(M; \FF_2) &\iso \FF_2 \oplus \FF_2 \oplus \FF_2 \\
+    H_3(M; \FF_2) &\iso \FF_2 \oplus \FF_2,
+  \end{align*}
+  and \(H_q(M; \FF_2) \iso 0\) for \(q > 3\).
+\end{example}
+
+
+\begin{example}
+  Recall
+  \begin{align*}
+    H^*(T^2; \FF_2) &= \FF_2[x, y, z]/(xy - z, x^2, y^2, xz, yz, z^2) \\
+      &\iso \underbracket{\FF_2\fgen{1}}_{\deg 0} \oplus
+            \underbracket{\FF_2\fgen{x, y}}_{\deg 1} \oplus
+            \underbracket{\FF_2\fgen{z}}_{\deg 2}.
+  \end{align*}
+  The fundamental class of the torus is
+  an element of \(H_2(T^2; \FF_2) \iso \FF_2\fgen{\delta_z}\).
+  The fundamental class is \(\delta_z\).
+
+  By Poincar\'e duality, there is a perfect pairing
+  \[
+    P \colon H^1(T^2; \FF_2) \otimes_{\FF_2} H^1(T^2; \FF_2) \to \FF_2
+  \]
+  where
+  \begin{align*}
+    P(x \otimes y) &= \angles{xy, \delta_z}
+                    = \angles{z, \delta_z}
+                    = \delta_z(z) = 1 \\
+    P(x \otimes x) &= \angles{xx, \delta_z}
+                    = \angles{0, \delta_z}
+                    = \delta_z(0) = 0,
+  \end{align*}
+  etc.
+
+  There is another pairing
+  \[
+    P \colon H^0(T^2; \FF_2) \otimes_{\FF_2} H^2(T^2; \FF_2) \to \FF_2
+  \]
+  where
+  \[
+    P(1 \otimes z) = \angles{1z, \delta_z}
+                   = \angles{z, \delta_z}
+                   = \delta_z(z) = 1.
+  \]
+\end{example}
+
+\begin{example}
+  What is \(H^*(\RP^2; \FF_2)\)?
+  Note that \(\RP^2\) is a 2D compact manifold.
+  We can compute
+  \begin{gather*}
+    H^0(\RP^2; \FF_2) \iso \FF_2 \\
+    H^1(\RP^2; \FF_2) \iso \FF_2
+  \end{gather*}
+  because \(\RP^2\) has one path component.
+  For \(H^1\), we have to manually calculate it.
+  However, for \(H^2\), we can use Poincar\'e duality, which gives
+  \[
+    H^2(\RP^2; \FF_2) \iso H^0(\RP^2; \FF_2) \iso \FF_2.
+  \]
+  Therefore, we can write
+  \[
+    H^*(\RP^2; \FF_2) \iso \underbracket{\FF_2\fgen{1}}_{\deg 0} \oplus
+                           \underbracket{\FF_2\fgen{a}}_{\deg 1} \oplus
+                           \underbracket{\FF_2\fgen{b}}_{\deg 2}.
+  \]
+  We know that \(b^2 = ab = 0\) for degree reasons, so the only question is
+  if \(a^2 = b\) or \(a^2 = 0\).
+
+  There is a perfect pairing
+  \[
+    P \colon H^1(\RP^2; \FF_2) \otimes_{\FF_2} H^1(\RP^2; \FF_2) \to \FF_2.
+  \]
+  This map must be nontrivial in order for its adjoint to be an isomorphism.
+  Therefore, \(P(a \otimes a) = \angles{a^2, [\RP^2]} \neq 0\), so
+  \(a^2 \neq 0\), and furthermore \(a^2 = b\).
+
+  Therefore,
+  \[
+    H^*(\RP^2; \FF_2) \iso \FF_2[a, b]/(a^2 - b, ab, b^2),
+  \]
+  where \(\size a = 1\) and \(\size b = 2\).
+\end{example}
+
+\begin{remark}
+  Note that
+  \(H^*(S^2 \vee S^1; \FF_2) \iso \FF_2[a, b]/(a^2, ab, b^2)\)
+  where \(\size a = 1\) and \(\size b = 2\).
+  So the cohomology groups are the same as \(\RP^2\),
+  but the ring structure is different.
+
+  In particular, \(S^2 \vee S^1\) is not a manifold,
+  so we cannot apply Poincar\'e duality.
+\end{remark}
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,167 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{November 06, 2020}
+
+\begin{proof}[\cref{thm:cohomology-ring}]
+  We want to prove that \(H^*(X; R)\) is an
+    associative, graded-commutative, unital ring.
+  We will first make the cup product explicit.
+  An element of \(H^p(X; R)\) is represented by a class
+  \[
+    f \in S^p(X; R) = \ul\Hom_{\cAb}(S_p(X), R),
+  \]
+  where \(f\) is a \vocab{cocycle},
+  and the cohomology class represented by \(f\)
+  does not change if we add a \vocab{coboundary} to \(f\).
+  Here, cocycles and coboundaries correspond to cycles and boundaries
+  in regular homology.
+
+  Explicitly, an \(f \in S^p(X; R)\) is a function \(S_p(X) \to R\)
+  that respects addition. This can be thought of as a function
+  \(f \colon \Sing_p(X) \to R\).
+  In particular, for every \(\sigma \colon \Delta^p \to X\),
+  there is \(f(\sigma) \in R\).
+
+  Now suppose that \(f \in S^p(X; R)\) and \(g \in S^q(X; R)\)
+  are elements of the cohomology ring.
+  The cup product of \(f\) and \(g\) is the element \(fg \in S^{p+q}(X; R)\)
+  such that for each \(\sigma \colon \Delta^{p+q} \to X\), we have
+  \[
+    (fg)(\sigma) =
+      (-1)^{pq} f(\sigma{\restriction}_{\Delta^p})
+                g(\sigma{\restriction}_{\Delta^q}),
+  \]
+  where the restriction to \(\Delta^p\) is to
+  the front \(p\)-face of \(\Delta^{p+q}\), and
+  the restriction to \(\Delta^q\) is to
+  the back \(q\)-face of \(\Delta^{p+q}\).
+
+  \paragraph{Associativity}
+  Suppose \(f \in S^P(X; R)\), \(g \in S^q(X; R)\), and \(h \in S^r(X; R)\)
+  are cocycles, and \(\sigma \in \Sing_{p+q+r}(X)\) is an arbitrary simplex.
+  Then
+  \begin{align*}
+    ((fg)h)(\sigma)
+      &= (-1)^{(p+q)r} (fg)(\sigma{\restriction}_{\Delta^{p+q}})
+                         h (\sigma{\restriction}_{\Delta^r}) \\
+      &= (-1)^{(p+q)r} (-1)^{pq} f(\sigma{\restriction}_{\Delta^p})
+                                 g(\sigma{\restriction}_{\Delta^q})
+                                 h(\sigma{\restriction}_{\Delta^r}) \\
+      &= (-1)^{pr + pq + qr} f(\sigma{\restriction}_{\Delta^p})
+                             g(\sigma{\restriction}_{\Delta^q})
+                             h(\sigma{\restriction}_{\Delta^r}),
+  \end{align*}
+  where the restriction to \(\Delta^p\) is the first \(p\)-simplex,
+        the restriction to \(\Delta^q\) is the middle \(q\)-simplex, and
+        the restriction to \(\Delta^r\) is the middle \(r\)-simplex.
+  We can compare this to
+  \begin{align*}
+    (f(gh))(\sigma)
+      &= (-1)^{p(q+r)}    f(\sigma{\restriction}_{\Delta^p})
+                       (gh)(\sigma{\restriction}_{\Delta^{q+r}}) \\
+      &= (-1)^{(p+q)r}           f(\sigma{\restriction}_{\Delta^p})
+                       (-1)^{qr} g(\sigma{\restriction}_{\Delta^q})
+                                 h(\sigma{\restriction}_{\Delta^r}) \\
+      &= (-1)^{pr + pq + qr} f(\sigma{\restriction}_{\Delta^p})
+                             g(\sigma{\restriction}_{\Delta^q})
+                             h(\sigma{\restriction}_{\Delta^r}),
+  \end{align*}
+  which is the same expression.
+  Therefore, the cup product is associative.
+  
+
+  \paragraph{Unitality}
+  We claim that the unit \(1 \in H^0(X; R)\) can be represented by
+  the function \(1 \colon \Sing_0(X) \to R\),
+  mapping everything to \(1 \in R\).
+  For any cocycle \(f \in S^p(X; R)\), we have
+  \begin{align*}
+    (f \cdot 1)(\sigma)
+      &= (-1)^{p \cdot 0} f(\sigma{\restriction}_{\Delta^p})
+                          1(\sigma{\restriction}_{\Delta^0}) \\
+      &= f(\sigma) 1 = f(\sigma).
+  \end{align*}
+
+
+  \paragraph{Graded-commutativity}
+  This property is a bit more involved.
+  Suppose \(f \in S^p(X; R)\) and \(g \in S^q(X; R)\) are cocycles and
+  let \(\sigma \colon \Delta^{p+q} \to X\).
+  Then
+  \begin{align*}
+    (fg)(\sigma) &= (-1)^{pq} f(\sigma{\restriction}_{\Delta^p})
+                              g(\sigma{\restriction}_{\Delta^q}) \\
+    (gf)(\sigma) &= (-1)^{pq} g(\sigma{\restriction}_{\Delta^q})
+                              f(\sigma{\restriction}_{\Delta^p}). \\
+  \end{align*}
+  However in \(fg\), the restriction to \(\Delta^p\) is the front \(p\)-face
+                 and the restriction to \(\Delta^q\) is the back \(q\)-face,
+  while in \(gf\), the restriction to \(\Delta^p\) is the back \(p\)-face
+               and the restriction to \(\Delta^q\) is the front \(q\)-face.
+  These are not obviously related.
+  In particular, we want to prove that
+  \((fg) - (-1)^{pq}(gf)\) is a coboundary.
+  
+  The key point is that there is an interesting chain map
+  \[
+    S_*(X) \to S_*(X)
+  \]
+  homotopic to the identity
+  where in degree \(p\) it maps a simplex \(\sigma \colon \Delta^p \to X\)
+  to \((-1)^{p(p=1)/2} \tilde \sigma\) where \(\tilde\sigma\) is the composite
+  \[
+    \begin{tikzcd}[row sep=0]
+    	\Delta^p \ar[r] &
+    		\Delta^p \ar[r, "\sigma"] &
+    		X \\
+      \brackets{v_0: v_1: \dots: v_p} \ar[r, mapsto] &
+    		\brackets{v_p: v_{p-1}: \dots: v_0}
+    \end{tikzcd}
+  \]
+  Note that the number of coordinate transpositions
+  has the same parity as \(p(p+1)/2\).
+  This is related to the sign that we introduce,
+  which is related to other signs where when we do a reflection,
+  we multiply by \(-1\).
+
+  Theorem 3.11 in Hatcher uses this fact to prove that
+  \((fg) - (-1)^{pq}(gf)\) is a coboundary.
+\end{proof}
+
+Note that if \(X\) is a topological space and \(R\) is a ring,
+then \(H^*(X; R)\) is not just a graded ring, but a graded \(R\)-algebra.
+This means that \(H^*(X; R)\) is an \(R\)-module and
+the multiplication is \(R\)-linear, i.e.\ the cup product is a map
+\[
+  H^*(X; R) \otimes_R H^*(X; R) \to H^*(X; R).
+\]
+
+
+\subsection{Cohomology ring of a product space}
+Suppose \(A^*\) and \(B^*\) are two graded \(R\)-algebras.
+Consider \(A^* \otimes_R B^*\) as the tensor product of \(R\)-modules.
+We claim that this has a tensor product graded \(R\)-algebra structure.
+For homogeneous \(a, b, a', b'\), we define
+\[
+  (a' \otimes b') (a \otimes b) = (-1)^{\abs{b'}\abs{a}} (a' a \otimes b' b).
+\]
+
+
+
+
+
+
+
+%If \(X \to Y\) is a map of topological spaces,
+%then there is an induced map \(H^*(Y; R) \to H^*(X; R)\) of rings.
+
+
+
+
+
+
+
+
+\end{document}

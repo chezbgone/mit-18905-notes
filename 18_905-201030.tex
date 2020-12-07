@@ -1,0 +1,242 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{October 30, 2020}
+
+\begin{theorem}[Eilenberg-Zilber]
+  If \(X\) and \(Y\) are topological spaces,
+  then the Alexander-Whitney map
+  \[
+    A \colon S_*(X \times Y) \to S_*(X) \otimes_\ZZ S_*(Y)
+  \]
+  is a quasi-isomorphism.
+\end{theorem}
+
+Recall that \(A\) is a chain map that sends an \(n\)-simplex
+\(\sigma \colon \Delta^n \to X \times Y\) to
+\[
+  A(\sigma) = \sum_{p + q = n} \alpha {\restriction}_{\Delta^p} \otimes
+                               \beta  {\restriction}_{\Delta^q}
+\]
+where \(\alpha {\restriction}_{\Delta^p}\) is the composite
+\[
+  \Delta^p \xrightarrow{\text{first coordinates}}
+  \Delta^n \overset\sigma\to
+  X \times Y \overset{p_x}\to
+  X
+\]
+and \(\beta {\restriction}_{\Delta^q}\) is the composite
+\[
+  \Delta^q \xrightarrow{\text{last coordinates}}
+  \Delta^n \overset\sigma\to
+  X \times Y \overset{p_y}\to
+  Y.
+\]
+
+The proof of this theorem is a technical elaboration of
+naturality and the fundamental theorem of homological algebra.
+
+\begin{adhoctheorem}{Construction}<construction:M-free-functors>
+  Suppose \(\mathcal C\) is a category and
+          \(\mathbb M\) is a set of objects of \(\mathcal C\)
+            (called the set of \vocab{models}).
+  For any \(\set{m_1, \dots, m_r} \subseteq \mathbb M\),
+  we can consider the functor
+  \begin{align*}
+    F \colon& \mathcal C \to \cAb \\[-1ex]
+      & c \mapsto \ZZ\fgen[\Big]{\coprod_{m \in \mathbb M} \Hom(m, c)}.
+  \end{align*}
+  Such a functor is said to be \vocab{\(\mathbb M\)-free}.
+\end{adhoctheorem}
+
+\begin{example}
+  Let \(\mathcal C = \cTop \times \cTop\).
+  Consider \(\mathbb M = \set{\Delta^n \times \Delta^n}\).
+  This gives the functor
+  \begin{align*}
+    F \colon \cTop \times \cAb &\to \cAb \\[-1ex]
+      (X, Y) &\mapsto \ZZ\fgen*{
+        \Hom_{\cTop \times \cTop}(\Delta^n \times \Delta^n, X \times Y)
+      } \\[-1ex]
+      &\mapsto \ZZ\fgen*{
+        \Hom_{\cTop}(\Delta^n, X) \times \Hom_{\cTop}(\Delta^n, Y)
+      } \\[-1ex]
+      &\mapsto \ZZ\fgen*{\Hom_{\cTop}(\Delta^n, X \times Y)} \\[-1ex]
+      &\mapsto S_n(X \times Y).
+  \end{align*}
+\end{example}
+
+\begin{example}
+  Let \(\mathcal C = \cTop \times \cTop\) again, and consider
+  \(
+    \set{
+      (\Delta^0, \Delta^n),
+      (\Delta^1, \Delta^{n-1}), \dots,
+      (\Delta^n, \Delta^0)
+    }
+  \).
+  This gives the functor
+  \begin{align*}
+    F(X, Y) &= \ZZ\fgen[\Big]{\coprod_{p + q = n}
+      \Hom_{\cTop \times \cTop}((\Delta^p, \Delta^q), (X, Y))} \\
+    &= \ZZ\fgen[\Big]{\coprod_{p + q = n}
+      \Hom_{\cTop}(\Delta^p, X) \times \Hom_{\cTop}(\Delta^q, Y)} \\
+    &\iso \bigoplus_{p + q = n} \ZZ\fgen[\Big]{
+      \Hom_{\cTop}(\Delta^p, X) \times \Hom_{\cTop}(\Delta^q, Y)} \\
+    &\iso \bigoplus_{p + q = n} \ZZ\fgen[\Big]{S_p(X) \otimes_\ZZ S_q(Y)} \\
+    &\iso (S_*(X) \otimes_\ZZ S_*(Y))_n.
+  \end{align*}
+\end{example}
+
+\begin{definition}
+  Let \(\mathcal C\) be a category and
+      \(\mathbb M\) be a set of objects in \(\mathcal C\).
+  Suppose \(F \colon \mathcal C \to \cAb\) be any functor.
+  An \vocab{\(\mathbb M\)-free resolution} of \(F\) is
+    a functor \(F_*\colon \mathcal C \to \cchAb\) with
+    a natural transformation \(\eps_F \colon H_0(F_*) \to F\) satisfying:
+  \begin{enumerate}[nosep]
+    \item Each \(F_n\) is \(\mathbb M\)-free.
+      In particular \(F_*\) composed with taking the \(n\)th group is
+      an \(\mathbb M\)-free functor \(F_n \colon \mathcal C \to \cAb\).
+    \item When evaluated on an object \(m \in \mathbb M\),
+      \(F_*(m)\) is a free resolution of \(F(m)\) in the sense that
+      \[
+        H_i(F_*(m)) = \begin{cases}
+          0 & i \neq 0 \\[-1ex]
+          F(m) & i = 0
+        \end{cases}
+      \]
+      and \(\eps_F \colon H_0(F_*(m)) \to F(m)\) is an isomorphism.
+  \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+  Let \(\Theta \colon F \to G\) be a natural transformation of
+  functors \(F, G \colon \mathcal C \to \cAb\).
+  If \(F_*\) and \(G_*\) are \(\mathbb M\)-free resolutions of \(F\) and \(G\),
+  there is a natural transformation \(\Theta_* \colon F_* \to G_*\)
+  lifting \(\Theta\) that is unique up to natural chain homotopy.
+\end{theorem}
+
+\begin{corollary}
+  The Eilenberg-Zilber theorem is true and
+  the Alexander-Whitney map \(A\) is unique up to natural chain homotopy.
+\end{corollary}
+\begin{proof}
+  Let \(\mathcal C = \cTop \times \cTop\) and
+  \begin{align*}
+    F(X, Y) &= H_0(X \times Y) \\
+    G(X, Y) &= H_0(S_*(X) \otimes_\ZZ S_*(Y)) \\
+    F_*(X, Y) &= S_*(X \times Y) \\
+    G_*(X, Y) &= S_*(X) \otimes_\ZZ S_*(Y).
+  \end{align*}
+  Note that when \(X\) and \(Y\) are both simplices,
+  both \(F_*\) and \(G_*\) record chain complexes
+  with homology only in degree zero.
+  On the model objects, \(f_*\) and \(G_*\) are
+  free resolutions of \(F\) and \(G\).
+  In general, \(F_*\) and \(G_*\) are \(\mathbb M\)-free resolutions.
+
+  It follows that if we have a map
+  \(H_0(X \times Y) \to H_0(S_*(X) \otimes_\ZZ S_*(Y))\),
+  there is a unique up to natural chain homotopy lift to
+  the Alexander-Whitney map
+  \[
+    A \colon S_*(X \times Y) \to S_*(X) \otimes_\ZZ S_*(Y).
+  \]
+  This means that the Alexander-Whitney map exists,
+  and moreover that it is unique.
+  In particular, if we want to produce an Alexander-Whitney map,
+  it suffices to produce the map between the map between their zeroth
+  homology and then lift the map.
+  However, this is not too hard because zeroth homologies
+  are just connected components.
+
+  To prove uniqueness, consider a natural isomorphism
+  \[
+    H_0(X \times Y) \to H_0(S_*(X) \otimes_\ZZ S_*(Y))
+  \]
+  and a natural inverse
+  \[
+    H_0(S_*(X) \otimes_\ZZ S_*(Y)) \to H_0(X \times Y).
+  \]
+  Composing these maps gives the identity on either
+  \(H_0(X \times Y)\) or \(H_0(S_*(X) \otimes_\ZZ S_*(Y))\),
+  and it follows by the fundamental theorem of homological algebra,
+  \(S_*(X \times Y)\) and \(S_*(X) \otimes_\ZZ S_*(Y)\)
+  are chain homotopy equivalent.
+\end{proof}
+
+\section{The diagonal map}
+Suppose \(X \in \cTop\).
+The diagonal map is the map \(\Delta \colon X \to X \times X\)
+mapping \(x \mapsto (x, x)\).
+
+If \(X\) is a space which has torsion free homology groups,
+i.e.\ the homology groups are free abelian groups.
+Then from K\"unneth,
+\[
+  H_n(X \times X) = \bigoplus_{p + q = n} H_p(X) \otimes_\ZZ H_q(X),
+\]
+where all of the \(\Tor\) groups are \(0\) because the homologies are free.
+Let \(H_*(X) \coloneqq \bigoplus_n H_n(X)\).
+
+\begin{example}
+  \(H_*(T^2) = H_0(T^2) \oplus H_1(T^2) \oplus H_2(T^2)
+             = \ZZ \oplus (\ZZ \oplus \ZZ) \oplus \ZZ\).
+\end{example}
+
+Then we have
+\begin{align*}
+  H_*(X) \otimes_\ZZ H_*(X)
+    &\iso \parens[\Big]{\bigoplus_p H_p(X)} \otimes_\ZZ
+          \parens[\Big]{\bigoplus_q H_q(X)} \\
+    &\iso \bigoplus_{p, q} H_p(X) \otimes_\ZZ H_q(X) \\
+    &\iso \bigoplus_n \bigoplus_{p + q = n} H_p(X) \otimes_\ZZ H_q(X) \\
+    &\iso \bigoplus_n H_n(X \times X) \\
+    &\iso H_*(X \times X).
+\end{align*}
+Therefore, \(\Delta \colon X \to X \times X\) induces a map
+\[
+  H_*(X) \to H_*(X \times X) \iso H_*(X) \otimes_\ZZ H_*(X).
+\]
+
+\begin{question}
+  In algebra, what does it mean to have an abelian group \(A\)
+  and a map \(A \to A \otimes_\ZZ A\)?
+  \tcblower
+  It is called a comultiplication, which is the dual of multiplication.
+\end{question}
+
+\begin{definition}
+  If \(A\) is an abelian group, a \vocab{multiplication}
+  is a map of abelian groups
+  \[
+    A \otimes_\ZZ A \to A.
+  \]
+\end{definition}
+
+Note that a map \(m \colon A \otimes_\ZZ A \to A\) is a rule
+that takes a pair \(a \otimes a'\) to an element \(a'' = m(a \otimes a')\).
+Note that we have
+\begin{gather*}
+  m((a_1 + a_2) \otimes a') = m(a_1 \otimes a') + m(a_2 \otimes a') \\
+  m(a \otimes (a'_1 + a'_2)) = m(a \otimes a'_1) + m(a \otimes a'_2).
+\end{gather*}
+
+\begin{example}
+  A \vocab{ring} is an abelian group \(A\) with a multiplication satisfying
+  some properties.
+\end{example}
+
+The fact that \(\Delta\) induces a comultiplication instead of a multiplication
+is not connected to more familiar mathematical structures.
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,259 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{November 02, 2020}
+
+\section{Homology with coefficients}
+One thing we may be wondering is why we care about homology with coefficients
+if we can compute them from homology with integer coefficients.
+Earlier, we talked about how in applied algebraic topology with huge datasets,
+it is provably faster to compute homology with rational coefficients than
+with integer coefficients.
+
+We can also give some pure math reasons.
+\begin{example}[Group homology]
+  If \(G\) is a group, we can form
+    a category \(BG\) of one object, and
+    a simplicial set \(N(BG)\).
+  We can then ask what \(H_q(N(BG); M)\) is for various
+  \(q \in \ZZ\), groups \(G\), and coefficient groups \(M\).
+  While we can calculate this explicitly, even in the integers,
+  one problem is that the number of simplices grows exponentially.
+  Therefore, while we do have an algorithm for computing them,
+  there is in general no closed form.
+
+  In particular, if \(G = \GL_n(\FF_q)\),
+  then this is known for \(M = \QQ\),
+  but for \(M = \ZZ\) it is an open problem.
+\end{example}
+
+\begin{example}[Configuration spaces]
+  Let \(X\) be a topological space and \(k \in \ZZ\).
+  Then \(\operatorname{Config}_k(X)\) is the subspace of \(X^{\times k}\)
+  given by
+  \[
+    \set{(x_1, \dots, x_k) \in X^{\times k} \mid
+      \text{\(x_i \neq x_j\) when \(i \neq j\)}
+    }.
+  \]
+  Then the unordered configuration space is
+  \(B_k(X) = \operatorname{Config}_k(X) / S_k\),
+  where \(S_k\) is the symmetric group on the points.
+  \begin{itemize}[nosep]
+    \item \(H_q(B_k(\RR^n); \ZZ)\) are known, but
+    \item \(H_q(B_k(R^2); \ZZ)\) are unknown.
+  \end{itemize}
+  In particular, in the 1980s,
+  people proved explicit formulas for \(H_q(B_k(T^2); \FF_2)\),
+  and in the 2010s, people proved formulas for \(H_q(B_k(T^2), \QQ)\).
+\end{example}
+
+
+\section{Cohomology}
+Recall that if we have a topological space\(X\)
+and an abelian group \(M\), then we can form
+\(\ul\Hom_{\ZZ\text{-}\cat{mod}}(S_n(X), M)\), % chktex 35
+which gives a chain \(\ul\Hom_{\der(\ZZ)}(S_*(X), M)\).
+This is an object of \(\der(\ZZ)\),
+so it has a well defined homology groups.
+In particular, \(H^q(X; M) \coloneqq H_{-q}(\ul\Hom_{\der(\ZZ)}(S_*(X), M))\)
+is the \vocab{\(q\)th cohomology group} of \(X\) with coefficients in \(M\).
+
+\begin{definition}
+  Let \(S^q(X; M) \coloneqq \ul\Hom_\cAb(S_q(X), M)\).
+\end{definition}
+Since \(\ul\Hom_\cAb({-}, M) \colon \cAb^\op \to \cAb\) is functorial,
+the map \(\partial \colon S_q(X) \to S_{q-1}(X)\) induces a map
+\(\partial \colon S^{q-1}(X; M) \to S^q(X; M)\).
+From this we can form the \vocab{cochain complex}
+\[
+  S^*_{\text{Hatcher}}(X; M) = \Big(\begin{tikzcd}
+  	\cdots \ar[r] &
+  		0 \ar[r] &
+  		S^0(X; M) \ar[r, "\partial"] &
+  		S^1(X; M) \ar[r, "\partial"] &
+  		S^2(X; M) \ar[r] &
+  		\cdots
+  \end{tikzcd}
+  \Big).
+\]
+This is a chain complex concentrated in nonpositive degrees.
+Then we define
+\[
+  H^q(X; M) = \frac{\ker (S^q(X; M) \to S^{q+1}(X; M))}
+                   {\img (S^{q-1}(X; M) \to S^q(X; M))}.
+\]
+
+\begin{adhoctheorem}{Warning}<cochain-warning>
+  We can also form
+  \[
+    S^*_{\text{Miller}}(X; M) = \Big(\begin{tikzcd}
+      \cdots \ar[r] &
+        0 \ar[r] &
+        S^0(X; M) \ar[r, "-\partial"] &
+        S^1(X; M) \ar[r, "\partial"] &
+        S^2(X; M) \ar[r, "-\partial"] &
+        S^3(X; M) \ar[r] &
+        \cdots
+    \end{tikzcd}
+    \Big)
+  \]
+  where in \(S^*_{\text{Miller}}\),
+  the map \(S^q(X; M) \to S^{q+1}(X; M)\) is \((-1)^{q+1} \partial\),
+  where \(\partial\) is the map in \(S^*_{\text{Hatcher}}\).
+\end{adhoctheorem}
+
+Note that \(S^*_{\text{Hatcher}}(X; M) \iso S^*_{\text{Miller}}(X; M)\)
+in \(\der(\ZZ)\), so they have the same cohomology groups.
+However, they are not exactly the same chain complex.
+Here, we will use \(S^*(X; M)\) to denote \(S^*_{\text{Miller}}(X; M)\).
+
+\begin{remark}
+  \(S^*(X; \FF_2)\) is the same in both conventions.
+\end{remark}
+
+Recall the universal coefficient theorem for cohomology:
+\[
+  H^q(X; M) \iso \Ext^1_\ZZ(H_{q-1}(X); M) \oplus \ul\Hom_\cAb(H_q(X), M).
+\]
+This shows that cohomology with coefficients in \(M\) can be computed in terms
+of homology with coefficients in \(\ZZ\).
+
+\begin{example}
+  Suppose we want to calculate \(H^2(\RP^2; \FF_2)\).
+
+  The first method is to use the cellular cochain complex.
+  First, we have the chain complex
+  \[
+    \Ccell_*(\RP^2, \ZZ) \iso \Big(
+      \begin{tikzcd}
+      	\cdots \ar[r] &
+      		0 \ar[r] &
+      		\ZZ \ar[r, "2"] &
+      		\ZZ \ar[r, "0"] &
+      		\ZZ \ar[r] &
+      		0 \ar[r] &
+      		\cdots
+      \end{tikzcd}
+    \Big)
+  \]
+  This gives the cochain complex
+  \begin{align*}
+    \CCell^*(\RP^2, \ZZ) &\iso \Big(
+      \begin{tikzcd}[ampersand replacement=\&, column sep=scriptsize]
+      	\cdots \ar[r] \&
+      		0 \ar[r] \&
+      		\ul\Hom_\cAb(\ZZ, \FF_2) \ar[r, "2"] \&
+      		\ul\Hom_\cAb(\ZZ, \FF_2) \ar[r, "0"] \&
+      		\ul\Hom_\cAb(\ZZ, \FF_2) \ar[r] \&
+      		0 \ar[r] \&
+      		\cdots
+      \end{tikzcd}\Big) \\
+      &\iso \Big(
+        \begin{tikzcd}[ampersand replacement=\&, column sep=large]
+          \cdots \ar[r] \&
+            0 \ar[r] \&
+            \FF_2 \ar[r, "0"] \&
+            \FF_2 \ar[r, "0"] \&
+            \FF_2 \ar[r] \&
+            0 \ar[r] \&
+            \cdots
+        \end{tikzcd}\Big)
+  \end{align*}
+  Therefore,
+  \[
+    H^q(\RP^2; \FF_2) = \begin{cases*}
+      \FF_2 & \(q = 0, 1, 2\) \\[-1ex]
+      0 & otherwise.
+    \end{cases*}
+  \]
+
+  The second method we can use is to apply the universal coefficient theorem.
+  We have
+  \begin{align*}
+    H^2(\RP^2; \FF_2) &\iso \Ext^1_\ZZ(H_q(\RP^2), \FF_2) \oplus
+                            \ul\Hom_\cAb(H_2(\RP^2), F_2) \\
+      &\iso \Ext^1_\ZZ(\ZZ/2\ZZ, \FF_2) \oplus \ul\Hom_\cAb(0, \FF^2) \\
+      &\iso \Ext^1_\ZZ(\FF_2, \FF_2).
+  \end{align*}
+  To compute \(\Ext^1_\ZZ(\FF_2, \FF_2)\), we need to compute
+  \begin{align*}
+    \mathop{H_{-1}} \ul\Hom_{\der(\ZZ)}(\FF_2, \FF_2)
+      &\iso \mathop{H_{-1}} \ul\Hom_{\der(\ZZ)}(\FF_2, \FF_2) \\
+      &\iso \mathop{H_{-1}} \ul\Hom_{\der(\ZZ)}(\,
+        \begin{tikzcd}[cramped, ampersand replacement=\&, column sep=scriptsize]
+          \underset{\mathclap{\deg 1}}\ZZ \ar[r, "2"] \&
+          \underset{\mathclap{\deg 0}}\ZZ
+        \end{tikzcd}\,,
+        \FF_2
+      ) \\
+      &\iso \mathop{H_{-1}} (\,
+        \begin{tikzcd}[cramped, ampersand replacement=\&, column sep=scriptsize]
+          \underset{\mathclap{\deg 0}}\FF \ar[r, "2"] \&
+          \underset{\mathclap{\deg {-1}}}\FF
+        \end{tikzcd}
+      \,) \\
+      &\iso \FF_2.
+  \end{align*}
+\end{example}
+
+\begin{definition}
+  Let \(H^*(X; M) \iso \bigoplus_q H^q(X; M)\).
+\end{definition}
+
+\begin{question}
+  How does \(H^*({-}; M)\) interact with diagonal maps?
+\end{question}
+
+If \(X \to Y\) is a map in \(\cTop\) and
+   \(M\) is an abelian group,
+then there is a natural map \(H^q(Y; M) \to H^q(X; M)\).
+In particular, if \(X\) is any topological space,
+then there is a natural map \(H^q(X \times X; M) \to H^q(X; M)\)
+induced from the diagonal map.
+Taking the direct sum over all \(q\), we get a map
+\[
+  H^*(X \times X; M) \to H^*(X; M).
+\]
+
+\begin{remark}
+  Suppose \(R\) is a ring.
+  Then if \(H^*(X; R)\) is a free \(R\)-module,
+  \[
+    H^*(X \times X; R) \iso H^*(X; R) \otimes_R H^*(X; R).
+  \]
+  This is similar to the result we got for regular homology.
+\end{remark}
+
+In particular, for any spaces \(X\) and \(Y\) and
+any ring \(R\), we will construct a map
+\[
+  H^*(X; R) \otimes_R H^*(Y; R) \to H^*(X \times Y; R).
+\]
+In the case where \(H_*(X; R)\) and \(H_*(Y; R)\) are free,
+this is an isomorphism.
+
+\begin{corollary}
+  If \(X\) is a topological space and \(R\) is a ring,
+  then there is a natural multiplication
+  \[
+    H^*(X; R) \otimes_R H^*(X; R) \hookrightarrow H^*(X; R)
+  \]
+  which is the composite
+  \[
+    H^*(X; R) \otimes_R H^*(X; R) \to H^*(X \times X; R)
+      \xrightarrow{H^q(\Delta; R)} H^*(X; R).
+  \]
+\end{corollary}
+
+This means that we a structure \(H^*(X; R)\) that has both
+an addition and multiplication operation.
+It turns out that multiplication is associative and commutative,
+so we can make this into a ring!
+
+
+
+
+
+\end{document}

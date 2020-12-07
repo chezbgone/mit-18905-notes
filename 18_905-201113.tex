@@ -1,0 +1,192 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{November 13, 2020}
+
+For some spaces, cohomology rings are easy to compute.
+
+\begin{example}[\(S^2\)]
+  Let's consider \(H^*(S^2; \ZZ)\). This is
+  \begin{align*}
+    H^*(S^2; \ZZ) &= \bigoplus_p H^p(S^2; \ZZ) \\
+      &= \bigoplus_p \ul\Hom_{\cAb}(H_p(S^2), \ZZ) \oplus \Ext(\,\cdot\,).
+  \end{align*}
+  Since all of the homologies are free, all of the \(\Ext\) terms are zero, so
+  \begin{gather*}
+    H^0(S^2; \ZZ) \iso \ZZ \\
+    H^1(S^2; \ZZ) \iso 0   \\
+    H^2(S^2; \ZZ) \iso \ZZ.
+  \end{gather*}
+  Therefore, \(H^*(S^2; \ZZ) = \underbracket{\ZZ\fgen{1}}_{\deg 0} \oplus
+                               \underbracket{\ZZ\fgen{x}}_{\deg 2}\)
+  where \(1\cdot x = x \cdot 1 = x\) and \(x^2 = 0\) for degree reasons.
+  Therefore, \(H^*(S^2; \ZZ) \iso \ZZ[x]/x^2\).
+  We write \(\size x = 2\) to mean that \(x\) is homogeneous of degree \(2\).
+\end{example}
+
+In general, for any ring \(R\) and any integer \(n \geq 1\),
+\[
+  H^*(S^n; R) \iso R[x]/x^2
+\]
+where \(\size x = n\).
+As a module, this is isomorphic to \(R \oplus R\).
+
+\begin{example}[Klein bottle]
+  Last time, we saw that
+  \[
+    H^*(K; \FF_2)
+      \iso \underbracket{\FF_2\fgen{1}}_{\deg 0} \oplus
+           \underbracket{\FF_2\fgen{\alpha}
+                  \oplus \FF_2\fgen{\beta}}_{\deg 1} \oplus
+           \underbracket{\FF_2\fgen{k}}_{\deg 2},
+  \]
+  where \(\alpha^2 = k\), \(\alpha \beta = \beta \alpha = k\), \(\beta^2 = 0\),
+  and all other nontrivial products are zero.
+  Therefore,
+  \[
+    H^*(K; \FF_2) \iso \FF_2[\alpha, \beta, k] /
+                       (\alpha^2 - k, \beta^2, \alpha\beta - k,
+                        \beta\alpha - k, \alpha k, \beta k, k^2).
+  \]
+\end{example}
+
+\begin{question}
+  Is there a continuous map \(S^2 \overset{f}{\to} K\) such that
+  \[
+    H^2(f; \FF_2)\colon H^2(K; \FF_2) \to H^2(S^2; \FF_2)?
+  \]
+\end{question}
+Note that if \(f \colon S^2 \to J\) exists, it also induces a map of rings
+\[
+  \begin{tikzcd}[row sep=-1ex]
+    H^*(K; \FF_2) \ar[r, "H^*(f)"] & H^*(S^2; \FF_2) \\
+    \FF_2[\alpha, \beta, k]/(\alpha\beta - k, \dots) \ar[r] & \FF_2[x]/x^2.
+  \end{tikzcd}
+\]
+Since this is a map of graded rings,
+it must send \(\alpha\) and \(\beta\) to \(0\),
+because there are no degree \(1\) elements in \(H^*(S^2; \FF_2)\).
+Therefore, we must also send \(\alpha^2 = k\) to zero,
+so there is no continuous map \(S^2 \to K\).
+
+\begin{adhoctheorem}{Construction}<graded-algebra-product>
+  Suppose \(R\) is a ring and \(A^*\), \(B^*\) are two graded \(R\)-algebras.
+  Then \(A^* \otimes_R B^*\) has a canonical \(R\)-algebra structure:
+  \begin{itemize}[nosep]
+    \item \(A^* \otimes_R B^*\) is (obviously) an \(R\)-module.
+    \item If \(a \in A^*\) is homogeneous of degree \(p\) and
+             \(b \in B^*\) is homogeneous of degree \(q\), then
+          \(\size{a \otimes b} = p + q\).
+    \item The multiplication is given by
+          \[
+            (a' \otimes b')(a \otimes b)
+              = (-1)^{\size{b'} \size{a}}(a' a \otimes b' b).
+          \]
+  \end{itemize}
+\end{adhoctheorem}
+
+\begin{theorem}
+  If \(X, Y \in \cTop\), then the cross product
+  \[
+    {\times} \colon H^*(X; R) \otimes_R H^*(Y; R) \to H^*(X \times Y; R)
+  \]
+  is a homomorphism of graded \(R\)-algebras.
+\end{theorem}
+This is often an isomorphic, in particular when \(H_q(X; R)\) is
+a finitely generated free \(R\)-module for all \(q \in \ZZ\).
+
+\begin{proof}
+  % see Miller lecture 29
+  Suppose \(\alpha_1, \alpha_2 \in H^*(X; R)\) and
+          \(\beta_1, \beta_2 \in H^*(Y; R)\) are homogeneous.
+  We need to prove
+  \[
+    (\alpha_1 \times \beta_1)(\alpha_2 \times \beta_2)
+      = (-1)^{\size{\alpha_2} \size{\beta_1}}
+        ((\alpha_1 \alpha_2) \times (\beta_1 \beta_2)).
+  \]
+  Consider
+  \[
+    \begin{tikzcd}
+      X \times Y \ar[rr, "\Delta_{X \times Y}"]
+                 \ar[dr, "\Delta_X \times \Delta_Y"'] &&
+        X \times Y \times X \times Y \\
+      & X \times X \times Y \times Y \ar[ur, "1 \times \text{swap} \times 1"']
+    \end{tikzcd}
+  \]
+  We have
+  \begin{align*}
+    (\alpha_1 \times \beta_1)(\alpha_2 \times \beta_2)
+      &= H^*(\Delta_{X \times Y})
+           (\alpha_1 \times \beta_1 \times \alpha_2 \times \beta_2) \\
+      &= \parens[\big]{H^*(\Delta_X \times \Delta_Y) \circ
+                       H^*(1 \times \text{swap} \times 1)}
+           (\alpha_1 \times \beta_1 \times \alpha_2 \times \beta_2) \\
+      &= H^*(\Delta_X \times \Delta_Y) \parens[\big]{
+           (-1)^{\size{\beta_1} \size{\alpha_2}}
+           (\alpha_1 \times \alpha_2 \times \beta_1 \times \beta_2)} \\
+      &= (-1)^{\size{\beta_1} \size{\alpha_2}}
+           ((\alpha_1 \alpha_2) \times (\beta_1 \beta_2)). \pog
+  \end{align*}
+\end{proof}
+
+\begin{example}
+  Suppose we want to calculate \(H^*(T^2; \ZZ)\).
+  Note that we have \(T^2 = S^1 \times S^1\).
+  First, note that
+  \[
+    \times \colon H^*(S^1; \ZZ) \otimes_\ZZ H^*(S^1; \ZZ) \to
+                  H^*(S^1 \times S^1; \ZZ)
+  \]
+  is an isomorphism.
+  If we let the two copies of \(H^*(S^1; \ZZ)\) be
+    \(\ZZ\fgen{1} \oplus \ZZ\fgen{a}\), \(\size a = 1\), \(a^2 = 0\) and
+    \(\ZZ\fgen{1} \oplus \ZZ\fgen{b}\), \(\size b = 1\), \(b^2 = 0\),
+  then
+  \[
+    H^*(S^1; Z) \otimes_\ZZ H^*(S^1; Z)
+      \iso \underbracket{\ZZ\fgen{1 \otimes 1}}_{\deg 0} \oplus
+           \underbracket{\ZZ\fgen{a \otimes 1} \oplus
+                         \ZZ\fgen{1 \otimes b}}_{\deg 1} \oplus
+           \underbracket{\ZZ\fgen{a \otimes b}}_{\deg 2}.
+  \]
+  The only interesting tensor products are
+  the ones between degree \(1\) elements.
+  We have
+  \begin{align*}
+    (a \otimes 1) (1 \otimes b)
+      &= (-1)^{0 \cdot 0} (a 1 \otimes 1 b) = a \otimes b \\
+    (1 \otimes b) (a \otimes 1)
+      &= (-1)^{1 \cdot 1} (1 a \otimes b 1) = -(a \otimes b) \\
+    (a \otimes 1) (a \otimes 1)
+      &= (-1)^{0 \cdot 1} (a a \otimes 1 1) = (0 \otimes 1) = 0 \\
+    (1 \otimes b) (1 \otimes b)
+      &= (-1)^{1 \cdot 0} (1 1 \otimes b b) = (1 \otimes 0) = 0.
+  \end{align*}
+  If we let \(x = a \otimes 1\), \(y = 1 \otimes b\), and \(z = a \otimes b\),
+  we get
+  \[
+    H^*(T^2; \ZZ) \iso \ZZ[x, y, z]/(xy - z, x^2, y^2, xz, yz, z^2).
+  \]
+
+  One trick we could have used to compute \(x^2\) is
+  \[
+    x^2 = x \cdot x = (-1)^1 x \cdot x \implies 2x^2 = 0 \implies x^2 = 0.
+  \]
+\end{example}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

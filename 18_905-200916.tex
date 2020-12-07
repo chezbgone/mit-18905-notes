@@ -68,7 +68,7 @@ A consequence of the theorem is that there is a diagram of functors
 that commutes. In particular, we claim that there exists a unique functor
 \(\cHoTop \to \cAb\).
 
-\begin{adhoctheorem*}{Aside on fundamental groups}
+\begin{adhoctheorem}{Aside on fundamental groups}<aside:fundamental-group>
   The fundamental group is similar in that we can form the diagram
   \[
     \begin{tikzcd}[column sep=tiny]
@@ -77,13 +77,13 @@ that commutes. In particular, we claim that there exists a unique functor
     \end{tikzcd}
   \]
   where \(\cTop_*\) is the category of topological spaces with a base point.
-\end{adhoctheorem*}
+\end{adhoctheorem}
 
 \begin{definition}
   A continuous map \(f \colon X \to Y\) of topological spaces is called a
   \vocab{homotopy equivalence} if it maps to an isomorphism under the functor
-  \(\cTop \to \cHoTop\), i.e. there exists a map \(g \colon Y \to X\) such that
-  \(f \circ g \simeq 1_Y\) and \(g \circ f \simeq 1_X\).
+  \(\cTop \to \cHoTop\), i.e.\ there exists a map \(g \colon Y \to X\)
+  such that \(f \circ g \simeq 1_Y\) and \(g \circ f \simeq 1_X\).
 
   Two spaces \(X, Y\) are \vocab{homotopy equivalent} if there exists
   a homotopy equivalence \(f \colon X \to Y\).
@@ -183,13 +183,15 @@ a point. Our next goal is to answer the following question:
 
 When we have an inclusion, then we can take the quotient.
 
-\begin{adhoctheorem}{Construction}
-  Suppose \(C_* \subseteq D_*\) is a subcomplex. The quotient complex
-  \(D_*/C_*\) has groups \((D_*/C_*)_n = D_n/C_n\), where the differential
-  \(\partial_n \colon D_n/C_n \to D_{n-1}/C_{n-1}\) is well defined because
-  if two classes in \(D_n\) differ by a class in \(C_n\), then their boundaries
-  differ by a class in \(C_{n-1}\). This is the same as the condition that all
-  the squares commute.
+\begin{adhoctheorem}{Construction}<construction:quotient-complex>
+  Suppose \(C_* \subseteq D_*\) is a subcomplex.
+  The quotient complex \(D_*/C_*\) has groups \((D_*/C_*)_n = D_n/C_n\),
+  where the differential \(\partial_n \colon D_n/C_n \to D_{n-1}/C_{n-1}\)
+  is well defined because if two classes in \(D_n\) differ by a class
+  in \(C_n\), then their boundaries differ by a class in \(C_{n-1}\).
+  This is the same as the condition that all the squares commute.
 \end{adhoctheorem}
+
+
 
 \end{document}
