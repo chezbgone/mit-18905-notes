@@ -1,0 +1,207 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{December 02, 2020}
+\section{Proof of Poincar\'e duality}
+\subsection{Constructions}
+So far, we have the constructions relating homology and cohomology:
+\begin{description}
+  \item[Cross products]
+  \[
+    \times \colon H^p(X; R) \otimes_R H^q(Y; R) \to H^{p+q}(X \times Y; R)
+  \]
+  
+  \item[Cup products]
+  \[
+    \times \colon H^p(X; R) \otimes_R H^q(X; R) \to H^{p+q}(X \times X; R),
+  \]
+  which is the cross product combined with the diagonal map.
+
+  \item[Kronecker pairing]
+  \[
+    H^p(X; R) \otimes_R H_p(X; R) \to R,
+  \]
+  which is taking some function on homology
+  (i.e.\ and element of cohomology)
+  and evaluating it.
+\end{description}
+
+\begin{definition}
+  The \vocab{cap product} is the operation
+  \[
+    \cap \colon H^p(X; R) \otimes_R H_n(X; R) \to H_{n-p}(X; R).
+  \]
+  is defined by applying homology to the chain map
+  \[
+    S^p(X; R) \otimes_R S_n(X; R) \xrightarrow{\mathrm{AW}}
+    S^p(X; R) \otimes_R S_p(X; R) \otimes_R S_{n-p}(X; R)
+    \xrightarrow{\angles{-, -}} R \otimes_R S_{n-p}(X; R) \iso S_{n-p}(X; R),
+  \]
+  where \(\mathrm{AW}\) is the Alexander-Whitney map.
+\end{definition}
+This is a variation of the Kronecker pairing that doesn't require
+the elements to come from a homology and cohomology of the same degree.
+
+\begin{note}
+  All of these constructions come from
+  \begin{itemize}[nosep]
+    \item the cross product,
+    \item the diagonal map on a space, and
+    \item the Kronecker pairing.
+  \end{itemize}
+\end{note}
+Here are some properties of the cap product:
+\begin{enumerate}
+  \item \((a \cup b) \cap x = a \cap (b \cap x)\) and \(1 \cap x = x\).
+    In other words, \(H_*(X; R)\) is a module for \(H^*(X; R)\).
+  \item \(\angles{a \cup b, x} = \angles{a, b \cap x}\).
+  \item Let \(\eps \colon H_0(X; R) \to R\) be
+    the element adjoint to \(1 \in H^0(X; R)\).
+    Then if \(b \in H^p(X; R)\) and \(x \in H_p(X; R)\), then
+    \[
+      \eps(b \cap x) = \angles{b, x}.
+    \]
+  \item(Projection formula) Given a map \(f \colon X \to Y\),
+                                        \(b \in H^p(Y)\), and
+                                        \(x \in H_n(X)\),
+    \[
+      H_*(f)(H^*(f)(b) \cap x) = b \cap (H_*(f)(x)).
+    \]
+\end{enumerate}
+
+\begin{theorem}[Poincar\'e duality]
+  Let \(M\) be a compact \(n\)-dimensional manifold
+  equipped with an \(R\)-orientation for a PID \(R\).
+  Then there is a unique \([M] \in H_n(M; R)\) that
+  restricts to the local orientation in \(H_n(M; M - \set{x}) \otimes_\ZZ R\)
+  for each point \(x \in M\), such that
+  \begin{align*}
+    H^p(M; R) &\to H_{n-p}(M; R) \\[-1ex]
+      a &\mapsto a \cap [M]
+  \end{align*}
+  is an isomorphism for all \(p \in \ZZ\).
+\end{theorem}
+To understand this geometrically, consider the reverse map.
+It takes a homology class and records the function on \(p\)th homology
+that counts intersections with sign depending on the \(R\)-orientation
+around each intersection.
+
+We will prove this with \(R = \ZZ\) for the notation simplicity.
+The more general proof is not any harder.
+We will prove Poincar\'e duality by formulating
+a more general statement that works for
+compact subsets of arbitrary manifolds.
+
+\subsection{Relative cap products}
+Suppose \(A \subseteq X\) is a subspace of \(X\).
+Then there is a \vocab{relative cap product}
+\[
+  H^p(X) \otimes H_n(X, A) \to H_{n-p}(X, A)
+\]
+making \(H_*(X, A)\) a module over \(H^*(X)\).
+This is constructed via the following diagram.
+\[
+  \begin{tikzcd}[column sep=small]
+    0 \ar[d] && 0 \ar[d] \\
+    S^p(X) \otimes S_n(A) \ar[r] \ar[d] &
+      S^p(A) \otimes S_n(A) \ar[r, "\cap"] &
+      S_{n-p}(A) \ar[d] \\
+    S^p(X) \otimes S_n(X) \ar[rr, "\cap"] \ar[d] &&
+      S_{n-p}(X) \ar[d] \\
+    S^p(X) \otimes S_n(X, A) \ar[rr, dashed] \ar[d] &&
+      S_{n-p}(X, A) \ar[d] \\
+    0 && 0
+  \end{tikzcd}
+\]
+We have a short exact sequence of chain complexes on the left
+from the definition of \(S_n(X, A) \iso S_n(X / A)\).
+We then have the map \(S^p(X) \otimes S_n(A) \to S^p(A) \otimes S_n(A)\)
+from the inclusion \(A \subseteq X\).
+Then, the rectangle commutes by the projection formula.
+Then, the dashed arrow exists by the universal property of a quotient.
+Taking the homology of the dashed arrow gives the relative cap product.
+
+\subsection{\v{C}ech cohomology}
+Suppose \(K \subseteq X\) is a closed subset of a topological space \(X\).
+By excision, we have
+\[
+  H_n(X, X-K) \iso H_n(U, U-K)
+\]
+for any open \(U\) containing \(K\).
+Note that we have a relative cap product
+\[
+  H^p(U) \otimes H_n(U, U-K) \to H_{n-k}(U, U-K).
+\]
+Thus, \(H_*(X, X-K)\) is a module over \(H^*(U)\)
+for every open \(U\) containing \(K\).
+
+\begin{definition}
+  The \(p\)th \vocab{\v{C}ech cohomology} of \(K\)
+  is denoted \(\check{H}^p(K)\).
+  An element \(x \in \check{H}^p(K)\) is an element of \(H^p(U)\)
+  for some open \(U\) containing \(K\).
+  If \(K \subseteq U \overset{}\subseteq V\), we let
+  \(x \in H^p(V) \subseteq \check{H}^p(X)\) be equal to
+  \[
+    H^*(i)(x) \in H^p(U) \subseteq H^p(X).
+  \]
+\end{definition}
+Informally, this tries to capture the cohomology rings of
+arbitrarily small open subsets of \(K\).
+
+\begin{remark}
+  \(\check{H}^p(K)\) depends on how \(K\) sits in \(X\).
+  For ``reasonable'' \(K \subseteq X\),
+  we have \(\check{H}^*(K) \iso H^*(K)\),
+  but this might fail for things like the Cantor set.
+
+  An instance of ``reasonable'' is when \(K\) is a deformation retract
+  of an open set.
+\end{remark}
+
+Note that \(\check{H}^*(K)\) is a ring.
+Furthermore, \(H_n(X, X-K)\) is a module over \(\check{H}^p(K)\).
+
+We now have
+\[
+  \cap \colon \check{H}^p(K) \otimes H_n(X, X-K) \to H_{n-p}(X, X-K).
+\]
+We will want to show that this is an isomorphism or perfect pairing
+under various conditions on \(X \subseteq X\).
+We will prove this by breaking \(X\) and \(K\) into smaller pieces
+that we understand and reassembling the desired statement from Mayor-Vietoris
+and the five lemma.
+
+\begin{example}[Topologist's sine curve]
+  Consider the graph of \(\sin(2\pi / x)\) for \(0 < x < 1\).
+  Let \(K \subseteq \RR^2\) be the union of
+    this curve,
+    \(\set{0} \times [-1, 1]\), and
+    \(\gamma\) defined to be a curve connecting \((0, -1)\) and \((1, 0)\)
+    such that it doesn't intersect the rest of the curves.
+
+  This looks like a circle,
+  but it gets really complicated near the \(y\)-axis.
+
+  We have
+  \[
+    H^*(K) \iso \begin{cases}
+      \ZZ & \deg = 0 \\[-1ex]
+      0 & \text{otherwise}.
+    \end{cases}
+  \]
+  On the other hand,
+  \[
+    \check H^*(K) \iso H^*(S^1) \iso \begin{cases*}
+      \ZZ & \text{\(\deg = 0\) and \(\deg = 1\)} \\[-1ex]
+      0 & otherwise.
+    \end{cases*}
+  \]
+\end{example}
+
+
+
+
+
+\end{document}

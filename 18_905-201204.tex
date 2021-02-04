@@ -1,0 +1,206 @@
+\documentclass{standalone}
+\usepackage{chez}
+
+\begin{document}
+\chapter{December 04, 2020}
+
+Recall that if \(X\) is a topological space,
+we defined the \v{C}ech cohomology of a closed subset \(K \subseteq X\) to be
+\[
+  \check H^*(K) = \coprod_{K \subseteq U} H^*(U) / \sim,
+\]
+where \(U\) ranges over the set of open neighborhoods of \(K\),
+where we consider two classes to be the same if
+one is an inclusion of the other.
+
+If \(L \subseteq K\) is a pair of closed subsets of \(X\),
+then we can form
+\[
+  \check H^*(K, L) \coloneqq \coprod_{\scriptsize
+    \begin{tikzcd}[cramped, column sep=1ex, row sep=1ex]
+      L\ar[r, symbol=\subseteq]\ar[d, symbol=\subseteq]
+        & V \ar[d, symbol=\subseteq] \\
+      K\ar[r, symbol=\subseteq] & U
+    \end{tikzcd}
+  } H^*(U, V) / \sim
+\]
+where \((U, V)\) ranges over all pairs \(Y \subseteq U\) such that
+\(V\) is an open neighborhood of \(L\) and
+\(U\) is an open neighborhood of \(K\).
+
+
+The theorems that we expect to hold from standard cohomology indeed hold.
+\begin{theorem}[LES]
+  Let \((K, L)\) be a closed pair in \(X\).
+  Then there is a natural long exact sequence
+  \[
+    \begin{tikzcd}
+    	\cdots \ar[r] &
+    		\check H^p(K, L) \ar[r] &
+    		\check H^p(K) \ar[r] &
+    		\check H^p(L) \ar[r, "\delta"] &
+    		\check H^{p+q}(K, L) \ar[r] &
+    		\cdots
+    \end{tikzcd}
+  \]
+\end{theorem}
+
+\begin{theorem}[Excision]
+  Suppose \(A\) and \(B\) are compact subsets of a Hausdorff space \(X\).
+  Then the inclusion
+  \[
+    (B, A \intersect B) \subseteq (A \union B, A)
+  \]
+  induces an isomorphism
+  \[
+    \check H^p(A \union B, A) \iso \check H^p(B, A \intersect B)
+  \]
+  for all \(p\).
+\end{theorem}
+
+Before we had a cap produce for a closed subspace \(K \subseteq X\)
+\[
+  \cap \colon \check H^p(K) \otimes_\ZZ H_n(X, X - K) \to H_{n-p}(X, X - K).
+\]
+We can extend this to a \vocab{fully relative cap product}.
+\begin{definition}
+  Let \(L \subseteq K\) be a pair of closed subspaces of \(X\).
+  Then there is a map
+  \[
+    \cap \colon \check H^p(K, L) \otimes_\ZZ H_n(X, X - K)
+            \to H_{n-p}(X, X - K).
+  \]
+\end{definition}
+Then, this fully relative cap produce commutes with Mayer-Vietoris sequence.
+\begin{theorem}
+  Let \(A\) and \(B\) be compact subsets of a Hausdorff space \(X\).
+  Let \(x_{A \union B} \in H_n(X, X - A \union B)\) be a homology class.
+  This gives us canonical restrictions
+  \[
+    x_A \in H_n(X, X-A),
+    x_B \in H_n(X, X-B), \text{ and }
+    x_{A \intersect B} \in H_n(X, X - A \intersect B).
+  \]
+  Then there is a map of long exact sequences
+  \[
+    \begin{tikzcd}[column sep=tiny]
+    	\cdots \ar[r] &
+    		\check H^p(A \union B) \ar[r]
+          \ar[d, "{-} \cap x_{A \union B}"] &
+    		\check H^p(A) \oplus H^p(B) \ar[r]
+          \ar[d, "({-} \cap x_A) \oplus ({-} \cap x_B)"] &
+    		\check H^p(A \intersect B) \ar[r, "\delta"]
+          \ar[d, "{-} \cap x_{A \intersect B}"] &
+    		\check H^{p+1}(A \union B) \ar[r]
+          \ar[d, "{-} \cap x_{A \union B}"] &
+    		\cdots \\
+    	\cdots \ar[r] &
+    		H_{n-p}(X, X - A \union B) \ar[r] &
+    		H_{n-p}(X, X - A) \oplus H_{n-p}(X, X-B) \ar[r] &
+    		H_{n-p}(X, X - A \intersect B) \ar[r, "\delta"] &
+    		H_{n-p-1}(X, X - A \union B) \ar[r] &
+    		\cdots
+    \end{tikzcd}
+  \]
+\end{theorem}
+
+\section{Poincar\' e duality, again}
+Let \(M\) be an \(n\)-dimensional manifold and let \(K\) be a compact subset.
+Recall that
+\[
+  H_n(M, M - K) \to \Gamma(K; o_M) =
+                    \set{
+                      f \colon K \to o_M \mid
+                      K \overset{f}{\to} o_M \overset{\pi}{\to} K = \id
+                    }.
+\]
+A \(\ZZ\)-orientation along a closed subset \(K\) is
+a section of \(o_M\) over \(K\) (i.e.\ an element of \(\Gamma(K; o_M)\))
+that restricts to a generator of \(H_n(M, M - \set{x})\) for every \(x \in K\).
+The corresponding class in \(H_n(M, M - K)\) is called the
+\vocab{fundamental class along \(K\)}, denoted \([M]_K\).
+
+If \(L \subseteq K\) is an inclusion of compact subsets of \(M\),
+then the map
+\[
+  H_n(M, M - K) \to H_n(M, M - L)
+\]
+sends \([M]_K\) to a fundamental class \([M]_L\).
+In particular, an inclusion of subsets gives a restriction of the orientation.
+
+Also, we have a cap product
+\[
+  \cap \colon \check H^p(K, L) \otimes_\ZZ H_n(M, M - K) \to
+              H_{n - p}(M - L, M - K).
+\]
+
+\begin{theorem}[Poincar\'e duality]
+  Let \(M\) be an \(n\)-dimensional manifold and
+    let \(L \subseteq K\) be a pair of compact subspaces.
+  Assume we have a \(\ZZ\)-orientation along \(K\)
+    with fundamental class \([M]_K\).
+  Then the map
+  \[
+    {-} \cap [M]_K \colon \check H^p(K, L) \to H_{n - p}(M - L, M - K)
+  \]
+  is an isomorphism.
+\end{theorem}
+
+\begin{proof*}{Sketch}
+  Read Miller's notes for more details.
+  \begin{enumerate}[nosep]
+    \item Prove the theorem for \(M = \RR^n\),
+      where \(K\) and \(L\) are compact convex subsets.
+    \item Prove for \(M = \RR^n\) where \(K\) and \(L\) are
+      a finite union of compact convex subsets of \(\RR^n\).
+    \item Prove for \(M = \RR^n\) where \(K\) and \(L\) are
+      any compact subsets of \(\RR^n\).
+    \item Prove for arbitrary \(M \) where \(K\) and \(L\) are
+      finite unions of compact Euclidean subspace of \(M\).
+    \item Prove for arbitrary \(M \) where \(K\) and \(L\) are
+      arbitrary compact subspaces. \pog
+  \end{enumerate}
+\end{proof*}
+
+\subsection{Applications}
+\begin{theorem}
+  Let \(M\) be an \(n\)-dimensional manifold and \(K\) be a compact subset.
+  A \(\ZZ\)-orientation along \(K\) determines \([M]_K \in H_n(M, M - K)\)
+  and capping with it gives an isomorphism
+  \[
+    \check H^{n - p}(K) \to H_p(M, M - K).
+  \]
+\end{theorem}
+\begin{corollary}[Alexander duality]
+  Suppose \(K\) is a compact subset of \(\RR^n\).
+  The composite
+  \[
+    \check H^{n - p}(K) \overset{\iso}{\to}
+      H_p(\RR^n, \RR^n - K) \overset{\partial}{\to}
+      \tilde H_{p - 1}(\RR^n - K)
+  \]
+  is an isomorphism.
+\end{corollary}
+
+\begin{example}[Jordan curve theorem]
+  Suppose \(n = 2\).
+  Let \(K\) be a closed loop in \(\RR^2\) with \(\check H^1(K) \iso \ZZ\).
+  (This will almost always be the case except for pathological embeddings
+  of the circle into \(\RR^2\).)
+
+  Then \(\tilde H_0(\RR^2 - K) \iso \check H^1(K) \iso \ZZ\),
+  so \(H_0(\RR^2 - K) \iso \ZZ \oplus \ZZ\).
+
+  In other words, \(\RR^2 - K\) has two path components.
+\end{example}
+
+\begin{adhoctheorem}{Warning}
+  The analog of this in \(\RR^3\) is false.
+  In particular, there are maps \(f \colon S^2 \to \RR^3\) where
+  \(\RR^3 - \img f\) does not give two path components.
+  The counterexample is called the Alexander horned sphere.
+\end{adhoctheorem}
+
+
+
+\end{document}
