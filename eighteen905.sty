@@ -1,0 +1,33 @@
+\ProvidesPackage{eighteen905}
+
+\DeclareMathOperator{\Sing}{Sing}
+\DeclareMathOperator{\Fun}{Fun}
+\DeclareMathOperator{\Int}{Int}
+\NewDocumentCommand{\op}{}{\textrm{op}}
+\NewDocumentCommand{\Deltainj}{}{\Delta_{\mathrm{inj}}}
+\DeclareMathOperator{\Sk}{Sk}
+\NewDocumentCommand{\cCWcomp}{}{\cat{CWcomp}}
+\NewDocumentCommand{\Ccell}{}{C^{\text{cell}}}
+\NewDocumentCommand{\CCell}{}{C_{\text{cell}}}
+
+\NewDocumentCommand{\cCat}{}{\cat{Cat}}
+\NewDocumentCommand{\cTop}{}{\cat{Top}}
+\NewDocumentCommand{\cHoTop}{}{{\cat{Ho}(\cat{Top})}}
+\NewDocumentCommand{\cSet}{}{\cat{Set}}
+\NewDocumentCommand{\cGrp}{}{\cat{Grp}}
+\NewDocumentCommand{\cAb}{}{\cat{Ab}}
+\NewDocumentCommand{\cVectR}{}{{\cat{Vect}_{\RR}}}
+\NewDocumentCommand{\cchAb}{}{\cat{chAb}}
+\NewDocumentCommand{\cRmod}{}{{R\text{-}\cat{mod}}}
+\NewDocumentCommand{\cchRmod}{}{{\cat{ch}(R\text{-}\cat{mod})}}
+
+\NewDocumentCommand{\der}{}{{\cat{D}}}
+
+\tikzset{%
+  symbol/.style={
+    draw=none,
+    every to/.append style={
+      edge node={node [sloped, allow upside down, auto=false]{$#1$}}
+    },
+  },
+}
