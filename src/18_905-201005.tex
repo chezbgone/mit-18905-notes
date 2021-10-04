@@ -115,9 +115,9 @@ Now we will introduce a tool to compute homology groups.
   to be the composite
   \[
     \begin{tikzcd}
-    	C_{n+1}(X) = H_{n+1}(\Sk_{n+1} X, \Sk_n X) \ar[r, "\partial"] &
-    	H_n(\Sk_n X) \ar[r] &
-    	H_n(\Sk_n X, \Sk_{n-1} X) = C_n(X)
+      C_{n+1}(X) = H_{n+1}(\Sk_{n+1} X, \Sk_n X) \ar[r, "\partial"] &
+      H_n(\Sk_n X) \ar[r] &
+      H_n(\Sk_n X, \Sk_{n-1} X) = C_n(X)
     \end{tikzcd}
   \]
 \end{definition}
@@ -158,12 +158,12 @@ with the singular homology of the geometric realization of \(X\).
   For e.g.\ \(n = 2\), we have the chain complex \(C_*(S^2)\) is isomorphic to
   \[
     \begin{tikzcd}
-    	\ZZ &
-    	0 \ar[l, "d"'] &
-    	\ZZ \ar[l, "d"'] &
-    	0 \ar[l, "d"'] &
-    	0 \ar[l, "d"'] &
-    	\cdots \ar[l, "d"']
+      \ZZ &
+      0 \ar[l, "d"'] &
+      \ZZ \ar[l, "d"'] &
+      0 \ar[l, "d"'] &
+      0 \ar[l, "d"'] &
+      \cdots \ar[l, "d"']
     \end{tikzcd}
   \]
   Since most of these groups are \(0\), we can easily compute:
@@ -229,11 +229,11 @@ with the singular homology of the geometric realization of \(X\).
   We can compute the homology group from the cellular chain complex
   \[
     \begin{tikzcd}
-    	\ZZ\fgen{x} &
-    	\ZZ\fgen{a, b} \iso \ZZ \oplus \ZZ \ar[l, "d_1"'] &
-    	\ZZ\fgen{u} \ar[l, "d_2"'] &
-    	0 \ar[l] &
-    	\cdots \ar[l]
+      \ZZ\fgen{x} &
+      \ZZ\fgen{a, b} \iso \ZZ \oplus \ZZ \ar[l, "d_1"'] &
+      \ZZ\fgen{u} \ar[l, "d_2"'] &
+      0 \ar[l] &
+      \cdots \ar[l]
     \end{tikzcd}
   \]
   Note that \(d_1\) has to be zero because the boundaries

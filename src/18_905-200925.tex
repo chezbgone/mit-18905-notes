@@ -14,13 +14,13 @@ Let \(A \subseteq X\) be a pair of spaces such that
 for \(m > 0\). We have the long exact sequence
 \[
   \begin{tikzcd}
-  	\cdots \ar[r] &
-  	H_m(A) \ar[r] &
-  	H_m(X) \ar[r] &
-  	H_m(X, A) \iso H_m(X/A) \ar[r, "\partial"] &
-  	H_{m-1}(A) \ar[r] &
-  	H_{m-1}(X) \ar[r] &
-  	\cdots
+    \cdots \ar[r] &
+    H_m(A) \ar[r] &
+    H_m(X) \ar[r] &
+    H_m(X, A) \iso H_m(X/A) \ar[r, "\partial"] &
+    H_{m-1}(A) \ar[r] &
+    H_{m-1}(X) \ar[r] &
+    \cdots
   \end{tikzcd}
 \]
 \begin{question}
@@ -134,12 +134,12 @@ Now we can prove excision.
   Note the diagram of a map of short exact sequences of chain complexes
   \[
     \begin{tikzcd}
-    	0 \ar[r]                                                      &
+      0 \ar[r]                                                      &
         S_*(A) \ar[r] \ar[d, equal]                                 &
         S_*^{\mathcal A}(X) \ar[r], \ar[d, hook]                    &
         S_*^{\mathcal A}(X)/S_*^{\mathcal A}(A) \ar[r] \ar[d, hook] &
         0                                                           \\
-    	0 \ar[r]                                                      &
+      0 \ar[r]                                                      &
         S_*(A) \ar[r]                                               &
         S_*(X) \ar[r]                                               &
         \underset{\mathclap{= S_*(X)/S_*(A)}}{S_*(X, A)} \ar[r]     &
@@ -149,20 +149,20 @@ Now we can prove excision.
   We can obtain a map of long exact sequences of homology groups
   \[
     \begin{tikzcd}
-    	\cdots \ar[r]                                               &
-    	H_m(A) \ar[r] \ar[d]                                        &
-    	H_m^{\mathcal A}(X) \ar[r] \ar[d]                           &
-    	H_m(S_*^{\mathcal A}(X) / S_*(X)) \ar[r, "\partial"] \ar[d] &
-    	H_{m-1}(A) \ar[r] \ar[d]                                    &
-    	H_{m-1}^{\mathcal A}(X) \ar[r] \ar[d]                       &
-    	\cdots                                                      \\
-    	\cdots \ar[r]                                               &
-    	H_m(A) \ar[r]                                               &
-    	H_m(X) \ar[r]                                               &
-    	H_m(S_*(X) / S_*(X)) \ar[r, "\partial"]                     &
-    	H_{m-1}(A) \ar[r]                                           &
-    	H_{m-1}^{\mathcal A}(X) \ar[r]                              &
-    	\cdots
+      \cdots \ar[r]                                               &
+      H_m(A) \ar[r] \ar[d]                                        &
+      H_m^{\mathcal A}(X) \ar[r] \ar[d]                           &
+      H_m(S_*^{\mathcal A}(X) / S_*(X)) \ar[r, "\partial"] \ar[d] &
+      H_{m-1}(A) \ar[r] \ar[d]                                    &
+      H_{m-1}^{\mathcal A}(X) \ar[r] \ar[d]                       &
+      \cdots                                                      \\
+      \cdots \ar[r]                                               &
+      H_m(A) \ar[r]                                               &
+      H_m(X) \ar[r]                                               &
+      H_m(S_*(X) / S_*(X)) \ar[r, "\partial"]                     &
+      H_{m-1}(A) \ar[r]                                           &
+      H_{m-1}^{\mathcal A}(X) \ar[r]                              &
+      \cdots
     \end{tikzcd}
   \]
   By locality, the \(H_m^{\mathcal A}(X) \to H_m(X)\) and

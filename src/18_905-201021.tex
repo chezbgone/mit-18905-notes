@@ -24,24 +24,24 @@
   \begin{align*}
     C_* &= \Big(
     \begin{tikzcd}[ampersand replacement=\&]
-    	\cdots \ar[r] \&
-    	0 \ar[r] \&
-    	0 \ar[r] \&
-    	\ZZ \ar[r, "5"] \&
-    	\ZZ \ar[r] \&
-    	0 \ar[r] \&
-    	\cdots
+      \cdots \ar[r] \&
+      0 \ar[r] \&
+      0 \ar[r] \&
+      \ZZ \ar[r, "5"] \&
+      \ZZ \ar[r] \&
+      0 \ar[r] \&
+      \cdots
     \end{tikzcd}
     \Big) \\
     D_* &= \Big(
     \begin{tikzcd}[ampersand replacement=\&]
-    	\cdots \ar[r] \&
-    	0 \ar[r] \&
-    	0 \ar[r] \&
-    	0 \ar[r] \&
-    	\ZZ/5\ZZ \ar[r] \&
-    	0 \ar[r] \&
-    	\cdots
+      \cdots \ar[r] \&
+      0 \ar[r] \&
+      0 \ar[r] \&
+      0 \ar[r] \&
+      \ZZ/5\ZZ \ar[r] \&
+      0 \ar[r] \&
+      \cdots
     \end{tikzcd}
     \Big)
   \end{align*}
@@ -75,20 +75,20 @@
   Then we have the free resolution
   \[
     \begin{tikzcd}
-    	\cdots \ar[r] &
-    		0 \ar[r] \ar[d] &
-    		\ZZ \oplus \ZZ \ar[r] \ar[d] &
-    		\ZZ \oplus \ZZ \oplus \ZZ \ar[r] \ar[d] &
-    		0 \ar[r] \ar[d] &
-    		0 \ar[r] \ar[d] &
-    		\cdots \\
-    	\cdots \ar[r] &
-    		0 \ar[r] &
-    		0 \ar[r] &
-    		\ZZ/3\ZZ \oplus \ZZ \oplus \ZZ/2\ZZ \ar[r] &
-    		0 \ar[r] &
-    		0 \ar[r] &
-    		\cdots
+      \cdots \ar[r] &
+        0 \ar[r] \ar[d] &
+        \ZZ \oplus \ZZ \ar[r] \ar[d] &
+        \ZZ \oplus \ZZ \oplus \ZZ \ar[r] \ar[d] &
+        0 \ar[r] \ar[d] &
+        0 \ar[r] \ar[d] &
+        \cdots \\
+      \cdots \ar[r] &
+        0 \ar[r] &
+        0 \ar[r] &
+        \ZZ/3\ZZ \oplus \ZZ \oplus \ZZ/2\ZZ \ar[r] &
+        0 \ar[r] &
+        0 \ar[r] &
+        \cdots
     \end{tikzcd}
   \]
   where the \(\ZZ \oplus \ZZ \to \ZZ \oplus \ZZ \oplus \ZZ\) map
@@ -104,9 +104,9 @@ and then use the degree \(1\) group to describe the relations.
 Note that free resolutions are not unique! In particular,
 \[
   \begin{tikzcd}[row sep=0.05ex]
-  	\ZZ \ar[r] &
-  		\ZZ \oplus \ZZ \oplus \ZZ \ar[r] &
-  		\ZZ \oplus \ZZ \oplus \ZZ \\
+    \ZZ \ar[r] &
+      \ZZ \oplus \ZZ \oplus \ZZ \ar[r] &
+      \ZZ \oplus \ZZ \oplus \ZZ \\
     1 \ar[r, mapsto] & (0, 0, 1) \\
     & (1, 0, 0) \ar[r, mapsto] & (3, 0, 1) \\
     & (0, 1, 0) \ar[r, mapsto] & (0, 0, 2) \\
@@ -127,25 +127,25 @@ However, it is not ``minimal''.
   Let
   \[
     \begin{tikzcd}
-    	\cdots \ar[r] &
-    		F_2 \ar[r] \ar[d] &
-    		F_1 \ar[r] \ar[d] &
-    		F_0 \ar[d, "\eps_N"] \\
-    	\cdots \ar[r] &
-    		0 \ar[r] &
-    		0 \ar[r] &
-    		N
+      \cdots \ar[r] &
+        F_2 \ar[r] \ar[d] &
+        F_1 \ar[r] \ar[d] &
+        F_0 \ar[d, "\eps_N"] \\
+      \cdots \ar[r] &
+        0 \ar[r] &
+        0 \ar[r] &
+        N
     \end{tikzcd}
     \qquad \text{and} \qquad
     \begin{tikzcd}
-    	\cdots \ar[r] &
-    		E_2 \ar[r] \ar[d] &
-    		E_1 \ar[r] \ar[d] &
-    		E_0 \ar[d, "\eps_M"] \\
-    	\cdots \ar[r] &
-    		0 \ar[r] &
-    		0 \ar[r] &
-    		M
+      \cdots \ar[r] &
+        E_2 \ar[r] \ar[d] &
+        E_1 \ar[r] \ar[d] &
+        E_0 \ar[d, "\eps_M"] \\
+      \cdots \ar[r] &
+        0 \ar[r] &
+        0 \ar[r] &
+        M
     \end{tikzcd}
   \]
   be two free resolutions of \(N\) and \(M\) respectively.
@@ -162,19 +162,19 @@ However, it is not ``minimal''.
     \begin{tikzcd}[row sep=small,
                    column sep=small,
                    background color=green!6]
-    	F_* = \Big( \cdots \ar[rr] &&
-    		0 \ar[rr] \ar[ld] &&
-    		\ZZ \ar[rr, "2"] \ar[ld, "1"'] &&
-    		\ZZ \ar[rr] \ar[ld, "3"'] \ar[dd] &&
-    		0 \ar[rr] \ar[ld] &&
-    		\cdots \Big) \\
-    	E_* = \Big( \cdots \ar[r] &
-    		0 \ar[rr] &&
-    		\ZZ \ar[rr, "6"'] &&
-    		\ZZ \ar[rr, crossing over] \ar[d] &&
-    		0 \ar[rr] &&
-    		\cdots \Big) \\
-    	&& && & \ZZ/6\ZZ & \ZZ/2\ZZ \ar[l, "f"']
+      F_* = \Big( \cdots \ar[rr] &&
+        0 \ar[rr] \ar[ld] &&
+        \ZZ \ar[rr, "2"] \ar[ld, "1"'] &&
+        \ZZ \ar[rr] \ar[ld, "3"'] \ar[dd] &&
+        0 \ar[rr] \ar[ld] &&
+        \cdots \Big) \\
+      E_* = \Big( \cdots \ar[r] &
+        0 \ar[rr] &&
+        \ZZ \ar[rr, "6"'] &&
+        \ZZ \ar[rr, crossing over] \ar[d] &&
+        0 \ar[rr] &&
+        \cdots \Big) \\
+      && && & \ZZ/6\ZZ & \ZZ/2\ZZ \ar[l, "f"']
     \end{tikzcd}
   \]
   This is a chain map \(f_*\), where

@@ -12,22 +12,22 @@ is not obviously a chain complex.
 Suppose
 \[
   \begin{tikzcd}
-  	0 \ar[r] &
-  	A \ar[r] &
-  	B \ar[r] &
-  	C \ar[r] &
-  	0
+    0 \ar[r] &
+    A \ar[r] &
+    B \ar[r] &
+    C \ar[r] &
+    0
   \end{tikzcd}
 \]
 is a short exact sequence of \(R\)-modules and \(M\) is another \(R\)-module.
 Then, note that the sequence
 \[
   \begin{tikzcd}
-  	0 \ar[r] &
-  	A \otimes_R M \ar[r] &
-  	B \otimes_R M \ar[r] &
-  	C \otimes_R M \ar[r] &
-  	0
+    0 \ar[r] &
+    A \otimes_R M \ar[r] &
+    B \otimes_R M \ar[r] &
+    C \otimes_R M \ar[r] &
+    0
   \end{tikzcd}
 \]
 is in general not exact.
@@ -35,22 +35,22 @@ is in general not exact.
   Let \(R = \ZZ\) and consider the short exact sequence
   \[
     \begin{tikzcd}
-    	0 \ar[r] &
-    	\ZZ \ar[r, "2"] &
-    	\ZZ \ar[r] &
-    	\ZZ/2\ZZ \ar[r] &
-    	0
+      0 \ar[r] &
+      \ZZ \ar[r, "2"] &
+      \ZZ \ar[r] &
+      \ZZ/2\ZZ \ar[r] &
+      0
     \end{tikzcd}
   \]
   Tensoring with \(\ZZ/2\ZZ\) yields
   \[
     \begin{tikzcd}[row sep=0.1ex]
-    	0 \ar[r] &
+      0 \ar[r] &
         \ZZ/2\ZZ \otimes_\ZZ \ZZ \ar[r] &
         \ZZ/2\ZZ \otimes_\ZZ \ZZ \ar[r] &
         \ZZ/2\ZZ \otimes_\ZZ \ZZ/2\ZZ \ar[r] &
         0 \\
-    	0 \ar[r] &
+      0 \ar[r] &
         \ZZ/2\ZZ \ar[r] &
         \ZZ/2\ZZ \ar[r] &
         \ZZ/2\ZZ \ar[r] &
@@ -73,19 +73,19 @@ is in general not exact.
   In other words, if
   \[
     \begin{tikzcd}
-    	A \ar[r] &
-    	B \ar[r] &
-    	C \ar[r] &
-    	0
+      A \ar[r] &
+      B \ar[r] &
+      C \ar[r] &
+      0
     \end{tikzcd}
   \]
   is an exact sequence of \(R\)-modules, then so is
   \[
     \begin{tikzcd}
-    	A \otimes_R M \ar[r] &
-    	B \otimes_R M \ar[r] &
-    	C \otimes_R M \ar[r] &
-    	0
+      A \otimes_R M \ar[r] &
+      B \otimes_R M \ar[r] &
+      C \otimes_R M \ar[r] &
+      0
     \end{tikzcd}
   \]
 \end{proposition}
@@ -93,19 +93,19 @@ is in general not exact.
   In fact,
   \[
     \begin{tikzcd}
-    	A \ar[r] &
-    	B \ar[r] &
-    	C \ar[r] &
-    	0
+      A \ar[r] &
+      B \ar[r] &
+      C \ar[r] &
+      0
     \end{tikzcd}
   \]
   is exact if and only if
   \[
     \begin{tikzcd}
-    	A \otimes_R M \ar[r] &
-    	B \otimes_R M \ar[r] &
-    	C \otimes_R M \ar[r] &
-    	0
+      A \otimes_R M \ar[r] &
+      B \otimes_R M \ar[r] &
+      C \otimes_R M \ar[r] &
+      0
     \end{tikzcd}
   \]
   is exact for every \(R\)-module \(M\).
@@ -122,19 +122,19 @@ In particular, we have the related theorem
   A sequence of \(R\)-modules
   \[
     \begin{tikzcd}
-    	A \ar[r] &
-    	B \ar[r] &
-    	C \ar[r] &
-    	0
+      A \ar[r] &
+      B \ar[r] &
+      C \ar[r] &
+      0
     \end{tikzcd}
   \]
   is exact if and only if for all \(R\)-modules \(N\),
   \[
     \begin{tikzcd}
-    	0 \ar[r] &
-    	\ul\Hom_{\cRmod}(C, N) \ar[r] &
-    	\ul\Hom_{\cRmod}(B, N) \ar[r] &
-    	\ul\Hom_{\cRmod}(A, N)
+      0 \ar[r] &
+      \ul\Hom_{\cRmod}(C, N) \ar[r] &
+      \ul\Hom_{\cRmod}(B, N) \ar[r] &
+      \ul\Hom_{\cRmod}(A, N)
     \end{tikzcd}
   \]
   is exact.
@@ -146,29 +146,29 @@ In particular, we have the related theorem
   To prove
   \[
     \begin{tikzcd}
-    	A \otimes_R M \ar[r] &
-    	B \otimes_R M \ar[r] &
-    	C \otimes_R M \ar[r] &
-    	0
+      A \otimes_R M \ar[r] &
+      B \otimes_R M \ar[r] &
+      C \otimes_R M \ar[r] &
+      0
     \end{tikzcd}
   \]
   is exact, by \cref{prop:module-exactness-hom} it suffices to check that
   \[
     \begin{tikzcd}
-    	0 \ar[r] &
-    	\ul\Hom(C \otimes_R M, N) \ar[r] &
-    	\ul\Hom(B \otimes_R M, N) \ar[r] &
-    	\ul\Hom(A \otimes_R M, N)
+      0 \ar[r] &
+      \ul\Hom(C \otimes_R M, N) \ar[r] &
+      \ul\Hom(B \otimes_R M, N) \ar[r] &
+      \ul\Hom(A \otimes_R M, N)
     \end{tikzcd}
   \]
   is exact for every \(N\).
   This is equivalent to checking that
   \[
     \begin{tikzcd}
-    	0 \ar[r] &
-    	\ul\Hom(C, \ul\Hom(M, N)) \ar[r] &
-    	\ul\Hom(B, \ul\Hom(M, N)) \ar[r] &
-    	\ul\Hom(A, \ul\Hom(M, N))
+      0 \ar[r] &
+      \ul\Hom(C, \ul\Hom(M, N)) \ar[r] &
+      \ul\Hom(B, \ul\Hom(M, N)) \ar[r] &
+      \ul\Hom(A, \ul\Hom(M, N))
     \end{tikzcd}
   \]
   is exact for every \(N\).
@@ -185,10 +185,10 @@ In particular, we have the related theorem
   is exact. We want to show
   \[
     \begin{tikzcd}
-    	0 \ar[r] &
-    	\ul\Hom(C, N) \ar[r] &
-    	\ul\Hom(B, N) \ar[r] &
-    	\ul\Hom(A, N)
+      0 \ar[r] &
+      \ul\Hom(C, N) \ar[r] &
+      \ul\Hom(B, N) \ar[r] &
+      \ul\Hom(A, N)
     \end{tikzcd}
   \]
   is exact.
@@ -201,11 +201,11 @@ In particular, we have the related theorem
   Consider the diagram
   \[
     \begin{tikzcd}
-    	A \ar[r, "\varphi"] \ar[rd, "0"'] &
+      A \ar[r, "\varphi"] \ar[rd, "0"'] &
         B \ar[r, "\psi"] \ar[d, "f" pos=0.3] &
         C \ar[r] \ar[ld, "g"]&
         0 \\
-    	& N & &
+      & N & &
     \end{tikzcd}
   \]
   Exactness at \(\ul\Hom(B, N)\) is equivalent to saying that a
@@ -224,30 +224,30 @@ In particular, we have the related theorem
 We have now proved that if
 \[
   \begin{tikzcd}
-  	0 \ar[r] &
-  	A \ar[r] &
-  	B \ar[r] &
-  	C \ar[r] &
-  	0
+    0 \ar[r] &
+    A \ar[r] &
+    B \ar[r] &
+    C \ar[r] &
+    0
   \end{tikzcd}
 \]
 is exact and \(M\) is an \(R\)-module, then
 \[
   \begin{tikzcd}
-  	A \otimes_R M \ar[r] &
-  	B \otimes_R M \ar[r] &
-  	C \otimes_R M \ar[r] &
-  	0
+    A \otimes_R M \ar[r] &
+    B \otimes_R M \ar[r] &
+    C \otimes_R M \ar[r] &
+    0
   \end{tikzcd}
 \]
 is exact, but
 \[
   \begin{tikzcd}
-  	0 \ar[r] &
-  	A \otimes_R M \ar[r] &
-  	B \otimes_R M \ar[r] &
-  	C \otimes_R M \ar[r] &
-  	0
+    0 \ar[r] &
+    A \otimes_R M \ar[r] &
+    B \otimes_R M \ar[r] &
+    C \otimes_R M \ar[r] &
+    0
   \end{tikzcd}
 \]
 is not necessarily exact.

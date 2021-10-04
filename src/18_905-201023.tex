@@ -102,9 +102,9 @@ For now, let's do some calculations of them.
   \intertext{where we add generators to make it more clear. Multiplying,}
     &\iso \begin{tikzcd}[ampersand replacement=\&,
                          cramped, column sep=scriptsize]
-    	\ZZ\fgen{a \otimes c} \ar[r, "\partial_2"] \&
-    		\ZZ\fgen{b \otimes c, a \otimes d} \ar[r, "\partial_1"] \&
-    		\ZZ\fgen{b \otimes d}
+      \ZZ\fgen{a \otimes c} \ar[r, "\partial_2"] \&
+        \ZZ\fgen{b \otimes c, a \otimes d} \ar[r, "\partial_1"] \&
+        \ZZ\fgen{b \otimes d}
     \end{tikzcd}
   \end{align*}
   where
@@ -146,12 +146,12 @@ For now, let's do some calculations of them.
       &\iso \Big(
         \begin{tikzcd}[ampersand replacement=\&,
                        cramped, column sep=scriptsize]
-        	\ZZ \ar[r, "2"] \& \ZZ
+          \ZZ \ar[r, "2"] \& \ZZ
         \end{tikzcd}
       \Big) \otimes \ZZ/3\ZZ \\
       &\iso \begin{tikzcd}[ampersand replacement=\&,
                            cramped, column sep=scriptsize]
-        	\ZZ/3\ZZ \ar[r, "2"] \& \ZZ/3\ZZ
+          \ZZ/3\ZZ \ar[r, "2"] \& \ZZ/3\ZZ
         \end{tikzcd}
   \end{align*}
   which means
@@ -169,11 +169,11 @@ For now, let's do some calculations of them.
   where we interpret \(\ZZ/3\ZZ\) as
   \[
     \begin{tikzcd}
-    	\cdots \ar[r] &
-    		0 \ar[r] &
-    		\ZZ/3\ZZ \ar[r] &
-    		0 \ar[r] &
-    		\cdots
+      \cdots \ar[r] &
+        0 \ar[r] &
+        \ZZ/3\ZZ \ar[r] &
+        0 \ar[r] &
+        \cdots
     \end{tikzcd}
   \]
   so
@@ -233,12 +233,12 @@ without reference to the derived categories.
   If \(R = \ZZ\),
   \[
     F_* = \bigg(\begin{tikzcd}[row sep=-1ex]
-    	\cdots \ar[r] &
-    		0 \ar[r] &
-    		\ZZ \ar[r, "4"] &
-    		\ZZ \ar[r] &
-    		0 \ar[r] &
-    		\cdots \\
+      \cdots \ar[r] &
+        0 \ar[r] &
+        \ZZ \ar[r, "4"] &
+        \ZZ \ar[r] &
+        0 \ar[r] &
+        \cdots \\
       & & \deg 1 & \deg 0
     \end{tikzcd}
     \bigg)
@@ -249,12 +249,12 @@ without reference to the derived categories.
     \ul\Hom_{\der(\ZZ)}(F_*, N) \iso
     \bigg(
       \begin{tikzcd}[row sep=-1ex]
-      	\cdots \ar[r] &
-      		0 \ar[r] &
-      		\ZZ/2\ZZ \ar[r, "\partial"] &
-      		\ZZ/2\ZZ \ar[r] &
-      		0 \ar[r] &
-      		\cdots \\
+        \cdots \ar[r] &
+          0 \ar[r] &
+          \ZZ/2\ZZ \ar[r, "\partial"] &
+          \ZZ/2\ZZ \ar[r] &
+          0 \ar[r] &
+          \cdots \\
         & & \deg 0 & \deg {-1}
       \end{tikzcd}
     \bigg)

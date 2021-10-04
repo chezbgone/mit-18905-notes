@@ -92,7 +92,7 @@ Let's do some computations before we prove this.
   Recall that
   \[
     \Ccell_*(\RP^2) = \Ccell_*(\RP^2; \ZZ) \iso \begin{tikzcd}
-    		\ZZ \ar[r, "2"] & \ZZ \ar[r, "0"] & \ZZ
+        \ZZ \ar[r, "2"] & \ZZ \ar[r, "0"] & \ZZ
     \end{tikzcd}
   \]
   and we have
@@ -109,7 +109,7 @@ Let's do some computations before we prove this.
   \(\Ccell_*(\RP^2) \otimes_\ZZ \FF_2\) directly.
   \[
     \begin{tikzcd}
-    	\FF_2 \ar[r, "2"] & \FF_2 \ar[r, "0"] & \FF_2
+      \FF_2 \ar[r, "2"] & \FF_2 \ar[r, "0"] & \FF_2
     \end{tikzcd}
   \]
   This gives
@@ -154,7 +154,7 @@ Let's do some computations before we prove this.
       &\iso \FF_2 \oplus H_1(\ZZ \otimes^{\mathbb L} \FF_2) \\
       &\iso \FF_2 \oplus H_1\parens[\Big]{
         \begin{tikzcd}[ampersand replacement=\&, column sep=scriptsize]
-        	\cdots \ar[r] \& 0 \ar[r] \& \FF_2 \ar[r] \& 0 \ar[r] \& \cdots
+          \cdots \ar[r] \& 0 \ar[r] \& \FF_2 \ar[r] \& 0 \ar[r] \& \cdots
         \end{tikzcd}
       } \\
       &\iso \FF_2 \oplus 0 = \FF_2,
@@ -171,7 +171,7 @@ Let's do some computations before we prove this.
       &\iso \FF_3 \oplus H_1(0 \otimes^{\mathbb L} \FF_2) \\
       &\iso \FF_2 \oplus H_1\parens[\big]{
         \begin{tikzcd}[ampersand replacement=\&, column sep=scriptsize]
-        	\cdots \ar[r] \& 0 \ar[r] \& 0 \ar[r] \& \cdots
+          \cdots \ar[r] \& 0 \ar[r] \& 0 \ar[r] \& \cdots
         \end{tikzcd}
       } \\
       &\iso \FF_3 \oplus 0 = \FF_3,
@@ -185,12 +185,12 @@ Let's do some computations before we prove this.
   Consider a free resolution
   \[
     \begin{tikzcd}
-    	\cdots \ar[r] &
-    		0 \ar[r] &
-    		F_1 \ar[r] &
-    		F_0 \ar[r] &
-    		0 \ar[r] &
-    		\cdots
+      \cdots \ar[r] &
+        0 \ar[r] &
+        F_1 \ar[r] &
+        F_0 \ar[r] &
+        0 \ar[r] &
+        \cdots
     \end{tikzcd}
   \]
   of \(M\).
@@ -208,20 +208,20 @@ Let's do some computations before we prove this.
   which gives us a long exact sequence in homology
   \[
     \begin{tikzcd}[row sep=scriptsize]
-    	\cdots \ar[r] &
-    		H_q    (C_* \otimes F_1) \ar[d, symbol=\iso] \ar[r] &
-    		H_q    (C_* \otimes F_0) \ar[d, symbol=\iso] \ar[r] &
-    		H_q    (C_* \otimes M  ) \ar[d, symbol=\iso] \ar[r, "\partial"] &
-    		H_{q-1}(C_* \otimes F_1) \ar[d, symbol=\iso] \ar[r] &
-    		H_{q-1}(C_* \otimes F_0) \ar[d, symbol=\iso] \ar[r] &
-    		\cdots \\
-    	\cdots \ar[r] &
-    		H_q    (C_*) \otimes F_1 \ar[r] &
-    		H_q    (C_*) \otimes F_0 \ar[r] &
-    		H_q    (C_* \otimes M)   \ar[r] &
-    		H_{q-1}(C_*) \otimes F_1 \ar[r] &
-    		H_{q-1}(C_*) \otimes F_0 \ar[r] &
-    		\cdots
+      \cdots \ar[r] &
+        H_q    (C_* \otimes F_1) \ar[d, symbol=\iso] \ar[r] &
+        H_q    (C_* \otimes F_0) \ar[d, symbol=\iso] \ar[r] &
+        H_q    (C_* \otimes M  ) \ar[d, symbol=\iso] \ar[r, "\partial"] &
+        H_{q-1}(C_* \otimes F_1) \ar[d, symbol=\iso] \ar[r] &
+        H_{q-1}(C_* \otimes F_0) \ar[d, symbol=\iso] \ar[r] &
+        \cdots \\
+      \cdots \ar[r] &
+        H_q    (C_*) \otimes F_1 \ar[r] &
+        H_q    (C_*) \otimes F_0 \ar[r] &
+        H_q    (C_* \otimes M)   \ar[r] &
+        H_{q-1}(C_*) \otimes F_1 \ar[r] &
+        H_{q-1}(C_*) \otimes F_0 \ar[r] &
+        \cdots
     \end{tikzcd}
   \]
   This long exact sequence implies the short exact sequence

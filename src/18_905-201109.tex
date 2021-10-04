@@ -17,12 +17,12 @@ We have the following semisimplicial structure:
 The chain complex \(S_*(K)\) is
 \[
   \begin{tikzcd}
-  	\cdots \ar[r] &
-  		\ZZ\fgen{U, L} \ar[r] &
-  		\ZZ\fgen{a, b, c} \ar[r] &
-  		\ZZ\fgen{v} \ar[r] &
-  		0 \ar[r] &
-  		\cdots
+    \cdots \ar[r] &
+      \ZZ\fgen{U, L} \ar[r] &
+      \ZZ\fgen{a, b, c} \ar[r] &
+      \ZZ\fgen{v} \ar[r] &
+      0 \ar[r] &
+      \cdots
   \end{tikzcd}
 \]
 To compute the cochain complex \(S^*(K; \FF_2)\),
@@ -37,12 +37,12 @@ Similarly, \(S^1(K; \FF_2) = \FF_2\fgen{\delta_a, \delta_b, \delta_c}\), and
 This gives the entire cochain complex \(S^*(K; \FF_2)\):
 \[
   \begin{tikzcd}
-  	\cdots \ar[r] &
-  		\FF_2\fgen{\delta_v} \ar[r, "\partial"] &
-  		\FF_2\fgen{\delta_a, \delta_b, \delta_c} \ar[r, "\partial"] &
-  		\FF_2\fgen{\delta_U, \delta_L} \ar[r] &
-  		0 \ar[r] &
-  		\cdots
+    \cdots \ar[r] &
+      \FF_2\fgen{\delta_v} \ar[r, "\partial"] &
+      \FF_2\fgen{\delta_a, \delta_b, \delta_c} \ar[r, "\partial"] &
+      \FF_2\fgen{\delta_U, \delta_L} \ar[r] &
+      0 \ar[r] &
+      \cdots
   \end{tikzcd}
 \]
 
@@ -75,15 +75,15 @@ Therefore, \(\partial\) maps
 This gives the cochain complex
 \[
   \begin{tikzcd}[row sep=0]
-  	\cdots \ar[r] &
-  		\FF_2\fgen{\delta_v} \ar[r, "\partial = 0"] &
-  		\FF_2\fgen{\delta_a, \delta_b, \delta_c} \ar[r, "\partial"] &
-  		\FF_2\fgen{\delta_U, \delta_L} \ar[r] &
-  		0 \ar[r] &
-  		\cdots \\
-  	& & \delta_a \ar[r, mapsto] & \delta_U + \delta_L \\[-0.5ex]
-  	& & \delta_b \ar[r, mapsto] & \delta_U + \delta_L \\[-0.5ex]
-  	& & \delta_c \ar[r, mapsto] & \delta_U + \delta_L
+    \cdots \ar[r] &
+      \FF_2\fgen{\delta_v} \ar[r, "\partial = 0"] &
+      \FF_2\fgen{\delta_a, \delta_b, \delta_c} \ar[r, "\partial"] &
+      \FF_2\fgen{\delta_U, \delta_L} \ar[r] &
+      0 \ar[r] &
+      \cdots \\
+    & & \delta_a \ar[r, mapsto] & \delta_U + \delta_L \\[-0.5ex]
+    & & \delta_b \ar[r, mapsto] & \delta_U + \delta_L \\[-0.5ex]
+    & & \delta_c \ar[r, mapsto] & \delta_U + \delta_L
   \end{tikzcd}
 \]
 
